@@ -5,14 +5,22 @@ services:
     image: ${DOCKER_REGISTRY-}productserviceapi
     build:
       context: .
-      dockerfile: ./Services/ProductService/ProductService.API/Dockerfile
+      dockerfile: Services/ProductService/ProductService.API/Dockerfile
+
+  cartservice.api:
+    image: cartservice.api
+    build:
+      context: .
+      dockerfile: Services/CartService/CartService.API/Dockerfile
 
   productservice.db:
     image: postgres
-    
+  
   cartservice.db:
     image: postgres
-    
+
 volumes:
-    postgres_productservice_data:
-    postgres_cartservice_data:
+  postgres_productservice_data:
+  postgres_cartservice_data:
+      
+

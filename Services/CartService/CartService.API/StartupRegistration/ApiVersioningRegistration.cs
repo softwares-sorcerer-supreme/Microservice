@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 
-namespace ProductService.API.StartupRegistration;
+namespace CartService.API.StartupRegistration;
 
 public static class ApiVersioningRegistration
 {
