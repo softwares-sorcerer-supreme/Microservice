@@ -1,9 +1,11 @@
-﻿services:
+version: '3.4'
+
+services:
   productservice.api:
-    image: productservice.api
+    image: ${DOCKER_REGISTRY-}productserviceapi
     build:
       context: .
-      dockerfile: Services/ProductService/ProductService.API/Dockerfile
+      dockerfile: ./Services/ProductService/ProductService.API/Dockerfile
 
   productservice.db:
     image: postgres

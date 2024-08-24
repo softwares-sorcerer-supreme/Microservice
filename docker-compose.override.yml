@@ -5,8 +5,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "5001"
+      - "8080"
+      - "8081"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
 
   productservice.db:
     container_name: productservice_db
@@ -31,4 +36,3 @@ services:
       - "5433:5432"
     volumes:
       - postgres_cartservice_data:/var/lib/postgresql/data2/
-
