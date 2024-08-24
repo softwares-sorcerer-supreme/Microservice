@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ProductService.Application.Models.Response.Categories;
 using ProductService.Application.Models.Response.Products;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;

@@ -17,7 +17,8 @@ builder.Services
     .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
     .AddValidators()
     .AddCustomMediatR()
-    .AddConfigureApiVersioning();
+    .AddConfigureApiVersioning()
+    .AddGrpcConfiguration();
     // .AddConfigureLogging(builder)
 
 var app = builder.Build();
@@ -35,5 +36,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGrpcConfiguration();
 
 app.Run();

@@ -22,4 +22,10 @@
 	  <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<Protobuf Include="..\..\ProductService\ProductService.Application\Protos\product.proto" GrpcServices="Client">
+			<Link>Protos\product.proto</Link>
+		</Protobuf>
+	</ItemGroup>
+
 </Project>

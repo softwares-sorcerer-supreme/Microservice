@@ -50,6 +50,8 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, Create
                 return response;
             }
             
+            
+            
             // var productEntity = _mapper.Map<Product>(payload);
             // await _unitOfWork.Product.AddAsync(productEntity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Models.Response;
+using CartService.Domain.Entities;
+using ProductService.Application.Grpc.Protos;
 
 namespace CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
 
@@ -12,57 +14,102 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
 {
     private readonly ILogger<GetItemsByCartIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly Services.GrpcService.ProductService _productService;
 
-    public GetItemsByCartIdHandler(ILogger<GetItemsByCartIdHandler> logger, IUnitOfWork unitOfWork)
+    public GetItemsByCartIdHandler(ILogger<GetItemsByCartIdHandler> logger, IUnitOfWork unitOfWork, Services.GrpcService.ProductService productService)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
+        _productService = productService;
     }
 
     public async Task<GetItemsByCartIdResponse> Handle(GetItemsByCartIdQuery request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(GetItemsByCartIdHandler)} => ";
-        var cartId = request.CartId;
+        _logger.LogInformation($"{functionName}");
         var response = new GetItemsByCartIdResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
-
-        _logger.LogInformation($"{functionName}");
-
+        var cartId = request.CartId;;
+        
         try
         {
-            var cartQueryable = _unitOfWork.Cart.GetQueryable();
-            var cartItemsQueryable = _unitOfWork.CartItem.GetQueryable();
-
-            var cart = await cartQueryable.Where(c => c.Id == cartId).FirstOrDefaultAsync(cancellationToken);
-            if (cart != null)
+            var cart = await _unitOfWork.Cart.GetQueryable().FirstOrDefaultAsync(c => c.Id == cartId, cancellationToken);
+            if (cart == null)
             {
-                _logger.LogWarning($"{functionName} Cart does not exists");
-                response.Status = ResponseStatusCode.NotFound.ToInt();
-                response.ErrorMessage = "Cart does not exists";
-                //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
-
-                return response;
+                _logger.LogWarning($"{functionName} Cart does not exist");
+                return CreateErrorResponse(ResponseStatusCode.NotFound, "Cart does not exist");
             }
 
-            var cartItems = await cartItemsQueryable.Where(ci => ci.CartId == cartId)
-                .ToListAsync(cancellationToken);
-
-            if (cartItems.Count > 0)
+            var cartItems = await GetCartItemsByCartIdAsync(request.CartId, cancellationToken);
+            if (cartItems.Count == 0)
             {
-                
+                return CreateResponseWithTotalPrice(cart.TotalPrice);
             }
-            
-            return response;
+
+            var productResponse = await _productService.GetProductsByIds(cartItems.Select(ci => ci.ProductId).ToList());
+            if (productResponse.Status != ResponseStatusCode.OK.ToInt() || productResponse.Products.Count == 0)
+            {
+                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessage);
+            }
+
+            var items = MapProductsToItemDatas(cartItems, productResponse.Products.ToList());
+            return CreateResponseWithItems(cart.TotalPrice, items);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(GetItemsByCartIdHandler)} Has error => {ex.Message}");
-            response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "Something went wrong";
-            //response.ErrorMessageCode = ""
-            return response;
+            _logger.LogError(ex, $"{functionName} Error in GetItemsByCartIdHandler");
+            return CreateErrorResponse(ResponseStatusCode.InternalServerError, "Something went wrong");
         }
+    }
+
+    private async Task<List<CartItem>> GetCartItemsByCartIdAsync(Guid cartId, CancellationToken cancellationToken)
+    {
+        return await _unitOfWork.CartItem.GetQueryable()
+            .Where(ci => ci.CartId == cartId)
+            .ToListAsync(cancellationToken);
+    }
+
+    private List<ItemDatas> MapProductsToItemDatas(List<CartItem> cartItems, List<ProductModel> products)
+    {
+        return products.Select(p => new ItemDatas
+        {
+            Id = new Guid(p.Id),
+            Name = p.Name,
+            Price = decimal.Parse(p.Price),
+            Quantity = cartItems.FirstOrDefault(ci => ci.ProductId == new Guid(p.Id))?.Quantity ?? 0
+        }).ToList();
+    }
+
+    private GetItemsByCartIdResponse CreateResponseWithTotalPrice(decimal totalPrice)
+    {
+        return new GetItemsByCartIdResponse
+        {
+            Status = ResponseStatusCode.OK.ToInt(),
+            Data = new GetItemByCartData { TotalPrice = totalPrice }
+        };
+    }
+
+    private GetItemsByCartIdResponse CreateResponseWithItems(decimal totalPrice, List<ItemDatas> items)
+    {
+        return new GetItemsByCartIdResponse
+        {
+            Status = ResponseStatusCode.OK.ToInt(),
+            Data = new GetItemByCartData
+            {
+                Items = items,
+                TotalPrice = totalPrice
+            }
+        };
+    }
+
+    private GetItemsByCartIdResponse CreateErrorResponse(ResponseStatusCode status, string errorMessage)
+    {
+        return new GetItemsByCartIdResponse
+        {
+            Status = status.ToInt(),
+            ErrorMessage = errorMessage
+        };
     }
 }

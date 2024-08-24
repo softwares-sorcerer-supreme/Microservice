@@ -14,8 +14,7 @@ public class GetItemByCartData
     public decimal TotalPrice { get; set; }
 }
 
-public class ItemDatas
+public class ItemDatas : ProductDto
 {
-    public ProductDto Products { get; set; }
     public int Quantity { get; set; }
 }

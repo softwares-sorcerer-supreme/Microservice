@@ -15,7 +15,8 @@ builder.Services
     .AddDatabaseConfiguration(builder.Configuration)
     .AddValidators()
     .AddCustomMediatR()
-    .AddConfigureApiVersioning();
+    .AddConfigureApiVersioning()
+    .AddGrpcConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
