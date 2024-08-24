@@ -2,9 +2,13 @@ using System.Globalization;
 using Grpc.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using ProductService.Application.Extensions;
 using ProductService.Application.Grpc.Protos;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProductQuantity;
+using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
+using Shared.CommonExtension;
+using Shared.Models.Response;
 
 namespace ProductService.Application.Services;
 
@@ -25,13 +29,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         var productIds = strProductIds.Select(id => new Guid(id)).ToList();
         var getProductsByIdsResponse = await _mediator.Send(new GetProductByIdsQuery(productIds), context.CancellationToken);
 
-        var productModels = getProductsByIdsResponse.Data.Select(product => new ProductModel
-        {
-            Id = product.Id.ToString(),
-            Name = product.Name,
-            Price = product.Price.ToString(CultureInfo.InvariantCulture),
-            Quantity = product.Quantity
-        }).ToList();
+        var productModels = getProductsByIdsResponse.Data.Select(product => product.ToProductModel()).ToList();
         
         var response = new GetProductsByIdsResponse
         {
@@ -47,9 +45,48 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         return response;
     }
 
-    public override async Task<UpdateProductQuantityResponse> UpdateProductQuantity(UpdateProductQuantityRequest request, ServerCallContext context)
+    public override async Task<ProductModelResponse> UpdateProductQuantity(UpdateProductQuantityRequest request, ServerCallContext context)
     {
         var response = await _mediator.Send(new UpdateProductQuantityCommand(request), context.CancellationToken);
-        return response;
+        
+        var getProductsByIdResponse = new ProductModelResponse
+        {
+            Status = response.Status,
+            ErrorMessage = response.ErrorMessage,
+            ErrorMessageCode = response.ErrorMessageCode
+        };
+
+        if (response.Status != ResponseStatusCode.OK.ToInt())
+        {
+            return getProductsByIdResponse;
+        }
+
+        var productModel = response.Data.ToProductModel();
+        getProductsByIdResponse.Product = productModel;
+        
+        return getProductsByIdResponse;
     }
+    
+    public override async Task<ProductModelResponse> GetProductsById(GetProductsByIdRequest request, ServerCallContext context)
+    {
+        var productId = new Guid(request.ProductId);
+        var response = await _mediator.Send(new GetProductByIdQuery(productId), context.CancellationToken);
+        var getProductsByIdResponse = new ProductModelResponse
+        {
+            Status = response.Status,
+            ErrorMessage = response.ErrorMessage,
+            ErrorMessageCode = response.ErrorMessageCode
+        };
+
+        if (response.Status != ResponseStatusCode.OK.ToInt())
+        {
+            return getProductsByIdResponse;
+        }
+
+        var productModel = response.Data.ToProductModel();
+        getProductsByIdResponse.Product = productModel;
+
+        return getProductsByIdResponse;
+    }
+    
 }

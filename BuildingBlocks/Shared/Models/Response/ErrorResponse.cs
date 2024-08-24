@@ -17,7 +17,6 @@ public static class ResponseHelper
         return new ObjectResult(new
         {
             status = httpStatusCode,
-            statusText = errorMessage,
             errorMessage,
             errorMessageCode,
             data
@@ -30,7 +29,6 @@ public static class ResponseHelper
         return new ObjectResult(new
         {
             status = httpStatusCode,
-            statusText = errorMessage,
             errorMessage,
             errorMessageCode,
             data,

@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ProductService.Application.Models.Response.Categories;
 using ProductService.Application.Models.Response.Products;
 using Shared.Models.Request;
 

@@ -3,27 +3,32 @@ syntax = "proto3";
 option csharp_namespace = "ProductService.Application.Grpc.Protos";
 
 service ProductProtoService {
-  rpc UpdateProductQuantity(UpdateProductQuantityRequest) returns (UpdateProductQuantityResponse);
+  rpc UpdateProductQuantity(UpdateProductQuantityRequest) returns (ProductModelResponse);
   rpc GetProductsByIds(GetProductsByIdsRequest) returns (GetProductsByIdsResponse);
+  rpc GetProductsById(GetProductsByIdRequest) returns (ProductModelResponse);
 }
 
 message UpdateProductQuantityRequest {
   string id = 1;
   int32 quantity = 2;
 }
-
-message UpdateProductQuantityResponse {
-  int32 status = 1;
-  string errorMessage = 2;
-  string errorMessageCode = 3;
-}
-
 message GetProductsByIdsRequest {
   repeated string productIds = 1;
 }
 
 message GetProductsByIdsResponse {
   repeated ProductModel products = 1;
+  int32 status = 2;
+  string errorMessage = 3;
+  string errorMessageCode = 4;
+}
+
+message GetProductsByIdRequest {
+  string productId = 1;
+}
+
+message ProductModelResponse {
+  ProductModel product = 1;
   int32 status = 2;
   string errorMessage = 3;
   string errorMessageCode = 4;

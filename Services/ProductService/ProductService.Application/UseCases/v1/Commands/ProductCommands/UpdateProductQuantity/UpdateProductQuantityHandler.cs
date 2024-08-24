@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Grpc.Protos;
+using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
@@ -25,7 +26,7 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
     public async Task<UpdateProductQuantityResponse> Handle(UpdateProductQuantityCommand request, CancellationToken cancellationToken)
     {
         var payload = request.Payload;
-        var functionName = $"{nameof(UpdateProductQuantityHandler)} => ProductId = ${payload.Id}";
+        var functionName = $"{nameof(UpdateProductQuantityHandler)} => ProductId = ${payload.Id} =>";
         var response = new UpdateProductQuantityResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
@@ -64,6 +65,14 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
             product.Quantity -= payload.Quantity;
             await _unitOfWork.Product.UpdateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            response.Data = new ProductDataResponse
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Quantity = product.Quantity,
+                Price = product.Price
+            };
         }
         
         catch (Exception ex)

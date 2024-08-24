@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProductService.Application.Models.Response.Categories;
+using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.CommonExtension;
@@ -59,7 +59,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occured!";
+            response.ErrorMessage = $"Some error has occured!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

@@ -33,7 +33,7 @@ public class GetProductByIdsHandler : IRequestHandler<GetProductByIdsQuery, GetP
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
                     where productIds.Contains(product.Id)
-                    select new GetProductData
+                    select new ProductDataResponse
                     {
                         Id = product.Id,
                         Name = product.Name,

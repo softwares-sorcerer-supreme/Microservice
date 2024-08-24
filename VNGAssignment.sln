@@ -29,15 +29,22 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "BuildingBlocks\Sh
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{1BC5DDFA-9EBB-43AD-A73F-A4CBE90071FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.API", "Services\CartService\CartService.API\CartService.API.csproj", "{E43E1A56-013C-4B36-B965-867BE950A6BB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.API", "Services\CartService\CartService.API\CartService.API.csproj", "{E43E1A56-013C-4B36-B965-867BE950A6BB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{849111D8-1283-44C7-9B85-98D0337ABC04} = {849111D8-1283-44C7-9B85-98D0337ABC04}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.Application", "Services\CartService\CartService.Application\CartService.Application.csproj", "{C91C8D00-3D2A-435D-9F00-FC9CBC638F32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.Application", "Services\CartService\CartService.Application\CartService.Application.csproj", "{C91C8D00-3D2A-435D-9F00-FC9CBC638F32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.Infrastructure", "Services\CartService\CartService.Infrastructure\CartService.Infrastructure.csproj", "{4CD877D5-264D-425E-94A5-EDA1D2BB2C83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.Infrastructure", "Services\CartService\CartService.Infrastructure\CartService.Infrastructure.csproj", "{4CD877D5-264D-425E-94A5-EDA1D2BB2C83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.Domain", "Services\CartService\CartService.Domain\CartService.Domain.csproj", "{CDD69730-9F2A-435B-8FF3-4013837D981C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.Domain", "Services\CartService\CartService.Domain\CartService.Domain.csproj", "{CDD69730-9F2A-435B-8FF3-4013837D981C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.Persistence", "Services\CartService\CartService.Persistence\CartService.Persistence.csproj", "{0516311F-1C10-4C4E-AB09-E01E0C4A5DA0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CartService.Persistence", "Services\CartService\CartService.Persistence\CartService.Persistence.csproj", "{0516311F-1C10-4C4E-AB09-E01E0C4A5DA0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{849111D8-1283-44C7-9B85-98D0337ABC04} = {849111D8-1283-44C7-9B85-98D0337ABC04}
+		{C91C8D00-3D2A-435D-9F00-FC9CBC638F32} = {C91C8D00-3D2A-435D-9F00-FC9CBC638F32}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

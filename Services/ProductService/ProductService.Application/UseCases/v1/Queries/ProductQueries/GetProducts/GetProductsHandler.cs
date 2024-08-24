@@ -35,7 +35,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
                     where !product.IsDeleted
-                    select new GetProductData
+                    select new ProductDataResponse
                     {
                         Id = product.Id,
                         Name = product.Name,

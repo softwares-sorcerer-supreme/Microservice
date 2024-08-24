@@ -87,7 +87,11 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         return new GetItemsByCartIdResponse
         {
             Status = ResponseStatusCode.OK.ToInt(),
-            Data = new GetItemByCartData { TotalPrice = totalPrice }
+            Data = new GetItemByCartData
+            {
+                Items = new(),
+                TotalPrice = totalPrice
+            }
         };
     }
 

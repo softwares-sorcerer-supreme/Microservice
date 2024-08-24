@@ -1,43 +1,108 @@
-﻿using ProductService.Application.Grpc.Protos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
+using ProductService.Application.Grpc.Protos;
+using Shared.CommonExtension;
+using Shared.Models.Response;
 
 namespace CartService.Application.Services.GrpcService;
 
 public class ProductService
 {
     private readonly ProductProtoService.ProductProtoServiceClient _productProtoServiceClient;
-
-    public ProductService(ProductProtoService.ProductProtoServiceClient productProtoServiceClient)
+    private readonly ILogger<ProductService> _logger;
+    
+    public ProductService(ProductProtoService.ProductProtoServiceClient productProtoServiceClient, ILogger<ProductService> logger)
     {
         _productProtoServiceClient = productProtoServiceClient;
+        _logger = logger;
     }
 
     public async Task<GetProductsByIdsResponse> GetProductsByIds(List<Guid> ids)
     {
-        var strIds = ids.Select(x => x.ToString());
-        var productRequest = new GetProductsByIdsRequest
-        {
-            ProductIds = 
-            {
-                strIds
-            }
-        };
+        const string functionName = $"{nameof(ProductService)} => {nameof(GetProductsByIds)} => ";
+        _logger.LogInformation($"{functionName} {string.Join(",", ids)}");
         
-        return await _productProtoServiceClient.GetProductsByIdsAsync(productRequest);
+        var response = new GetProductsByIdsResponse
+        {
+            Status = ResponseStatusCode.OK.ToInt()
+        };
+
+        try
+        {
+            var productRequest = new GetProductsByIdsRequest
+            {
+                ProductIds =
+                {
+                    ids.Select(x => x.ToString())
+                }
+            };
+
+            response = await _productProtoServiceClient.GetProductsByIdsAsync(productRequest);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{functionName} => {ex.Message}");
+            response.Status = ResponseStatusCode.InternalServerError.ToInt();
+            response.ErrorMessage = "Some error has occured!";
+        }
+
+        return response;
     }
 
-    public async Task<UpdateProductQuantityResponse> UpdateProductQuantity(Guid id, int quantity)
+    public async Task<ProductModelResponse> UpdateProductQuantity(Guid id, int quantity)
     {
-        var productRequest = new UpdateProductQuantityRequest
+        const string functionName = $"{nameof(ProductService)} => {nameof(UpdateProductQuantity)} => ";
+        _logger.LogInformation($"{functionName} ProductId = {id}; Quantity = {quantity}");
+        
+        var response = new ProductModelResponse
         {
-            Id = id.ToString(),
-            Quantity = quantity
+            Status = ResponseStatusCode.OK.ToInt()
         };
 
-        return await _productProtoServiceClient.UpdateProductQuantityAsync(productRequest);
+        try
+        {
+            var productRequest = new UpdateProductQuantityRequest
+            {
+                Id = id.ToString(),
+                Quantity = quantity
+            };
+
+            response = await _productProtoServiceClient.UpdateProductQuantityAsync(productRequest);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{functionName} => {ex.Message}");
+            response.Status = ResponseStatusCode.InternalServerError.ToInt();
+            response.ErrorMessage = "Some error has occured!";
+        }
+
+        return response;
+    }
+
+    public async Task<ProductModelResponse> GetProductsById(Guid id)
+    {
+        const string functionName = $"{nameof(ProductService)} => {nameof(GetProductsById)} => ";
+        _logger.LogInformation($"{functionName} Id = {id}");
+        var response = new ProductModelResponse
+        {
+            Status = ResponseStatusCode.OK.ToInt()
+        };
+
+        try
+        {
+            var productRequest = new GetProductsByIdRequest
+            {
+                ProductId = id.ToString(),
+            };
+
+            response = await _productProtoServiceClient.GetProductsByIdAsync(productRequest);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{functionName} => {ex.Message}");
+            response.Status = ResponseStatusCode.InternalServerError.ToInt();
+            response.ErrorMessage = "Some error has occured!";
+        }
+
+        return response;
     }
 }
