@@ -32,7 +32,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
         try
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
-                    where product.Id == productId
+                    where product.Id == productId && !product.IsDeleted
                     select new GetProductData
                     {
                         Id = product.Id,

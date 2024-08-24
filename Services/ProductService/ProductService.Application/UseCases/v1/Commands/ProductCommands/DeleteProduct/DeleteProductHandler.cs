@@ -1,33 +1,30 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
-using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Domain.Abstraction;
+using ProductService.Domain.Entities;
 using Shared.CommonExtension;
 using Shared.Models.Response;
 
-namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
+namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, UpdateProductResponse>
+public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, DeleteProductResponse>
 {
-    private readonly ILogger<UpdateProductHandler> _logger;
+    private readonly ILogger<DeleteProductHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-
-    public UpdateProductHandler(
-        ILogger<UpdateProductHandler> logger,
-        IUnitOfWork unitOfWork)
+    
+    public DeleteProductHandler(ILogger<DeleteProductHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
-
-    public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    
+    public async Task<DeleteProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        const string functionName = $"{nameof(CreateProductHandler)} Handler => ";
-        var payload = request.Payload;
+        const string functionName = $"{nameof(DeleteProductHandler)} => ";
         var id = request.Id;
-        var response = new UpdateProductResponse
+        var response = new DeleteProductResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
@@ -44,26 +41,23 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
             if (product == null)
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
-                response.Status = ResponseStatusCode.BadRequest.ToInt();
+                response.Status = ResponseStatusCode.NotFound.ToInt();
                 response.ErrorMessage = "Product does not exists";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
             }
-
-            product.Name = payload.Name;
-            product.Price = payload.Price;
-            product.Quantity = payload.Quantity;
+            
+            product.IsDeleted = true;
             
             await _unitOfWork.Product.UpdateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
-        
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occurred!";
+            response.ErrorMessage = $"{functionName} Some error has occured!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

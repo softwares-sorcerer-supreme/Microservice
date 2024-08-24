@@ -13,6 +13,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
 {
     private readonly ILogger<GetProductsHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
+
     public GetProductsHandler(ILogger<GetProductsHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
@@ -33,6 +34,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
         try
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
+                    where !product.IsDeleted
                     select new GetProductData
                     {
                         Id = product.Id,

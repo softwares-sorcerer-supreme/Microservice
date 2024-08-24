@@ -37,7 +37,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
         {
             var queryable = _unitOfWork.Product.GetQueryable();
 
-            var product = await queryable.Where(x => x.Name == payload.Name)
+            var product = await queryable.Where(x => x.Name == payload.Name && !x.IsDeleted)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cancellationToken);
 

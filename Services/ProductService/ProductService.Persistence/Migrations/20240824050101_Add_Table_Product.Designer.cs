@@ -12,7 +12,7 @@ using ProductService.Persistence;
 namespace ProductService.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240824043749_Add_Table_Product")]
+    [Migration("20240824050101_Add_Table_Product")]
     partial class Add_Table_Product
     {
         /// <inheritdoc />
@@ -30,6 +30,9 @@ namespace ProductService.Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
