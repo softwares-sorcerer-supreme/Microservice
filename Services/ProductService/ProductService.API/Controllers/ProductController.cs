@@ -44,7 +44,7 @@ public class ProductController : ControllerBase
         var response = await _mediator.Send(new CreateProductCommand(productRequest), cancellationToken);
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessage, response.ErrorMessageCode);
     }
-
+     
     [HttpPut]
     [Route("{id}")]
     //[ProducesResponseType(typeof(UpdateProductResponse), StatusResponses.Status200OK)]
