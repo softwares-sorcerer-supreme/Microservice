@@ -5,6 +5,10 @@ namespace ProductService.Persistence;
 
 public class ApplicationDbContext : DbContext
 {
+    public ApplicationDbContext()
+    {
+        
+    }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
@@ -12,10 +16,6 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
-    }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
     }
     
     public DbSet<Product> Products { get; set; }
