@@ -1,26 +1,26 @@
 version: '3.4'
 
 services:
-  productservice.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=5000
-      - ASPNETCORE_HTTPS_PORTS=5001
-    ports:
-      - "5000:5000"
-      - "5001:5001"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
-      
   cartservice.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=5002
-      - ASPNETCORE_HTTPS_PORTS=5003
+      - ASPNETCORE_HTTP_PORTS=5001
+      - ASPNETCORE_HTTPS_PORTS=5002
     ports:
+      - "5001:5001"
       - "5002:5002"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+
+  productservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=5003
+      - ASPNETCORE_HTTPS_PORTS=5004
+    ports:
       - "5003:5003"
+      - "5004:5004"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

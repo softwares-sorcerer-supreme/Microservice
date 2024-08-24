@@ -1,17 +1,17 @@
 version: '3.4'
 
 services:
+  cartservice.api:
+    image: ${DOCKER_REGISTRY-}cartserviceapi
+    build:
+      context: .
+      dockerfile: Services/CartService/CartService.API/Dockerfile
+
   productservice.api:
     image: ${DOCKER_REGISTRY-}productserviceapi
     build:
       context: .
       dockerfile: Services/ProductService/ProductService.API/Dockerfile
-
-  cartservice.api:
-    image: cartservice.api
-    build:
-      context: .
-      dockerfile: Services/CartService/CartService.API/Dockerfile
 
   productservice.db:
     image: postgres
@@ -22,5 +22,3 @@ services:
 volumes:
   postgres_productservice_data:
   postgres_cartservice_data:
-      
-

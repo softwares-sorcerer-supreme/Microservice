@@ -6,6 +6,9 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<InvariantGlobalization>true</InvariantGlobalization>
 		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+		<UserSecretsId>698fe6df-aab7-4ce2-bbf9-87dc911e71d1</UserSecretsId>
+		<DockerfileContext>..\..\..</DockerfileContext>
+		<DockerComposeProjectPath>..\..\..\docker-compose.dcproj</DockerComposeProjectPath>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,12 +27,6 @@
 	  <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
 	  <ProjectReference Include="..\CartService.Infrastructure\CartService.Infrastructure.csproj" />
 	  <ProjectReference Include="..\CartService.Persistence\CartService.Persistence.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Content Include="..\..\..\.dockerignore">
-	    <Link>.dockerignore</Link>
-	  </Content>
 	</ItemGroup>
 
 </Project>
