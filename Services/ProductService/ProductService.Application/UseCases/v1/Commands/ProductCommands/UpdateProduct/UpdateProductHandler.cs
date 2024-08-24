@@ -26,6 +26,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
     {
         const string functionName = $"{nameof(CreateProductHandler)} Handler => ";
         var payload = request.Payload;
+        var id = request.Id;
         var response = new UpdateProductResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
@@ -37,7 +38,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
         {
             var queryable = _unitOfWork.Product.GetQueryable();
 
-            var product = await queryable.Where(x => x.Id == payload.Id)
+            var product = await queryable.Where(x => x.Id == id)
                 .FirstOrDefaultAsync(cancellationToken);
 
             if (product == null)
