@@ -2,6 +2,7 @@ using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Application.Models.Request.Products;
+using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
@@ -47,7 +48,7 @@ public class ProductController : ControllerBase
      
     [HttpPut]
     [Route("{id}")]
-    //[ProducesResponseType(typeof(UpdateProductResponse), StatusResponses.Status200OK)]
+    // [ProducesResponseType(StatusCode = StatusCodes.Status200OK, Type = typeof(UpdateProductResponse))]
     public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] UpdateProductRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateProductCommand(id, request), cancellationToken);

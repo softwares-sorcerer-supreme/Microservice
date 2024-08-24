@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Shared.Handler;
 using Shared.Validation;
 
-namespace ProductService.Infrastructure.Middleware;
+namespace CartService.Infrastructure.Middleware;
 
 public class ExceptionHandleMiddleware
 {

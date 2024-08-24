@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Shared.Validation;
 
-namespace ProductService.Application.Handler
+namespace Shared.Handler
 {
     public class ErrorHandler
     {
