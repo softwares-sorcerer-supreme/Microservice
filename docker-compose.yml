@@ -1,0 +1,16 @@
+﻿services:
+  productservice.api:
+    image: productservice.api
+    build:
+      context: .
+      dockerfile: Services/ProductService/ProductService.API/Dockerfile
+
+  productservice.db:
+    image: postgres
+    
+  cartservice.db:
+    image: postgres
+    
+volumes:
+    postgres_productservice_data:
+    postgres_cartservice_data:

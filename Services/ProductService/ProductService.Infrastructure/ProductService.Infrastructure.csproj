@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
+		<ProjectReference Include="..\..\BuildingBlocks\Shared\Shared.csproj" />
+		<ProjectReference Include="..\ProductService.Application\ProductService.Application.csproj" />
+		<ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj" />
+	</ItemGroup>
+
+	
+
+</Project>

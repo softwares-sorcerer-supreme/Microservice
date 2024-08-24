@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  productservice.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    ports:
+      - "5001"
+
+  productservice.db:
+    container_name: productservice_db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=productdb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_productservice_data:/var/lib/postgresql/data2/
+
+  cartservice.db:
+    container_name: cartservice_db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=cartdb
+    restart: always
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_cartservice_data:/var/lib/postgresql/data2/
+
