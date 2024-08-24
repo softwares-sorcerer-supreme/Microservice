@@ -1,17 +1,16 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Categories;
+using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
-using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
-using ReviewVerse.Shared.CommonExtensions;
+using Shared.CommonExtension;
 using Shared.Models.Response;
 
-namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateCategory;
+namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 
-public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, UpdateCategoryResponse>
+public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, UpdateProductResponse>
 {
     private readonly ILogger<UpdateProductHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
@@ -24,11 +23,11 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UpdateCategoryResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(CreateProductHandler)} Handler => ";
         var payload = request.Payload;
-        var response = new UpdateCategoryResponse
+        var response = new UpdateProductResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
         };

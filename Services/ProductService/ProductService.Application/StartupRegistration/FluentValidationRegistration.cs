@@ -1,8 +1,8 @@
-﻿using FluentValidation;
+﻿using System.Reflection;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
-namespace ReviewVerse.Application.StartupRegistration;
+namespace ProductService.Application.StartupRegistration;
 
 public static class FluentValidationRegistration
 {

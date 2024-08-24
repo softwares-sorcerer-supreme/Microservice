@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Categories;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
-using ReviewVerse.Shared.CommonExtensions;
+using Shared.CommonExtension;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;

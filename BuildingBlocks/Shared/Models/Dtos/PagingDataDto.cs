@@ -1,4 +1,4 @@
-﻿namespace ReviewVerse.Shared.Models.Dtos;
+﻿namespace Shared.Models.Dtos;
 
 public class PagingDataDto<T>
 {

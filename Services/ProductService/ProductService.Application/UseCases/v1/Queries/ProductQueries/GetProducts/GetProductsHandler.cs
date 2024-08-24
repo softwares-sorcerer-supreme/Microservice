@@ -1,10 +1,9 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProductService.Application.Models.Response.Categories;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
-using ReviewVerse.Shared.CommonExtensions;
+using Shared.CommonExtension;
 using Shared.Extensions;
 using Shared.Models.Response;
 

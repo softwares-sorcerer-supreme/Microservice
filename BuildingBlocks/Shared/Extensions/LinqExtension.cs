@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ReviewVerse.Shared.Models.Dtos;
+using Shared.Models.Dtos;
 
 namespace Shared.Extensions;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
-using ReviewVerse.Shared.CommonExtensions;
+using Shared.CommonExtension;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;

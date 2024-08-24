@@ -1,4 +1,4 @@
-namespace ReviewVerse.Shared.CommonExtensions;
+namespace Shared.CommonExtension;
 
 public static class EnumExtensions
 {

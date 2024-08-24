@@ -1,4 +1,4 @@
-﻿using ReviewVerse.Shared.Models.Dtos;
+﻿using Shared.Models.Dtos;
 using Shared.Models.Response;
 
 namespace ProductService.Application.Models.Response.Products;

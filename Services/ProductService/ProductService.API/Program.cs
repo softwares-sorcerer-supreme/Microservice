@@ -2,7 +2,6 @@ using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
 using ProductService.Infrastructure.Middleware;
 using ProductService.Persistence.StartupRegistration;
-using ReviewVerse.Application.StartupRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
 
