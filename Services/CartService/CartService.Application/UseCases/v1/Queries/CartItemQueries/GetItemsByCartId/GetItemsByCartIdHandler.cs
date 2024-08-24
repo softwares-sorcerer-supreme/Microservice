@@ -1,6 +1,7 @@
 ﻿using CartService.Application.Models.Response.CartItems;
 using CartService.Domain.Abstraction;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Models.Response;
@@ -31,6 +32,27 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
 
         try
         {
+            var cartQueryable = _unitOfWork.Cart.GetQueryable();
+            var cartItemsQueryable = _unitOfWork.CartItem.GetQueryable();
+
+            var cart = await cartQueryable.Where(c => c.Id == cartId).FirstOrDefaultAsync(cancellationToken);
+            if (cart != null)
+            {
+                _logger.LogWarning($"{functionName} Cart does not exists");
+                response.Status = ResponseStatusCode.NotFound.ToInt();
+                response.ErrorMessage = "Cart does not exists";
+                //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
+
+                return response;
+            }
+
+            var cartItems = await cartItemsQueryable.Where(ci => ci.CartId == cartId)
+                .ToListAsync(cancellationToken);
+
+            if (cartItems.Count > 0)
+            {
+                
+            }
             
             return response;
         }

@@ -1,4 +1,5 @@
 using CartService.Application.Models.Response.CartItems;
+using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 using CartService.Domain.Abstraction;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -8,7 +9,7 @@ using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.DeleteItemToCart;
 
-public class DeleteItemToCartHandler : IRequestHandler<DeleteItemToCartCommand, RemoveCartItemResponse>
+public class DeleteItemToCartHandler : IRequestHandler<RemoveItemFromCartCommand, RemoveItemFromCartResponse>
 {
     private readonly ILogger<DeleteItemToCartHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
@@ -19,11 +20,11 @@ public class DeleteItemToCartHandler : IRequestHandler<DeleteItemToCartCommand, 
         _unitOfWork = unitOfWork;
     }
     
-    public async Task<RemoveCartItemResponse> Handle(DeleteItemToCartCommand request, CancellationToken cancellationToken)
+    public async Task<RemoveItemFromCartResponse> Handle(RemoveItemFromCartCommand request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(DeleteItemToCartHandler)} => ";
         var id = request.Id;
-        var response = new RemoveCartItemResponse
+        var response = new RemoveItemFromCartResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
         };

@@ -1,6 +1,6 @@
 ﻿namespace CartService.Application.Models.Request.CartItems;
 
-public class CreateCartItemRequest
+public class AddItemToCartRequest
 {
     public Guid ProductId { get; set; }
     public int Quantity { get; set; }
