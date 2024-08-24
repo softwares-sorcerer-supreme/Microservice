@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProductService.Application.Models.Response.Categories;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Domain.Abstraction;

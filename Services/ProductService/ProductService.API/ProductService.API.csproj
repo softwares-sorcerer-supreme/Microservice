@@ -19,6 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
+    <ProjectReference Include="..\ProductService.Application\ProductService.Application.csproj" />
+    <ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj" />
     <ProjectReference Include="..\ProductService.Infrastructure\ProductService.Infrastructure.csproj" />
     <ProjectReference Include="..\ProductService.Persistence\ProductService.Persistence.csproj" />
   </ItemGroup>
