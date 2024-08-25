@@ -34,8 +34,7 @@ public class CartController : ControllerBase
     [Route("{id}/products")]
     public async Task<IActionResult> AddItemToCart(Guid id, [FromBody] AddItemToCartRequest request,CancellationToken cancellationToken)
     {
-        request.CartId = id;
-        var response = await _mediator.Send(new AddItemToCartCommand(request), cancellationToken);
+        var response = await _mediator.Send(new AddItemToCartCommand(id, request), cancellationToken);
         return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessage, response.ErrorMessageCode);
     }
 

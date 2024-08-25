@@ -1,6 +1,12 @@
 version: '3.4'
 
 services:
+  ocelotapigateway:
+    image: ${DOCKER_REGISTRY-}ocelotapigateway
+    build:
+      context: .
+      dockerfile: Services/ApiGateway/OcelotApiGateway/Dockerfile
+
   cartservice.api:
     image: ${DOCKER_REGISTRY-}cartserviceapi
     build:

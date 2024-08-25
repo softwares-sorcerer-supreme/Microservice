@@ -6,9 +6,11 @@ namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemT
 
 public class AddItemToCartCommand : IRequest<AddItemToCartResponse>
 {
+    public Guid CartId { get; set; }
     public AddItemToCartRequest Payload { get; set; }
-    public AddItemToCartCommand(AddItemToCartRequest payload)
+    public AddItemToCartCommand(Guid cartId, AddItemToCartRequest payload)
     {
+        CartId = cartId;
         Payload = payload;
     }
 }

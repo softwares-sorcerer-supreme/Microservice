@@ -34,11 +34,12 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
         var response = new AddItemToCartResponse { Status = ResponseStatusCode.OK.ToInt() };
         _logger.LogInformation($"{functionName}");
         var payload = request.Payload;
+        var cartId = request.CartId;
         var isUpdatedQuantity = false;
         try
         {
             var cart = await _unitOfWork.Cart.GetQueryable()
-                .FirstOrDefaultAsync(x => x.Id == payload.CartId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == cartId, cancellationToken);
 
             if (cart == null)
             {
@@ -47,7 +48,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
             }
 
             var cartItem = await _unitOfWork.CartItem.GetQueryable()
-                .FirstOrDefaultAsync(x => x.ProductId == payload.ProductId && x.CartId == payload.CartId,
+                .FirstOrDefaultAsync(x => x.ProductId == payload.ProductId && x.CartId == cartId,
                     cancellationToken);
 
             var productResponse =
@@ -72,7 +73,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
             {
                 cartItem = new CartItem
                 {
-                    CartId = payload.CartId,
+                    CartId = cartId,
                     ProductId = payload.ProductId,
                     Quantity = payload.Quantity
                 };

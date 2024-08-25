@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "productservice.api": "StartDebugging",
-        "cartservice.api": "StartDebugging"
+        "cartservice.api": "StartDebugging",
+        "ocelotapigateway": "StartDebugging"
       }
     }
   }
