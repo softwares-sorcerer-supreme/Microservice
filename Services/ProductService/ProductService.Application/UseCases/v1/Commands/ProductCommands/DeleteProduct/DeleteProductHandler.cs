@@ -22,7 +22,7 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
     
     public async Task<DeleteProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
-        const string functionName = $"{nameof(DeleteProductHandler)} => ";
+        const string functionName = $"{nameof(DeleteProductHandler)} =>";
         var id = request.Id;
         var response = new DeleteProductResponse
         {

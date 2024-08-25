@@ -1,4 +1,5 @@
 ﻿using CartService.Application.Models.Response.CartItems;
+using CartService.Application.Services.GrpcService;
 using CartService.Domain.Abstraction;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,14 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
 {
     private readonly ILogger<GetItemsByCartIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly Services.GrpcService.ProductService _productService;
+    private readonly IProductService _productService;
 
-    public GetItemsByCartIdHandler(ILogger<GetItemsByCartIdHandler> logger, IUnitOfWork unitOfWork, Services.GrpcService.ProductService productService)
+    public GetItemsByCartIdHandler
+    (
+        ILogger<GetItemsByCartIdHandler> logger,
+        IUnitOfWork unitOfWork,
+        IProductService productService
+    )
     {
         _logger = logger;
         _unitOfWork = unitOfWork;

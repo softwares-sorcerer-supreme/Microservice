@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="5.0.0-preview0011" />
+    <PackageReference Include="FluentAssertions" Version="7.0.0-alpha.4" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
+    <PackageReference Include="MockQueryable.Moq" Version="7.0.2" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="coverlet.collector" Version="6.0.0" />
+    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.0.0-pre.24">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\BuildingBlocks\Shared\Shared.csproj" />
+    <ProjectReference Include="..\..\Services\ProductService\ProductService.API\ProductService.API.csproj" />
+    <ProjectReference Include="..\..\Services\ProductService\ProductService.Application\ProductService.Application.csproj" />
+    <ProjectReference Include="..\..\Services\ProductService\ProductService.Domain\ProductService.Domain.csproj" />
+    <ProjectReference Include="..\..\Services\ProductService\ProductService.Infrastructure\ProductService.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Services\ProductService\ProductService.Persistence\ProductService.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

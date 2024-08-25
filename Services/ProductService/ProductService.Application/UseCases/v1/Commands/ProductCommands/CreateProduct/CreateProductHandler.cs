@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
@@ -14,12 +13,10 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
 {
     private readonly ILogger<CreateProductHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly IMapper _mapper;
-    public CreateProductHandler(ILogger<CreateProductHandler> logger, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateProductHandler(ILogger<CreateProductHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
-        _mapper = mapper;
     }
 
     public async Task<CreateProductResponse> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -50,8 +47,15 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
 
                 return response;
             }
+
+            var productEntity = new Product 
+            {
+                IsDeleted = false,
+                Name = payload.Name,
+                Price = payload.Price,
+                Quantity = payload.Quantity,
+            };
             
-            var productEntity = _mapper.Map<Product>(payload);
             await _unitOfWork.Product.AddAsync(productEntity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
@@ -59,7 +63,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"Some error has occured!";
+            response.ErrorMessage = $"Some error has occurred!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

@@ -24,7 +24,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
 
     public async Task<UpdateProductResponse> Handle(UpdateProductCommand request, CancellationToken cancellationToken)
     {
-        const string functionName = $"{nameof(CreateProductHandler)} Handler => ";
+        const string functionName = $"{nameof(CreateProductHandler)} Handler =>";
         var payload = request.Payload;
         var id = request.Id;
         var response = new UpdateProductResponse

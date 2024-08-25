@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProductService.Application.Grpc.Protos;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
@@ -12,21 +11,24 @@ namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.Update
 
 public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantityCommand, UpdateProductQuantityResponse>
 {
-    private readonly ILogger<UpdateProductHandler> _logger;
+    private readonly ILogger<UpdateProductQuantityHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
 
-    public UpdateProductQuantityHandler(
-        ILogger<UpdateProductHandler> logger,
-        IUnitOfWork unitOfWork)
+    public UpdateProductQuantityHandler
+    (
+        ILogger<UpdateProductQuantityHandler> logger,
+        IUnitOfWork unitOfWork
+    )
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<UpdateProductQuantityResponse> Handle(UpdateProductQuantityCommand request, CancellationToken cancellationToken)
+    public async Task<UpdateProductQuantityResponse> Handle(UpdateProductQuantityCommand request,
+        CancellationToken cancellationToken)
     {
         var payload = request.Payload;
-        var functionName = $"{nameof(UpdateProductQuantityHandler)} => ProductId = ${payload.Id} =>";
+        var functionName = $"{nameof(UpdateProductQuantityHandler)} => ProductId = {payload.Id} =>";
         var response = new UpdateProductQuantityResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
@@ -36,7 +38,7 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
 
         try
         {
-            var productId = new Guid(payload.Id);
+            var productId = payload.Id;
             var queryable = _unitOfWork.Product.GetQueryable();
 
             var product = await queryable.Where(x => x.Id == productId && !x.IsDeleted)
@@ -51,8 +53,8 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
 
                 return response;
             }
-            
-            if(product.Quantity - payload.Quantity < 0)
+
+            if (product.Quantity - payload.Quantity < 0)
             {
                 _logger.LogWarning($"{functionName} Product quantity is not enough");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
@@ -61,7 +63,7 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
 
                 return response;
             }
-            
+
             product.Quantity -= payload.Quantity;
             await _unitOfWork.Product.UpdateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
@@ -74,7 +76,7 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
                 Price = product.Price
             };
         }
-        
+
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");

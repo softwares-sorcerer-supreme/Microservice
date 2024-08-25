@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using ProductService.Application.Grpc.Protos;
+using ProductService.Application.Models.Request.Products;
 using ProductService.Application.Models.Response.Products;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProductQuantity;

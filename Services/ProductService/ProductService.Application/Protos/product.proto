@@ -12,6 +12,7 @@ message UpdateProductQuantityRequest {
   string id = 1;
   int32 quantity = 2;
 }
+
 message GetProductsByIdsRequest {
   repeated string productIds = 1;
 }

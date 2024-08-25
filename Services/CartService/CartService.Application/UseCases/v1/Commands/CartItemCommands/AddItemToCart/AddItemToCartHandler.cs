@@ -1,39 +1,44 @@
 ﻿using CartService.Application.Models.Response.CartItems;
+using CartService.Application.Services.GrpcService;
 using CartService.Domain.Abstraction;
 using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
 using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 
-public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, CreateCartItemResponse>
+public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddItemToCartResponse>
 {
     private readonly ILogger<AddItemToCartHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly Services.GrpcService.ProductService _productService;
+    private readonly IProductService _productService;
 
-    public AddItemToCartHandler(ILogger<AddItemToCartHandler> logger, IUnitOfWork unitOfWork,
-        Services.GrpcService.ProductService productService)
+    public AddItemToCartHandler
+    (
+        ILogger<AddItemToCartHandler> logger,
+        IUnitOfWork unitOfWork,
+        IProductService productService
+    )
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _productService = productService;
     }
 
-    public async Task<CreateCartItemResponse> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
+    public async Task<AddItemToCartResponse> Handle(AddItemToCartCommand request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(AddItemToCartHandler)} => ";
-        var response = new CreateCartItemResponse { Status = ResponseStatusCode.OK.ToInt() };
+        var response = new AddItemToCartResponse { Status = ResponseStatusCode.OK.ToInt() };
         _logger.LogInformation($"{functionName}");
-
+        var payload = request.Payload;
+        var isUpdatedQuantity = false;
         try
         {
             var cart = await _unitOfWork.Cart.GetQueryable()
-                .FirstOrDefaultAsync(x => x.Id == request.CartId, cancellationToken);
+                .FirstOrDefaultAsync(x => x.Id == payload.CartId, cancellationToken);
 
             if (cart == null)
             {
@@ -42,11 +47,11 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, Create
             }
 
             var cartItem = await _unitOfWork.CartItem.GetQueryable()
-                .FirstOrDefaultAsync(x => x.ProductId == request.Payload.ProductId && x.CartId == request.CartId,
+                .FirstOrDefaultAsync(x => x.ProductId == payload.ProductId && x.CartId == payload.CartId,
                     cancellationToken);
 
-            ProductModelResponse productResponse =
-                   await _productService.UpdateProductQuantity(request.Payload.ProductId, request.Payload.Quantity);
+            var productResponse =
+                   await _productService.UpdateProductQuantity(payload.ProductId, payload.Quantity);
 
             if (productResponse.Status != ResponseStatusCode.OK.ToInt())
             {
@@ -54,21 +59,22 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, Create
                 return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessage);
             }
 
+            isUpdatedQuantity = true;
             var productPrice = decimal.Parse(productResponse.Product.Price);
-            cart.TotalPrice += request.Payload.Quantity * productPrice;
+            cart.TotalPrice += payload.Quantity * productPrice;
 
             if (cartItem != null)
             {
-                cartItem.Quantity += request.Payload.Quantity;
+                cartItem.Quantity += payload.Quantity;
                 await _unitOfWork.CartItem.UpdateAsync(cartItem, cancellationToken);
             }
             else
             {
                 cartItem = new CartItem
                 {
-                    CartId = request.CartId,
-                    ProductId = request.Payload.ProductId,
-                    Quantity = request.Payload.Quantity
+                    CartId = payload.CartId,
+                    ProductId = payload.ProductId,
+                    Quantity = payload.Quantity
                 };
                 await _unitOfWork.CartItem.AddAsync(cartItem, cancellationToken);
             }
@@ -78,15 +84,21 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, Create
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Error occurred => {ex.Message}");
+            
+            // Rollback the product quantity
+            if (isUpdatedQuantity)
+            {
+                await _productService.UpdateProductQuantity(payload.ProductId, -payload.Quantity);
+            }
             return CreateErrorResponse(ResponseStatusCode.InternalServerError, $"An error has occurred");
         }
 
         return response;
     }
 
-    private CreateCartItemResponse CreateErrorResponse(ResponseStatusCode statusCode, string errorMessage)
+    private AddItemToCartResponse CreateErrorResponse(ResponseStatusCode statusCode, string errorMessage)
     {
-        return new CreateCartItemResponse
+        return new AddItemToCartResponse
         {
             Status = statusCode.ToInt(),
             ErrorMessage = errorMessage

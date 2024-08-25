@@ -5,7 +5,7 @@ using Shared.Models.Response;
 
 namespace CartService.Application.Services.GrpcService;
 
-public class ProductService
+public class ProductService : IProductService
 {
     private readonly ProductProtoService.ProductProtoServiceClient _productProtoServiceClient;
     private readonly ILogger<ProductService> _logger;
