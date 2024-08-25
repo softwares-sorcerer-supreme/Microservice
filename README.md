@@ -1,3 +1,4 @@
+
 # VNG Assignment
 
 ## Exercise 2 - Microservice
@@ -6,15 +7,26 @@
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
 
+
 ### Components
 
-- **API Gateway**: Ocelot
-- **Database**: Postgres
-- **Communication**: gRPC
-- **Architecture**: Clean Architecture
-- **Design Patterns**: CQRS, Mediator, Dependency Injection (DI)
-- **Unit Testing**: Moq, AutoFixture, xUnit
-- **Local Deployment**: Docker
+- **API Gateway**: Ocelot  
+<img src="https://api.nuget.org/v3-flatcontainer/ocelot/23.3.3/icon" alt="Ocelot API Gateway" width="50"/>
+
+- **Database**: Postgres  
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/640px-Postgresql_elephant.svg.png" alt="Ocelot API Gateway" width="50"/>
+
+- **Communication**: gRPC  
+  <img src="https://blog.kakaocdn.net/dn/bi6vYk/btqDSAPIWKU/AsFL9mx7ttSwBEqLX6Sgo0/img.png" alt="Ocelot API Gateway" width="50"/>
+
+- **Architecture**: Clean Architecture  
+
+- **Design Patterns**: CQRS, Mediator, Dependency Injection (DI)  
+
+- **Unit Testing**: Moq, AutoFixture, xUnit  
+
+- **Local Deployment**: Docker  
+    <img src="https://cloud.z.com/vn/wp-content/uploads/2023/02/image1-15.png" alt="Ocelot API Gateway" width="50"/>
 
 ### Databases
 
