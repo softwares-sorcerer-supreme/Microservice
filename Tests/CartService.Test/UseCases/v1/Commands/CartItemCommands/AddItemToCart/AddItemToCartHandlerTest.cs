@@ -56,12 +56,12 @@ public class AddItemToCartHandlerTest
         var cartId = Guid.NewGuid();
         var payloadRequest = new AddItemToCartRequest
         {
-            CartId = cartId,
             ProductId = Guid.NewGuid(),
             Quantity = 1
         };
         
         var request = _fixture.Build<AddItemToCartCommand>()
+            .With(x => x.CartId, cartId)
             .With(x => x.Payload, payloadRequest)
             .Create();
 
@@ -106,12 +106,12 @@ public class AddItemToCartHandlerTest
         var cartId = Guid.NewGuid();
         var payloadRequest = new AddItemToCartRequest
         {
-            CartId = cartId,
             ProductId = Guid.NewGuid(),
             Quantity = 1
         };
         
         var request = _fixture.Build<AddItemToCartCommand>()
+            .With(x => x.CartId, cartId)
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
@@ -124,7 +124,7 @@ public class AddItemToCartHandlerTest
         };
         var cartItem = new CartItem
         {
-            CartId = request.Payload.CartId,
+            CartId = cartId,
             ProductId = request.Payload.ProductId,
             Quantity = request.Payload.Quantity
         };
