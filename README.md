@@ -9,7 +9,7 @@ This project demonstrates a microservices architecture using .NET technologies. 
 
 I am planning to build architect like this:
 
-<img src="[https://api.nuget.org/v3-flatcontainer/ocelot/23.3.3/icon](https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg)" alt="Ocelot API Gateway" width="500"/>
+<img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Ocelot API Gateway" width="500"/>
 
 ### Components
 
