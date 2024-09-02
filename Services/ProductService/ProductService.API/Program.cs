@@ -1,6 +1,7 @@
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
 using ProductService.Infrastructure.Middleware;
+using ProductService.Infrastructure.StartupRegistration;
 using ProductService.Persistence.StartupRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,9 +17,11 @@ builder.Services
     .AddDatabaseConfiguration(builder.Configuration)
     .AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies())
     .AddValidators()
-    .AddCustomMediatR()
+    .AddCustomMediator()
     .AddConfigureApiVersioning()
-    .AddGrpcConfiguration();
+    .AddGrpcConfiguration()
+    .AddAuthenticationConfiguration(builder.Configuration)
+    .AddOptionConfiguration(builder.Configuration);
     // .AddConfigureLogging(builder)
 
 var app = builder.Build();
@@ -28,11 +31,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseMiddleware<ExceptionHandleMiddleware>();
 app.UseHttpsRedirection();
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

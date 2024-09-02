@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ProductService.Application.StartupRegistration;
+namespace ProductService.Infrastructure.StartupRegistration;
 
 public static class GrpcRegistration
 {
@@ -13,7 +13,7 @@ public static class GrpcRegistration
     
     public static WebApplication MapGrpcConfiguration(this WebApplication app)
     {
-        app.MapGrpcService<Services.ProductService>();
+        app.MapGrpcService<Application.Services.ProductService>();
         return app;
     }
 }

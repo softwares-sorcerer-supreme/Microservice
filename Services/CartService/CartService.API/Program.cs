@@ -1,5 +1,6 @@
 using CartService.API.StartupRegistration;
 using CartService.Application.StartupRegistration;
+using CartService.Infrastructure.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,9 +15,11 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .AddDatabaseConfiguration(builder.Configuration)
     .AddValidators()
-    .AddCustomMediatR()
+    .AddCustomMediator()
     .AddConfigureApiVersioning()
-    .AddGrpcConfiguration(builder.Configuration);
+    .AddGrpcConfiguration(builder.Configuration)
+    .AddAuthenticationConfiguration(builder.Configuration)
+    .AddOptionConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -25,6 +28,7 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseDeveloperExceptionPage();
 }
 
 app.UseHttpsRedirection();
