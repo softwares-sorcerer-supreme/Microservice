@@ -7,6 +7,9 @@
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
 
+I am planning to build architect like this:
+
+<img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Ocelot API Gateway"/>
 
 ### Components
 
