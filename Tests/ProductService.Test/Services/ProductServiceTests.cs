@@ -8,6 +8,8 @@ using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProd
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -140,7 +142,7 @@ public class ProductServiceTests
         var responseFromMediator = new UpdateProductQuantityResponse
         {
             Status = ResponseStatusCode.BadRequest.ToInt(),
-            ErrorMessage = "Product does not exist"
+            ErrorMessageCode = ResponseErrorMessageCode.ERR_PRODUCT_0001
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<UpdateProductQuantityCommand>(), It.IsAny<CancellationToken>()))
@@ -151,7 +153,7 @@ public class ProductServiceTests
 
         // Assert
         Assert.Equal(ResponseStatusCode.BadRequest.ToInt(), response.Status);
-        Assert.Equal("Product does not exist", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_PRODUCT_0001, response.ErrorMessageCode);
     }
 
     #endregion
@@ -204,7 +206,7 @@ public class ProductServiceTests
         var responseFromMediator = new GetProductByIdResponse
         {
             Status = ResponseStatusCode.BadRequest.ToInt(),
-            ErrorMessage = "Product does not exist"
+            ErrorMessageCode = ResponseErrorMessageCode.ERR_PRODUCT_0001
         };
 
         _mediatorMock.Setup(x => x.Send(It.IsAny<GetProductByIdQuery>(), It.IsAny<CancellationToken>()))
@@ -215,7 +217,7 @@ public class ProductServiceTests
 
         // Assert
         Assert.Equal(ResponseStatusCode.BadRequest.ToInt(), response.Status);
-        Assert.Equal("Product does not exist", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_PRODUCT_0001, response.ErrorMessageCode);
     }
 
     #endregion

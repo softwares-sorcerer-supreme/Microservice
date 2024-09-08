@@ -24,7 +24,11 @@ services:
   
   cartservice.db:
     image: postgres
+    
+  authservice.db:
+    image: postgres
 
 volumes:
   postgres_productservice_data:
   postgres_cartservice_data:
+  postgres_authservice_data:

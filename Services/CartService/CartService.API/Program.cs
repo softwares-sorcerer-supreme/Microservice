@@ -2,6 +2,7 @@ using CartService.API.StartupRegistration;
 using CartService.Application.StartupRegistration;
 using CartService.Infrastructure.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
+using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,8 +32,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseHttpsRedirection();
-
+app.UseMiddleware<ExceptionHandleMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

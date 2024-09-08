@@ -9,6 +9,8 @@ using MockQueryable.EntityFrameworkCore;
 using Moq;
 using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace CartService.Test.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
@@ -50,7 +52,7 @@ public class RemoveItemFromCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Cart does not exist", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_SYS_0002, response.ErrorMessageCode);
     }
 
     [Fact]
@@ -81,7 +83,7 @@ public class RemoveItemFromCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("CartItem does not exist", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_CART_0002, response.ErrorMessageCode);
     }
 
     [Fact]
@@ -110,7 +112,7 @@ public class RemoveItemFromCartHandlerTest
         var productResponse = new ProductModelResponse
         {
             Status = ResponseStatusCode.BadRequest.ToInt(),
-            ErrorMessage = "Update failed"
+            ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0002
         };
 
         _mockUnitOfWork.Setup(uow => uow.Cart.GetQueryable())
@@ -127,7 +129,7 @@ public class RemoveItemFromCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Update failed", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_SYS_0002, response.ErrorMessageCode);
 
         _mockUnitOfWork.Verify(uow => uow.CartItem.RemoveAsync(It.IsAny<CartItem>(), It.IsAny<CancellationToken>()), Times.Never);
         _mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Never);
@@ -176,7 +178,7 @@ public class RemoveItemFromCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-        Assert.Empty(response.ErrorMessage);
+        Assert.Empty(response.ErrorMessageCode);
 
         _mockUnitOfWork.Verify(uow => uow.CartItem.RemoveAsync(It.IsAny<CartItem>(), It.IsAny<CancellationToken>()), Times.Once);
         _mockUnitOfWork.Verify(uow => uow.SaveChangesAsync(It.IsAny<CancellationToken>()), Times.Once);
@@ -219,6 +221,6 @@ public class RemoveItemFromCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.Contains("Some error has occured", response.ErrorMessage);
+        Assert.Contains(ResponseErrorMessageCode.ERR_SYS_0001, response.ErrorMessageCode);
     }
 }

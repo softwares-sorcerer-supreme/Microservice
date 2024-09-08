@@ -13,23 +13,26 @@ public static class AuthenticationRegistration
     {
         var jwtOptions = new JwtOptions();
         configuration.GetSection(JwtOptions.OptionName).Bind(jwtOptions);
-        
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(options =>
         {
+            // it's recommended to check the type header to avoid "JWT confusion" attacks
+            options.TokenValidationParameters.ValidTypes = ["at+jwt"];
+            
+            options.Authority = jwtOptions.Authority; // Set this to your IdentityServer4 URL
+            options.RequireHttpsMetadata = false; // Set to true in production environments
+            options.SaveToken = true;
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateIssuerSigningKey = true,
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ClockSkew = TimeSpan.Zero,
-                ValidIssuer = jwtOptions.Issuer,
-                ValidAudience = jwtOptions.Audience,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key))
+                ValidateAudience = true, // Validate that the token was intended for your API
+                ValidateIssuer = true, // Validate that the token was issued by your IdentityServer4
+                ValidateIssuerSigningKey = true, // Validate the token signature with the signing key
+                RequireExpirationTime = true, // Ensure the token has an expiration
+                ValidateLifetime = true // Ensure the token is still valid
             };
 
             // SignalR

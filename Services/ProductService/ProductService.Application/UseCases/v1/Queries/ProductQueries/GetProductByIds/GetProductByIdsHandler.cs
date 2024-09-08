@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
@@ -50,8 +52,7 @@ public class GetProductByIdsHandler : IRequestHandler<GetProductByIdsQuery, GetP
         {
             _logger.LogError(ex, $"{nameof(GetProductByIdsHandler)} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "Something went wrong";
-            //response.ErrorMessageCode = ""
+            response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
             return response;
         }
     }

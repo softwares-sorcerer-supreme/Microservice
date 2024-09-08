@@ -26,7 +26,7 @@ public class CartController : ControllerBase
     public async Task<IActionResult> GetItemsByCartId(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetItemsByCartIdQuery(id), cancellationToken);
-        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessage, response.ErrorMessageCode,
+        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode,
             response.Data);
     }
 
@@ -35,7 +35,7 @@ public class CartController : ControllerBase
     public async Task<IActionResult> AddItemToCart(Guid id, [FromBody] AddItemToCartRequest request,CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new AddItemToCartCommand(id, request), cancellationToken);
-        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessage, response.ErrorMessageCode);
+        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode);
     }
 
     [HttpDelete]
@@ -48,6 +48,6 @@ public class CartController : ControllerBase
             ProductId = productId
         };
         var response = await _mediator.Send(new RemoveItemFromCartCommand(request), cancellationToken);
-        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessage, response.ErrorMessageCode);
+        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode);
     }
 }

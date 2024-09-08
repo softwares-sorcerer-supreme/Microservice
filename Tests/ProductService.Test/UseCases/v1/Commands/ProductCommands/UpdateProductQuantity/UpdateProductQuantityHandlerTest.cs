@@ -6,6 +6,7 @@ using ProductService.Application.Models.Request.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProductQuantity;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -67,7 +68,7 @@ public async Task Handle_ProductExistsAndQuantitySufficient_ReturnsOkResponse()
 
     // Assert
     Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-    Assert.Empty(response.ErrorMessage);  // Check that there is no error message
+    Assert.Empty(response.ErrorMessageCode);  // Check that there is no error message
     Assert.NotNull(response.Data);
     Assert.Equal(existingProduct.Id, response.Data.Id);
     Assert.Equal(existingProduct.Name, response.Data.Name);
@@ -96,7 +97,7 @@ public async Task Handle_ProductDoesNotExist_ReturnsBadRequest()
 
     // Assert
     Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-    Assert.Equal("Product does not exists", response.ErrorMessage);
+    Assert.Equal("Product does not exists", response.ErrorMessageCode);
 }
 
 [Fact]
@@ -127,7 +128,7 @@ public async Task Handle_InsufficientQuantity_ReturnsBadRequest()
 
     // Assert
     Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-    Assert.Equal("Product quantity is not enough", response.ErrorMessage);
+    Assert.Equal("Product quantity is not enough", response.ErrorMessageCode);
 }
 
 [Fact]
@@ -145,7 +146,7 @@ public async Task Handle_ExceptionThrown_ReturnsInternalServerError()
 
     // Assert
     Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-    Assert.Equal("UpdateProductQuantityHandler => ProductId = " + updateRequest.Id + " => Some error has occurred!", response.ErrorMessage);
+    Assert.Equal("UpdateProductQuantityHandler => ProductId = " + updateRequest.Id + " => Some error has occurred!", response.ErrorMessageCode);
 }
 
 }

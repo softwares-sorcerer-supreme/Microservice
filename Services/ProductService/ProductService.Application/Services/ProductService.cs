@@ -8,6 +8,8 @@ using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProd
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.Services;
@@ -35,15 +37,12 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         try
         {
             var productIds = request.ProductIds.Select(id => new Guid(id)).ToList();
-            var mediatorResponse =
-                await _mediator.Send(new GetProductByIdsQuery(productIds), context.CancellationToken);
+            var mediatorResponse = await _mediator.Send(new GetProductByIdsQuery(productIds), context.CancellationToken);
 
             if (mediatorResponse.Status != ResponseStatusCode.OK.ToInt())
             {
-                _logger.LogWarning(
-                    $"{functionName} Failed to get products. Status: {mediatorResponse.Status}, Error: {mediatorResponse.ErrorMessage}");
+                _logger.LogWarning($"{functionName} Failed to get products.");
                 response.Status = mediatorResponse.Status;
-                response.ErrorMessage = mediatorResponse.ErrorMessage;
                 response.ErrorMessageCode = mediatorResponse.ErrorMessageCode;
                 return response;
             }
@@ -56,7 +55,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         {
             _logger.LogError(ex, $"{functionName} Exception occurred: {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "An error occurred while processing the request.";
+            // "An error occurred while processing the request.";
         }
 
         return response;
@@ -83,13 +82,12 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
                 context.CancellationToken);
 
             response.Status = mediatorResponse.Status;
-            response.ErrorMessage = mediatorResponse.ErrorMessage;
+            // mediatorResponse.ErrorMessage;
             response.ErrorMessageCode = mediatorResponse.ErrorMessageCode;
 
             if (mediatorResponse.Status != ResponseStatusCode.OK.ToInt())
             {
-                _logger.LogWarning(
-                    $"{functionName} Failed to update product quantity. Status: {mediatorResponse.Status}, Error: {mediatorResponse.ErrorMessage}");
+                _logger.LogWarning($"{functionName} Failed to update product quantity.");
                 return response;
             }
 
@@ -99,7 +97,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         {
             _logger.LogError(ex, $"{functionName} Exception occurred: {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"An error occurred while processing the request.";
+            // $"An error occurred while processing the request.";
         }
 
         return response;
@@ -119,13 +117,11 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
             var mediatorResponse = await _mediator.Send(new GetProductByIdQuery(productId), context.CancellationToken);
 
             response.Status = mediatorResponse.Status;
-            response.ErrorMessage = mediatorResponse.ErrorMessage;
             response.ErrorMessageCode = mediatorResponse.ErrorMessageCode;
 
             if (mediatorResponse.Status != ResponseStatusCode.OK.ToInt())
             {
-                _logger.LogWarning(
-                    $"{functionName} Failed to get product. Status: {mediatorResponse.Status}, Error: {mediatorResponse.ErrorMessage}");
+                _logger.LogWarning($"{functionName} Failed to get product.");
                 return response;
             }
 
@@ -135,7 +131,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
         {
             _logger.LogError(ex, $"{functionName} Exception occurred: {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "An error occurred while processing the request.";
+            response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
         }
 
         return response;

@@ -1,8 +1,8 @@
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
-using ProductService.Infrastructure.Middleware;
 using ProductService.Infrastructure.StartupRegistration;
 using ProductService.Persistence.StartupRegistration;
+using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 

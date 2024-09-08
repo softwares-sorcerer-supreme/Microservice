@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
@@ -47,7 +48,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
-                response.ErrorMessage = "Product does not exists";
+                // "Product does not exists";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
@@ -60,7 +61,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
         {
             _logger.LogError(ex, $"{nameof(GetProductByIdHandler)} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "Something went wrong";
+            // "Something went wrong";
             //response.ErrorMessageCode = ""
             return response;
         }

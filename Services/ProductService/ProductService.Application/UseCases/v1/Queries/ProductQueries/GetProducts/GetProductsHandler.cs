@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Extensions;
 using Shared.Models.Response;
 
@@ -54,7 +55,7 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
         {
             _logger.LogError(ex, $"{nameof(GetProductsHandler)} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = "Something went wrong";
+            // "Something went wrong";
             //response.ErrorMessageCode = ""
             return response;
         }

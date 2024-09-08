@@ -9,6 +9,8 @@ using MockQueryable.EntityFrameworkCore;
 using Moq;
 using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace CartService.Test.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
@@ -46,7 +48,7 @@ public class AddItemToCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Cart does not exist", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_CART_0001, response.ErrorMessageCode);
     }
 
     [Fact]
@@ -71,7 +73,7 @@ public class AddItemToCartHandlerTest
         var productResponse = new ProductModelResponse
         {
             Status = ResponseStatusCode.BadRequest.ToInt(),
-            ErrorMessage = "Update failed"
+            ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0002
         };
 
         // Mock the CartItem repository
@@ -92,7 +94,7 @@ public class AddItemToCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Update failed", response.ErrorMessage);
+        Assert.Equal(ResponseErrorMessageCode.ERR_SYS_0002, response.ErrorMessageCode);
 
         // Verify the interaction with CartItem
         _mockUnitOfWork.Verify(uow => uow.CartItem.UpdateAsync(It.IsAny<CartItem>(), It.IsAny<CancellationToken>()), Times.Never);
@@ -145,6 +147,6 @@ public class AddItemToCartHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-        Assert.Empty(response.ErrorMessage);
+        Assert.Empty(response.ErrorMessageCode);
     }
 }

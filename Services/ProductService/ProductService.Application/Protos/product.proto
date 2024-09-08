@@ -20,8 +20,7 @@ message GetProductsByIdsRequest {
 message GetProductsByIdsResponse {
   repeated ProductModel products = 1;
   int32 status = 2;
-  string errorMessage = 3;
-  string errorMessageCode = 4;
+  string errorMessageCode = 3;
 }
 
 message GetProductsByIdRequest {
@@ -31,8 +30,7 @@ message GetProductsByIdRequest {
 message ProductModelResponse {
   ProductModel product = 1;
   int32 status = 2;
-  string errorMessage = 3;
-  string errorMessageCode = 4;
+  string errorMessageCode = 3;
 }
 
 message ProductModel {
