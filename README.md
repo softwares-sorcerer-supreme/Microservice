@@ -1,8 +1,3 @@
-
-# VNG Assignment
-
-## Exercise 2 - Microservice
-
 ### Overview
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
