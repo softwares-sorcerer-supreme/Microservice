@@ -11,9 +11,7 @@ public static class DatabaseRegistration
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
-        services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(connectionString));
+        services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(connectionString));
 
         return services;
     }

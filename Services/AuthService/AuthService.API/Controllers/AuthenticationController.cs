@@ -37,7 +37,7 @@ public class AuthenticationController : ControllerBase
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
     }
     
-    //
+    
     // [HttpPost]
     // [Route("refresh-token")]
     //

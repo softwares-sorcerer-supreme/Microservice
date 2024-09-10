@@ -167,5 +167,9 @@ public class IdentityService : IIdentityService
 
         return response;
     }
-    
+
+    public Task<string> RefreshTokenAsync(string refreshToken)
+    {
+        throw new NotImplementedException();
+    }
 }
