@@ -19,6 +19,16 @@
           "Url": "https://localhost:5002/swagger/v1/swagger.json"
         }
       ]
+    },
+    {
+      "Key": "Authentication",
+      "Config": [
+        {
+          "Name": "Authentication API",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+        }
+      ]
     }
   ]
 }

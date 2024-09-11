@@ -50,4 +50,11 @@ public class CartController : ControllerBase
         var response = await _mediator.Send(new RemoveItemFromCartCommand(request), cancellationToken);
         return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode);
     }
+    
+    [HttpGet]
+    [Route("health")]
+    public IActionResult HealthCheck()
+    {
+        return Ok();
+    }
 }

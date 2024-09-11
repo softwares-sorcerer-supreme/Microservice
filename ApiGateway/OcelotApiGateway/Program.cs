@@ -14,15 +14,15 @@ builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 builder.Services.AddOcelot(builder.Configuration);
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
-builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-    .AddOcelot(routes, builder.Environment)
-    .AddEnvironmentVariables();
+// builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
+//     .AddOcelot(routes, builder.Environment)
+//     .AddEnvironmentVariables();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Configuration.AddJsonFile("ocelot.json");
+builder.Configuration.AddJsonFile("ocelot.json", optional: true, reloadOnChange: true);
 
 var app = builder.Build();
 
