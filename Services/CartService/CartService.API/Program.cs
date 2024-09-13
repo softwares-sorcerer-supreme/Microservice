@@ -2,6 +2,8 @@ using CartService.API.StartupRegistration;
 using CartService.Application.StartupRegistration;
 using CartService.Infrastructure.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,7 +22,10 @@ builder.Services
     .AddConfigureApiVersioning()
     .AddGrpcConfiguration(builder.Configuration)
     .AddAuthenticationConfiguration(builder.Configuration)
-    .AddOptionConfiguration(builder.Configuration);
+    .AddOptionConfiguration(builder.Configuration)
+    .AddHealthChecks();
+    // .AddNpgSql(pgConnectionString)
+    // .AddRedis(redisConnectionString);
 
 var app = builder.Build();
 
@@ -34,6 +39,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionHandleMiddleware>();
 app.UseAuthorization();
+//HealthCheck Middleware
+
+app.MapHealthChecks("/api/health", new HealthCheckOptions()
+{
+    Predicate = _ => true,
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.MapControllers();
 
