@@ -1,6 +1,7 @@
 using AuthService.Application.StartupRegistration;
 using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
+using Caching.StartupRegistration;
 using Serilog;
 using Shared.Middlewares;
 
@@ -20,8 +21,9 @@ internal static class HostingExtensions
             .AddMediatorConfiguration()
             .AddValidatorConfiguration()
             .AddDIConfiguration()
-            .AddOptionConfiguration(builder.Configuration);
-
+            .AddOptionConfiguration(builder.Configuration)
+            .AddRedisConfiguration();
+        
         return builder.Build();
     }
 

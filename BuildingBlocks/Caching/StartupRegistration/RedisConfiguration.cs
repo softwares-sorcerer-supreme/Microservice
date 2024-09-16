@@ -1,4 +1,5 @@
 using Caching.Options;
+using Caching.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
@@ -8,28 +9,35 @@ namespace Caching.StartupRegistration;
 
 public static class RedisConfiguration
 {
-    public static IServiceCollection AddRedisConfiguration(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddRedisConfiguration(this IServiceCollection services)
     {
         // Register Redis
         var redisOptions = services.GetOptions<RedisOptions>(RedisOptions.OptionName);
-        
+        var redisUrl = $"{redisOptions.Host}:{redisOptions.Port}";
+
         services.AddSingleton<IConnectionMultiplexer>
         (
-            opt=>
-            ConnectionMultiplexer.Connect(redisOptions.Url)
+            opt =>
+            ConnectionMultiplexer.Connect(new ConfigurationOptions
+                {
+                    EndPoints = { redisUrl },
+                    AbortOnConnectFail = false,
+                    Ssl = redisOptions.IsSSL,
+                    Password = redisOptions.Password
+                })
         );
         
         services.AddStackExchangeRedisCache(options =>
         {
-            options.Configuration =;
-            options.ConfigurationOptions = new StackExchange.Redis.ConfigurationOptions()
+            options.Configuration = redisUrl;
+            options.ConfigurationOptions = new ConfigurationOptions()
             {
                 AbortOnConnectFail = true,
-                EndPoints = { redisOptions.Url }
+                EndPoints = { redisUrl }
             };
         });
-        
-        
+
+        services.AddScoped<IRedisService, RedisService>();
         
         return services;
     }
