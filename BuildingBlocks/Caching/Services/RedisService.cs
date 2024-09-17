@@ -549,7 +549,7 @@ public class RedisService : IRedisService
         using var redLockFactory = RedLockFactory.Create(new List<RedLockMultiplexer> { ConnectionMultiplexer as ConnectionMultiplexer });
 
         // the lock is automatically released at the end of the using block
-        using var redLock = await redLockFactory
+        await using var redLock = await redLockFactory
             .CreateLockAsync(resource, expiryTime);
 
         if (redLock.IsAcquired)
