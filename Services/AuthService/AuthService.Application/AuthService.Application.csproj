@@ -18,6 +18,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\..\BuildingBlocks\Caching\Caching.csproj" />
 	  <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
 	</ItemGroup>
 

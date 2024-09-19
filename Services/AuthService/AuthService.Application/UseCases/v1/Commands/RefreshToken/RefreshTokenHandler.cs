@@ -1,24 +1,42 @@
 using AuthService.Application.Abstraction.Interfaces;
+using AuthService.Application.Constants;
 using AuthService.Application.Models.Responses;
+using Caching.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Options;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
+using Shared.HttpContextCustom;
+using RefreshTokenRequest = IdentityModel.Client.RefreshTokenRequest;
 
 namespace AuthService.Application.UseCases.v1.Commands.RefreshToken;
 
 public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenResponse>
 {
     private readonly IIdentityService _identityService;
+    private readonly IRedisService _redisService;
     private readonly ILogger<RefreshTokenHandler> _logger;
-    public RefreshTokenHandler(IIdentityService identityService, ILogger<RefreshTokenHandler> logger)
+    private readonly Options.ClientOptions _clientOptions;
+    private readonly ICustomHttpContextAccessor _httpContextAccessor;
+    
+    public RefreshTokenHandler
+    (
+        IIdentityService identityService,
+        IRedisService redisService,
+        IOptions<Options.ClientOptions> clientOptions,
+        ICustomHttpContextAccessor httpContextAccessor,
+        ILogger<RefreshTokenHandler> logger
+    )
     {
         _identityService = identityService;
+        _redisService = redisService;
+        _clientOptions = clientOptions.Value;
+        _httpContextAccessor = httpContextAccessor;
         _logger = logger;
     }
-    
+
     public async Task<RefreshTokenResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(RefreshTokenHandler)} =>";
@@ -27,25 +45,55 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshT
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
+        
         var payload = request.Payload;
         try
         {
             var refreshToken = payload.RefreshToken;
-            var tokenResponse = await _identityService.RefreshTokenAsync(refreshToken);
-            // if (tokenResponse.HasError)
-            // {
-            //     _logger.LogWarning($"{functionName} Error while refreshing token");
-            //     response.Status = tokenResponse.Status;
-            //     response.ErrorMessageCode = tokenResponse.ErrorMessageCode;
-            //     return response;
-            // }
-            // var data = new RefreshTokenData
-            // {
-            //     AccessToken = tokenResponse.Data.AccessToken,
-            //     RefreshToken = tokenResponse.Data.RefreshToken
-            // };
-            // response.Data = data;
+            var userId = _httpContextAccessor.GetCurrentUserId();
+            var cachedRefreshToken = await _redisService.HashGetAsync<string>(AuthCacheKeysConst.RefreshTokenStoresKey, userId);
+            if (string.IsNullOrEmpty(cachedRefreshToken))
+            {
+                _logger.LogWarning($"{functionName} Refresh token not found in cache");
+                response.Status = ResponseStatusCode.BadRequest.ToInt();
+                response.ErrorMessageCode = ResponseErrorMessageCode.ERR_AUTH_0009;
+                return response;
+            }
             
+            if (refreshToken != cachedRefreshToken)
+            {
+                _logger.LogWarning($"{functionName} Refresh token not match");
+                response.Status = ResponseStatusCode.BadRequest.ToInt();
+                response.ErrorMessageCode = ResponseErrorMessageCode.ERR_AUTH_0010;
+                return response;
+            }
+
+            var refreshTokenRequest = new RefreshTokenRequest
+            {
+                Address = $"https://localhost:5001{IdentityServerEndpointConstant.AuthPath}",
+                ClientId = _clientOptions.UserCredentials.ClientId,
+                ClientSecret = _clientOptions.UserCredentials.ClientSecret,
+                RefreshToken = refreshToken
+            };
+            
+            var tokenResponse = await _identityService.RefreshTokenAsync(refreshTokenRequest);
+            if (!string.IsNullOrEmpty(tokenResponse.Error))
+            {
+                _logger.LogError($"{functionName} Error while refreshing token. Message => {tokenResponse.Error}, Description => {tokenResponse.ErrorDescription}");
+                response.Status = ResponseStatusCode.InternalServerError.ToInt();
+                response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
+                return response;
+            }
+            
+            var data = new RefreshTokenData
+            {
+                AccessToken = tokenResponse.AccessToken,
+                RefreshToken = tokenResponse.RefreshToken,
+                ExpiresIn = tokenResponse.ExpiresIn,
+                TokenType = tokenResponse.TokenType
+            };
+            
+            response.Data = data;
             return response;
         }
         catch (Exception ex)

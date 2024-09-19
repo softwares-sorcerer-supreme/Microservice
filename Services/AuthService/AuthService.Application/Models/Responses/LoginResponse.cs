@@ -13,4 +13,5 @@ public class LoginData
     public string RefreshToken { get; set; } = string.Empty;
     public string TokenType { get; set; } = string.Empty;
     public int ExpiresIn { get; set; }
+    internal string UserId { get; set; } = string.Empty;
 }

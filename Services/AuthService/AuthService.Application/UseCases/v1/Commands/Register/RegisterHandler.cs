@@ -57,6 +57,8 @@ public class RegisterHandler : IRequestHandler<RegisterCommand, RegisterResponse
                 _logger.LogWarning($"{functionName} Error while registering");
                 response.Status = result.Status;
                 response.ErrorMessageCode = result.ErrorMessageCode;
+                
+                
             }
             
             return response;

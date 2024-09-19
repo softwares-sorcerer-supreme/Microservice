@@ -9,5 +9,5 @@ public interface IIdentityService
     Task<TokenResponse> GetTokenFromCredential(PasswordTokenRequest request, CancellationToken cancellationToken);
     Task<SignInServiceResponse> SignInAsync(string email, string password, bool isPersistent, bool lockoutOnFailure);
     Task<RegisterServiceResponse> RegisterAsync(UserDto user, string password);
-    Task<string> RefreshTokenAsync(string refreshToken);
+    Task<TokenResponse> RefreshTokenAsync(RefreshTokenRequest request);
 }

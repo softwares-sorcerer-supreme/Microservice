@@ -26,6 +26,13 @@ public readonly struct ResponseErrorMessageCode
     
     //Role Not Found
     public const string ERR_AUTH_0008 = nameof(ERR_AUTH_0008);
+    
+    //Refresh token not exist
+    public const string ERR_AUTH_0009 = nameof(ERR_AUTH_0009);
+    
+    //Refresh token not match
+    public const string ERR_AUTH_0010 = nameof(ERR_AUTH_0010);
+
 
     
     //Cart

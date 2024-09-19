@@ -2,6 +2,7 @@ using Asp.Versioning;
 using AuthService.Application.Models.Requests;
 using AuthService.Application.Models.Responses;
 using AuthService.Application.UseCases.v1.Commands.Login;
+using AuthService.Application.UseCases.v1.Commands.RefreshToken;
 using AuthService.Application.UseCases.v1.Commands.Register;
 using Caching.Services;
 using MediatR;
@@ -39,15 +40,13 @@ public class AuthenticationController : ControllerBase
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
     }
     
-    
-    // [HttpPost]
-    // [Route("refresh-token")]
-    //
-    // public async Task<IActionResult> RefreshToken(Guid id, CancellationToken cancellationToken)
-    // {
-    //     var response = await _mediator.Send(new GetItemsByCartIdQuery(id), cancellationToken);
-    //     return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
-    // }
+    [HttpPost]
+    [Route("refresh-token")]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new RefreshTokenCommand(request), cancellationToken);
+        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+    }
     
     
     

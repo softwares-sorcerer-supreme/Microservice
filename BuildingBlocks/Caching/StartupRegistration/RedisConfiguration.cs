@@ -18,7 +18,7 @@ public static class RedisConfiguration
         services.AddSingleton<IConnectionMultiplexer>
         (
             opt =>
-            ConnectionMultiplexer.Connect(new ConfigurationOptions
+             ConnectionMultiplexer.Connect(new ConfigurationOptions
                 {
                     EndPoints = { redisUrl },
                     AbortOnConnectFail = false,

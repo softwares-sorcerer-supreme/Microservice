@@ -3,6 +3,7 @@ using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
 using Caching.StartupRegistration;
 using Serilog;
+using Shared.HttpContextCustom;
 using Shared.Middlewares;
 
 namespace AuthService.API;
@@ -22,7 +23,8 @@ internal static class HostingExtensions
             .AddValidatorConfiguration()
             .AddDIConfiguration()
             .AddOptionConfiguration(builder.Configuration)
-            .AddRedisConfiguration();
+            .AddRedisConfiguration()
+            .AddCustomHttpContextAccessor();
         
         return builder.Build();
     }

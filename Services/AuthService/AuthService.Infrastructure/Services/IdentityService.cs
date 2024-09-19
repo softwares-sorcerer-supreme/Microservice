@@ -1,4 +1,3 @@
-
 using System.Text.Json;
 using AuthService.Application.Abstraction.Interfaces;
 using AuthService.Application.Models.Dtos;
@@ -129,6 +128,7 @@ public class IdentityService : IIdentityService
                 _logger.LogError($"{functionName} Error while creating user: {JsonSerializer.Serialize(createUserResult.Errors)}");
                 response.Status = ResponseStatusCode.InternalServerError.ToInt();
                 response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
+                return response;
             }
 
             var roleStr = userDto.Role;
@@ -152,6 +152,7 @@ public class IdentityService : IIdentityService
                 _logger.LogError($"{functionName} Error while adding role to user: {JsonSerializer.Serialize(addRoleResult.Errors)}");
                 response.Status = ResponseStatusCode.InternalServerError.ToInt();
                 response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
+                await _userManager.DeleteAsync(user);
                 return response;
             }
             
@@ -168,8 +169,8 @@ public class IdentityService : IIdentityService
         return response;
     }
 
-    public Task<string> RefreshTokenAsync(string refreshToken)
+    public async Task<TokenResponse> RefreshTokenAsync(RefreshTokenRequest request)
     {
-        throw new NotImplementedException();
+        return await _httpClient.RequestRefreshTokenAsync(request);
     }
 }

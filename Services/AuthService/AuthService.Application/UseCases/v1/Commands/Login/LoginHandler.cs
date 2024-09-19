@@ -86,7 +86,8 @@ public class LoginHandler : IRequestHandler<LoginCommand, LoginResponse>
                 AccessToken = tokenResponse.AccessToken,
                 RefreshToken = tokenResponse.RefreshToken,
                 TokenType = tokenResponse.TokenType,
-                ExpiresIn = tokenResponse.ExpiresIn
+                ExpiresIn = tokenResponse.ExpiresIn,
+                UserId = user.Id
             };
 
             response.Data = responseData;

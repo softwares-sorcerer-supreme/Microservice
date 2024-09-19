@@ -273,10 +273,10 @@ public class RedisService : IRedisService
 
     public async Task<T> HashGetAsync<T>(string key, string hashField)
     {
-        string redisValue = await Database.HashGetAsync(key, hashField.ToLower());
+        var redisValue = await Database.HashGetAsync(key, hashField.ToLower());
 
-        return !string.IsNullOrEmpty(redisValue)
-            ? CacheHelper.Deserialize<T>(redisValue)
+        return redisValue.HasValue
+            ? CacheHelper.Deserialize<T>(redisValue.ToString())
             : default;
     }
 
