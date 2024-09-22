@@ -13,4 +13,5 @@ public class RefreshTokenData
     public string RefreshToken { get; set; }
     public int ExpiresIn { get; set; }
     public string TokenType { get; set; }
+    internal string UserId { get; set; }
 }

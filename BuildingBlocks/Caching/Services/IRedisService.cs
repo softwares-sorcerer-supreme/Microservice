@@ -32,9 +32,9 @@ public interface IRedisService
     Task<T> HashGetAsync<T>(string key, string hashField);
     Task<IEnumerable<T>> HashValuesAsync<T>(string key);
     Task<IEnumerable<T>> HashGetAsync<T>(string key, string[] hashFields);
-    Task<T> HashGetOrSetAsync<T>(string key, string hashField, Func<Task<T>> func);
+    Task<T> HashGetOrSetAsync<T>(string key, string hashField, Func<Task<T>> func, TimeSpan? expiry = null);
     Task HashSetLongAsync(string key, string hashField, long value);
-    Task HashSetAsync(string key, string hashField, object value);
+    Task HashSetAsync(string key, string hashField, object value, TimeSpan? expiry = null);
     Task HashSetAsync<T>(string hashKey, IDictionary<string, T> values, TimeSpan? expiration = null);
     Task<Dictionary<string, T>> HashGetAsyncV2<T>(string key, string[] hashFields);
     Task<double?> SortedSetScoreAsync<T>(string key, T value);

@@ -353,7 +353,7 @@ public class RedisService : IRedisService
         return entries?.Select(x => CacheHelper.Deserialize<T>(x)).AsEnumerable();
     }
 
-    public async Task<T> HashGetOrSetAsync<T>(string key, string hashField, Func<Task<T>> func)
+    public async Task<T> HashGetOrSetAsync<T>(string key, string hashField, Func<Task<T>> func, TimeSpan? expiry)
     {
         string redisValue = await Database.HashGetAsync(key, hashField.ToLower());
 
@@ -366,7 +366,7 @@ public class RedisService : IRedisService
 
         if (value != null)
         {
-            await HashSetAsync(key, hashField.ToLower(), value);
+            await HashSetAsync(key, hashField.ToLower(), value, expiry);
         }
 
         return value;
@@ -406,9 +406,19 @@ public class RedisService : IRedisService
         await Database.HashSetAsync(key, hashField.ToLower(), value);
     }
 
-    public async Task HashSetAsync(string key, string hashField, object value)
+    public async Task HashSetAsync(string key, string hashField, object value, TimeSpan? expiry)
     {
         await Database.HashSetAsync(key, hashField.ToLower(), CacheHelper.Serialize(value));
+
+        if (expiry.HasValue)
+        {
+            await Database.HashFieldExpireAsync
+            (
+                new RedisKey(key),
+                [hashField],
+                expiry.Value
+            );
+        }
     }
 
     public async Task<IEnumerable<string>> HashKeysAsync(string key)

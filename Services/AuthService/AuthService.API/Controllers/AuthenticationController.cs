@@ -13,6 +13,7 @@ using Shared.Models.Response;
 namespace AuthService.API.Controllers;
 
 [ApiController]
+[ApiVersion("1.0")]
 [Route("api/v{api_version:apiVersion}/[controller]")]
 public class AuthenticationController : ControllerBase
 {
@@ -24,7 +25,6 @@ public class AuthenticationController : ControllerBase
     }
     
     [HttpPost]
-    [ApiVersion("2.0")]
     [Route("login")]
     
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
@@ -50,6 +50,7 @@ public class AuthenticationController : ControllerBase
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
     }
     
+    //Test api versioning
     [HttpPost]
     [Authorize]
     [ApiVersion("2.0")]
@@ -59,7 +60,4 @@ public class AuthenticationController : ControllerBase
         var response = await _mediator.Send(new RenewTokenCommand(request), cancellationToken);
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
     }
-    
-    
-    
 }

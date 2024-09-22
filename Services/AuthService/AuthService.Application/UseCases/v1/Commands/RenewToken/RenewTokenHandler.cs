@@ -90,7 +90,8 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
                 AccessToken = tokenResponse.AccessToken,
                 RefreshToken = tokenResponse.RefreshToken,
                 ExpiresIn = tokenResponse.ExpiresIn,
-                TokenType = tokenResponse.TokenType
+                TokenType = tokenResponse.TokenType,
+                UserId = userId
             };
             
             response.Data = data;
