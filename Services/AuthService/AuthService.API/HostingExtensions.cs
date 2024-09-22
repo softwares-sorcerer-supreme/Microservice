@@ -1,7 +1,9 @@
+using AuthService.API.StartupRegistration;
 using AuthService.Application.StartupRegistration;
 using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
 using Caching.StartupRegistration;
+using Microsoft.OpenApi.Models;
 using Serilog;
 using Shared.HttpContextCustom;
 using Shared.Middlewares;
@@ -14,7 +16,7 @@ internal static class HostingExtensions
     {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        
         builder.Services.AddRazorPages();
 
         builder.Services.AddAuthenticationConfiguration(builder.Configuration)
@@ -24,7 +26,9 @@ internal static class HostingExtensions
             .AddDIConfiguration()
             .AddOptionConfiguration(builder.Configuration)
             .AddRedisConfiguration()
-            .AddCustomHttpContextAccessor();
+            .AddCustomHttpContextAccessor()
+            .AddConfigureApiVersioning()
+            .AddCustomSwaggerConfiguration();
         
         return builder.Build();
     }
@@ -36,8 +40,11 @@ internal static class HostingExtensions
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
-            app.UseSwaggerUI();
-            app.UseDeveloperExceptionPage();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authentication - V1");
+                c.SwaggerEndpoint("/swagger/v2/swagger.json", "Authentication - V2");
+            });            app.UseDeveloperExceptionPage();
         }
         
         app.UseMiddleware<ExceptionHandleMiddleware>();

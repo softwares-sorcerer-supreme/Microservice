@@ -49,6 +49,8 @@ public static class AuthenticationRegistration
 
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
+                
+                options.KeyManagement.Enabled = false;
             })
             // .AddInMemoryIdentityResources(Config.IdentityResources) // Use this when use OIDC 
             .AddInMemoryApiScopes(Config.ApiScopes)

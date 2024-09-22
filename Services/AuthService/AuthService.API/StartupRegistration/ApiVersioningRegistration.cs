@@ -1,6 +1,6 @@
 ﻿using Asp.Versioning;
 
-namespace ProductService.API.StartupRegistration;
+namespace AuthService.API.StartupRegistration;
 
 public static class ApiVersioningRegistration
 {

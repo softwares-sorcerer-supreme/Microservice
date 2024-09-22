@@ -11,23 +11,23 @@ using Shared.Enums;
 using Shared.HttpContextCustom;
 using RefreshTokenRequest = IdentityModel.Client.RefreshTokenRequest;
 
-namespace AuthService.Application.UseCases.v1.Commands.RefreshToken;
+namespace AuthService.Application.UseCases.v1.Commands.RenewToken;
 
-public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshTokenResponse>
+public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshTokenResponse>
 {
     private readonly IIdentityService _identityService;
     private readonly IRedisService _redisService;
-    private readonly ILogger<RefreshTokenHandler> _logger;
+    private readonly ILogger<RenewTokenHandler> _logger;
     private readonly Options.ClientOptions _clientOptions;
     private readonly ICustomHttpContextAccessor _httpContextAccessor;
     
-    public RefreshTokenHandler
+    public RenewTokenHandler
     (
         IIdentityService identityService,
         IRedisService redisService,
         IOptions<Options.ClientOptions> clientOptions,
         ICustomHttpContextAccessor httpContextAccessor,
-        ILogger<RefreshTokenHandler> logger
+        ILogger<RenewTokenHandler> logger
     )
     {
         _identityService = identityService;
@@ -37,9 +37,9 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, RefreshT
         _logger = logger;
     }
 
-    public async Task<RefreshTokenResponse> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
+    public async Task<RefreshTokenResponse> Handle(RenewTokenCommand request, CancellationToken cancellationToken)
     {
-        const string functionName = $"{nameof(RefreshTokenHandler)} =>";
+        const string functionName = $"{nameof(RenewTokenHandler)} =>";
         _logger.LogInformation($"{functionName}");
         var response = new RefreshTokenResponse
         {

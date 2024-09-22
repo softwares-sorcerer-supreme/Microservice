@@ -2,18 +2,18 @@ using Asp.Versioning;
 using AuthService.Application.Models.Requests;
 using AuthService.Application.Models.Responses;
 using AuthService.Application.UseCases.v1.Commands.Login;
-using AuthService.Application.UseCases.v1.Commands.RefreshToken;
 using AuthService.Application.UseCases.v1.Commands.Register;
+using AuthService.Application.UseCases.v1.Commands.RenewToken;
 using Caching.Services;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Response;
 
 namespace AuthService.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
-[ApiVersion("1.0")]
+[Route("api/v{api_version:apiVersion}/[controller]")]
 public class AuthenticationController : ControllerBase
 {
     private readonly IMediator _mediator;
@@ -24,6 +24,7 @@ public class AuthenticationController : ControllerBase
     }
     
     [HttpPost]
+    [ApiVersion("2.0")]
     [Route("login")]
     
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
@@ -41,10 +42,21 @@ public class AuthenticationController : ControllerBase
     }
     
     [HttpPost]
-    [Route("refresh-token")]
-    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
+    [Authorize]
+    [Route("renew-token")]
+    public async Task<IActionResult> RenewToken([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
     {
-        var response = await _mediator.Send(new RefreshTokenCommand(request), cancellationToken);
+        var response = await _mediator.Send(new RenewTokenCommand(request), cancellationToken);
+        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+    }
+    
+    [HttpPost]
+    [Authorize]
+    [ApiVersion("2.0")]
+    [Route("renew-token")]
+    public async Task<IActionResult> RenewTokenV2([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new RenewTokenCommand(request), cancellationToken);
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
     }
     

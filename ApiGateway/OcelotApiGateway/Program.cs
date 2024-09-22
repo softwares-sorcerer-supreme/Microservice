@@ -1,3 +1,4 @@
+using ApiGateway.StartupRegistration;
 using MMLib.SwaggerForOcelot.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -23,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Configuration.AddJsonFile("ocelot.json", optional: true, reloadOnChange: true);
+builder.Services.AddAuthenticationConfiguration();
 
 var app = builder.Build();
 
