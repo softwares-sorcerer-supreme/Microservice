@@ -11,7 +11,7 @@ namespace CartService.API.Controllers;
 
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/{api_version:apiVersion}/[controller]")]
+[Route("api/v{api_version:apiVersion}/[controller]")]
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;

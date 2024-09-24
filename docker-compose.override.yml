@@ -75,3 +75,11 @@ services:
       - '6379:6379'
     volumes:
       - redis-data:/data
+        
+  consul:
+    container_name: "consul"
+    restart: always
+    ports:
+      - '8500:8500'
+    volumes:
+      - consul-data:/consul/data

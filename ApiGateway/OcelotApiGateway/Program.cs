@@ -24,7 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Configuration.AddJsonFile("ocelot.json", optional: true, reloadOnChange: true);
-builder.Services.AddAuthenticationConfiguration();
+builder.Services.AddAuthenticationConfiguration(builder.Configuration);
 
 var app = builder.Build();
 
@@ -32,7 +32,7 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerForOcelotUI(options => { options.PathToSwaggerGenerator = "/swagger/docs"; });
+    app.UseSwaggerForOcelotUI();
 }
 
 app.UseHttpsRedirection();
@@ -41,5 +41,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
-await app.UseOcelot();
+app.UseOcelot().Wait();
 await app.RunAsync();

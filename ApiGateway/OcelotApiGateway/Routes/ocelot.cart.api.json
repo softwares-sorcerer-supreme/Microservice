@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/{api_version}/cart/{everything}",
+      "DownstreamPathTemplate": "/api/v{api_version}/cart/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,7 @@
           "Port": 5002
         }
       ],
-      "UpstreamPathTemplate": "/api/{api_version}/cart/{everything}",
+      "UpstreamPathTemplate": "/api/v{api_version}/cart/{everything}",
       "UpstreamHttpMethod": [
         "Get",
         "Post",

@@ -44,7 +44,8 @@ internal static class HostingExtensions
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authentication - V1");
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Authentication - V2");
-            });            app.UseDeveloperExceptionPage();
+            });            
+            app.UseDeveloperExceptionPage();
         }
         
         app.UseMiddleware<ExceptionHandleMiddleware>();

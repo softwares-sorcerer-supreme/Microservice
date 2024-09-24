@@ -5,7 +5,7 @@ namespace ApiGateway.StartupRegistration;
 
 public static class CustomAuthenticationRegistration
 {
-    public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services)
+    public static IServiceCollection AddAuthenticationConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         const string authenticationProviderKey = "IdentityApiKey";
         services.AddAuthentication(options =>
@@ -17,7 +17,7 @@ public static class CustomAuthenticationRegistration
             // it's recommended to check the type header to avoid "JWT confusion" attacks
             options.TokenValidationParameters.ValidTypes = ["at+jwt"];
 
-            options.Authority = "https://localhost:5001"; // Set this to your IdentityServer4 URL
+            options.Authority = configuration.GetValue<string>("AuthServer"); // Set this to your IdentityServer4 URL
             options.RequireHttpsMetadata = false; // Set to true in production environments
             options.SaveToken = true;
             options.TokenValidationParameters = new TokenValidationParameters
