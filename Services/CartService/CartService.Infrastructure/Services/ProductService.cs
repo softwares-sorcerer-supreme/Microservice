@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace CartService.Infrastructure.Services;
 
@@ -107,4 +106,36 @@ public class ProductService : IProductService
 
         return response;
     }
+
+    // Test server streaming
+    public async Task TestServerStreaming()
+    {
+        using var call = _productProtoServiceClient.TestSeverStreaming(new TestSeverStreamingRequest());
+        while (await call.ResponseStream.MoveNext(new CancellationToken()))
+        {
+            var current = call.ResponseStream.Current;
+            _logger.LogInformation($"Server streaming response: {current}");
+            Console.WriteLine("Server streaming response: " + current + ", Time: " + TimeSpan.TicksPerMicrosecond);
+        }
+    }
+    
+    // Test client streaming
+    public async Task TestClientStreaming()
+    {
+        using var call = _productProtoServiceClient.TestClientStreaming();
+        var listId = new List<string> { "1", "2", "3", "4", "5" };
+        foreach (var id in listId)
+        {
+            var request = new TestSeverStreamingRequest
+            {
+                Id = id
+            };
+            await call.RequestStream.WriteAsync(request);
+        }
+        await call.RequestStream.CompleteAsync();
+        var response = await call.ResponseAsync;
+        _logger.LogInformation($"Client streaming response: {response}");
+        Console.WriteLine("Client streaming response: " + response);
+    }
+    
 }

@@ -136,4 +136,36 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
 
         return response;
     }
+    
+    //Test server streaming grpc
+    public override async Task TestSeverStreaming(TestSeverStreamingRequest request,
+        IServerStreamWriter<TestSeverStreamingResponse> responseStream,
+        ServerCallContext context)
+    {
+        var listId = new List<string> { "1", "2", "3", "4", "5" };
+        foreach (var id in listId)
+        {
+            var response = new TestSeverStreamingResponse
+            {
+                Id = id,
+            };
+            await responseStream.WriteAsync(response);
+        }
+    }
+
+    //Test client streaming grpc
+    public override async Task<TestSeverStreamingResponse> TestClientStreaming(
+        IAsyncStreamReader<TestSeverStreamingRequest> requestStream, ServerCallContext context)
+    {
+        while (await requestStream.MoveNext())
+        {
+            var request = requestStream.Current;
+            Console.WriteLine(request.Id);
+        }
+
+        return new TestSeverStreamingResponse
+        {
+            Id = "1"
+        };
+    }
 }

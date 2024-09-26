@@ -1,7 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using ProductService.Application.Grpc.Protos;
-using Shared.CommonExtension;
-using Shared.Models.Response;
+﻿using ProductService.Application.Grpc.Protos;
 
 namespace CartService.Application.Services.GrpcService;
 
