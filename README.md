@@ -1,4 +1,4 @@
-### Overview
+# Overview
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
 
@@ -6,33 +6,96 @@ I am planning to build architect like this:
 
 <img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Ocelot API Gateway"/>
 
-### Components
+# Components:
 
-- **API Gateway**: Ocelot  
-<img src="https://api.nuget.org/v3-flatcontainer/ocelot/23.3.3/icon" alt="Ocelot API Gateway" width="50"/>
+## Structure:
+#### API Gateway:
+- [x] Ocelot
+- [ ] Load Balancing
+- [ ] Rate limiting
+- [ ] Service Discovery (Consul)
 
-- **Database**: Postgres  
-  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Postgresql_elephant.svg/640px-Postgresql_elephant.svg.png" alt="Ocelot API Gateway" width="50"/>
+#### Authentication, Authorization:
+- [x] JWT
 
-- **Communication**: gRPC  
-  <img src="https://blog.kakaocdn.net/dn/bi6vYk/btqDSAPIWKU/AsFL9mx7ttSwBEqLX6Sgo0/img.png" alt="Ocelot API Gateway" width="50"/>
+#### Communication:
+- ##### Synchronous:
+    - [x] gRPC
+    - [ ] HTTP
+- ##### Asynchronous:
+    - [ ] Event Message (RabbitMQ/Kafka)
 
-- **Architecture**: Clean Architecture  
+#### Architecture (each services): 
+- [x] Clean Architecture  
 
-- **Design Patterns**: CQRS, Mediator, Dependency Injection (DI)  
+#### Validations: 
+- [x] FluentValidation
 
-- **Unit Testing**: Moq, AutoFixture, xUnit  
+#### Design Patterns: 
+- [x] CQRS
+- [x] Mediator
+- [x] Dependency Injection (DI)
+- [x] Generic Repository, Unit of Work
+- [x] Options
 
-- **Local Deployment**: Docker  
-    <img src="https://cloud.z.com/vn/wp-content/uploads/2023/02/image1-15.png" alt="Ocelot API Gateway" width="50"/>
+#### Unit Testing: 
+- [x] Moq
+- [x] AutoFixture
+- [x] xUnit
 
-### Databases
+#### Integration Testing: 
+- **Planning ...**
 
-This project utilizes two PostgreSQL databases:
+#### Caching:
+- [x] Redis
 
-1. **CartServiceDB**: Used by the Cart service, running on port `5433`.
-2. **ProductDB**: Used by the Product service, running on port `5432`.
+#### Monitoring:
+- [ ] OpenTelemetry
+- ##### Logging:
+    - [ ] ElasitcSearch, Kibana, Serilog
+    - [ ] Grafana, Loki
+    - [ ] Log collectors (FluentD/(Logstash, FileBeat))
 
+- ##### Tracing:
+    - [ ] Jeager/Zipkin
+
+- ##### Metrics:
+    - [ ] Prometheus (Alert, ...)
+
+#### Local Deployment:
+- [x] Docker
+- [ ] Docker Swarm / k8s
+
+#### Database & ORM:
+- ##### Auth Service:
+    - [x] Postgres (EF Core)
+- ##### Cart Service:
+    - [x] Postgres (EF Core)
+- ##### Product Service:
+    - [x] Postgres (EF Core)
+    - [ ] MongoDB (Dapper)
+
+## Services:
+- [x] AuthService (Identity Server 4)
+- [x] CartService
+- [x] ProductService
+- [ ] NotificationService
+
+## Technique:
+- ##### Distributed Lock:
+    - [x] RedLock (Redis)
+- ##### Distributed transaction:
+    - [ ] 2PC/3PC
+    - **Saga Pattern**:
+        - [ ] Orchestration
+        - [ ] Choreography
+    - [ ] Outbox Pattern
+    - [ ] Inbox Pattern
+- ##### Resilience (Polly):
+    - [ ] Circuit Breaker
+    - [ ] Bulkhead Pattern
+    - [ ] Retry Strategy
+# Usage
 ### Applying Migrations
 
 Before running the project, apply migrations to set up the databases. Use the following commands in the Package Manager Console:
@@ -41,27 +104,3 @@ Before running the project, apply migrations to set up the databases. Use the fo
 update-database -s CartService.API -p CartService.Persistence
 update-database -s ProductService.API -p ProductService.Persistence
 ```
-
-### Running the Project
-
-#### Using IDE (HTTPS)
-
-If you are running the project using an IDE, the services will be available on the following ports:
-
-- **API Gateway**: 5000
-- **Product API**: 5004
-- **Cart API**: 5002
-
-#### Using Docker (HTTP)
-
-When deploying using Docker, the services will run on the following ports:
-
-- **API Gateway**: 5432
-- **Product API**: 5003
-- **Cart API**: 5001
-
-**Important**: When running on Docker, the services are configured to use HTTP only. Ensure to configure the appropriate ports in the Docker configuration to enable communication between services.
-
-**Configuration Note**: The Docker configuration files will need to be updated to point each service to the correct ports.
-
-![Docker Configuration Example](./images/docker-configuration-example.png)
