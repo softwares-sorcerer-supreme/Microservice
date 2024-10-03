@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Models.Response;
 using CartService.Domain.Entities;
+using Polly.Registry;
 using ProductService.Application.Grpc.Protos;
 using Shared.Constants;
 using Shared.Enums;
@@ -18,17 +19,20 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
     private readonly ILogger<GetItemsByCartIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IProductService _productService;
-
+    private readonly ResiliencePipelineProvider<string> _resiliencePipelineProvider;
+    
     public GetItemsByCartIdHandler
     (
         ILogger<GetItemsByCartIdHandler> logger,
         IUnitOfWork unitOfWork,
-        IProductService productService
+        IProductService productService,
+        ResiliencePipelineProvider<string> resiliencePipelineProvider
     )
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
         _productService = productService;
+        _resiliencePipelineProvider = resiliencePipelineProvider;
     }
 
     public async Task<GetItemsByCartIdResponse> Handle(GetItemsByCartIdQuery request, CancellationToken cancellationToken)
@@ -40,6 +44,11 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
             Status = ResponseStatusCode.OK.ToInt()
         };
         var cartId = request.CartId;;
+        var testPipeline = _resiliencePipelineProvider.GetPipeline(ResiliencePipelineConst.HttpRetry);
+        testPipeline.ExecuteAsync(async ct =>
+        {
+            return Task.CompletedTask;
+        });
         
         try
         {
