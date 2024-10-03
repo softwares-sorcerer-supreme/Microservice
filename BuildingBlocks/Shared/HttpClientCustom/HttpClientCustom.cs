@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Polly.Registry;
 
 namespace Shared.HttpClientCustom;
 
@@ -9,7 +10,9 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
     private readonly HttpClient _httpClient;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<HttpClientCustom<T>> _logger;
-
+    private readonly ResiliencePipelineProvider<string> _resiliencePipelineProvider;
+    
+    
     public HttpClientCustom
     (
         HttpClient httpClient,
