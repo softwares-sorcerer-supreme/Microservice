@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Shared.Constants;
+using Shared.HttpClientCustom.Resilience;
 
 namespace Shared.HttpClientCustom;
 
@@ -10,8 +12,8 @@ public static class HttpClientCustomExtensions
 
     public static IServiceCollection AddHttpClientCustom<T>(this IServiceCollection services, T clientConfig) where T : ServiceConfig
     {
-        var clientName = $"{typeof(T).Name}{DateTime.UtcNow.Ticks}" ;
-        var logger =  services.BuildServiceProvider().GetService<ILogger<IHttpClientCustom<T>>>();
+        var clientName = $"{typeof(T).Name}{DateTime.UtcNow.Ticks}";
+        var logger = services.BuildServiceProvider().GetService<ILogger<IHttpClientCustom<T>>>();
 
         services.AddHttpClient<IHttpClientCustom<T>, HttpClientCustom<T>>(clientName, c =>
             {
@@ -19,7 +21,9 @@ public static class HttpClientCustomExtensions
                 c.DefaultRequestHeaders.Add("Accept", "application/json");
                 c.Timeout = TimeSpan.FromMinutes(clientConfig.HttpClientTimeout);
             })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(clientConfig.HttpClientTimeout * 2));
+            .SetHandlerLifetime(TimeSpan.FromMinutes(clientConfig.HttpClientTimeout * 2))
+            .AddResilienceHandler(ResiliencePipelineConst.HttpCircuitBreaker,
+                context => { PollyResilienceStrategy.CircuitBreaker(); });
 
         return services;
     }
