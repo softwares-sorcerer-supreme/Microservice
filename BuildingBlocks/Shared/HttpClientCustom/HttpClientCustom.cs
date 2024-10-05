@@ -12,7 +12,6 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
     private readonly ILogger<HttpClientCustom<T>> _logger;
     private readonly ResiliencePipelineProvider<string> _resiliencePipelineProvider;
     
-    
     public HttpClientCustom
     (
         HttpClient httpClient,

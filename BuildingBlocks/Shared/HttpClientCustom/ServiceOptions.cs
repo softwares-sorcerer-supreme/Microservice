@@ -6,23 +6,27 @@ public class ServiceOptions
     public static readonly string OptionName = "Services";
 }
 
-public class ServiceConfig
+public class ResilienceConfig
 {
     public string ServiceName { get; set; }
     public string Url { get; set; }
     public int HttpClientTimeout { get; set; } = 6;
-    public Retry Retry { get; set; } = new();
-    public CircuitBreaker CircuitBreaker { get; set; }
+    public bool IsEnableRetry { get; set; }
+    public bool IsEnableCircuitBreaker { get; set; }
+    public RetryOptions Retry { get; set; } = new();
+    public CircuitBreakerOptions CircuitBreaker { get; set; } = new();
 }
 
-public class Retry
+public class RetryOptions
 {
-    public int RetryCount { get; set; } = 0;
-    public int SleepDurationInSeconds { get; set; } = 1;
+    public int MaxRetryAttempts { get; set; } = 3;
+    public double DelayDurationInSeconds { get; set; } = 2;
 }
 
-public class CircuitBreaker
+public class CircuitBreakerOptions
 {
-    public int AllowConsecutiveErrors { get; set; }
-    public int DurationOfBreakInSeconds { get; set; }
+    public double FailureRatio { get; set; } = 0.5;
+    public double SamplingDurationInSeconds { get; set; } = 10;
+    public int MinimumThroughput { get; set; } = 10;
+    public double BreakDurationInSeconds { get; set; } = 30;
 }
