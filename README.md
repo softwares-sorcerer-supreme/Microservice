@@ -92,9 +92,9 @@ I am planning to build architect like this:
     - [ ] Outbox Pattern
     - [ ] Inbox Pattern
 - ##### Resilience (Polly):
-    - [ ] Circuit Breaker
+    - [x] Circuit Breaker
     - [ ] Bulkhead Pattern
-    - [ ] Retry Strategy
+    - [x] Timeout/Retry Strategy
 # Usage
 ### Applying Migrations
 
