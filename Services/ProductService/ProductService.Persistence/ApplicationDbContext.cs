@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 using ProductService.Domain.Entities;
 
 namespace ProductService.Persistence;
@@ -7,8 +8,8 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext()
     {
-        
     }
+    
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }
@@ -17,6 +18,7 @@ public class ApplicationDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
-    
+
+    public IDbConnection Connection => Database.GetDbConnection();
     public DbSet<Product> Products { get; set; }
 }

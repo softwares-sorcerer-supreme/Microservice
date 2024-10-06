@@ -9,6 +9,7 @@ using ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProd
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Application.UseCases.v1.Queries.CartQueries.HealthCheckCartService;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
+using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIdDapper;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProducts;
 using Shared.Models.Request;
 using Shared.Models.Response;
@@ -46,7 +47,15 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetProductById(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
-        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+    }
+    
+    [HttpGet]
+    [Route("dapper/{id}")]
+    public async Task<IActionResult> GetProductByIdDapper(Guid id, CancellationToken cancellationToken)
+    {
+        var response = await _mediator.Send(new GetProductByIdDapperQuery(id), cancellationToken);
+        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
     }
     
     [HttpPost]

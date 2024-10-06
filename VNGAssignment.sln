@@ -58,17 +58,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AuthService", "AuthService"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.API", "Services\AuthService\AuthService.API\AuthService.API.csproj", "{627F537D-1A75-4D66-9AAE-D3A55D62BBD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Application", "Services\AuthService\AuthService.Application\AuthService.Application.csproj", "{FA1074E5-E347-40B2-8844-D52089587CF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Application", "Services\AuthService\AuthService.Application\AuthService.Application.csproj", "{FA1074E5-E347-40B2-8844-D52089587CF4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Infrastructure", "Services\AuthService\AuthService.Infrastructure\AuthService.Infrastructure.csproj", "{21876E99-0DD3-4EDC-B7A4-3FEFF06A5D2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Infrastructure", "Services\AuthService\AuthService.Infrastructure\AuthService.Infrastructure.csproj", "{21876E99-0DD3-4EDC-B7A4-3FEFF06A5D2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Persistence", "Services\AuthService\AuthService.Persistence\AuthService.Persistence.csproj", "{C1FBA5D1-6A76-41DB-B1AC-E248FCDEE51E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Persistence", "Services\AuthService\AuthService.Persistence\AuthService.Persistence.csproj", "{C1FBA5D1-6A76-41DB-B1AC-E248FCDEE51E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthService.Domain", "Services\AuthService\AuthService.Domain\AuthService.Domain.csproj", "{669C9042-30FB-4E33-9493-40ED7B239C7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthService.Domain", "Services\AuthService\AuthService.Domain\AuthService.Domain.csproj", "{669C9042-30FB-4E33-9493-40ED7B239C7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "BuildingBlocks\Caching\Caching.csproj", "{F5402B1C-23D9-424D-ABA9-F2118344D39C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Caching", "BuildingBlocks\Caching\Caching.csproj", "{F5402B1C-23D9-424D-ABA9-F2118344D39C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventMessage", "BuildingBlocks\EventMessage\EventMessage.csproj", "{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventMessage", "BuildingBlocks\EventMessage\EventMessage.csproj", "{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
