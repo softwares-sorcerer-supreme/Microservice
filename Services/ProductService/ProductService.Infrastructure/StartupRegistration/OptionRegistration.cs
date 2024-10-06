@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ProductService.Infrastructure.Options;
+using Shared.HttpClientCustom;
 
 namespace ProductService.Infrastructure.StartupRegistration;
 
@@ -10,6 +11,7 @@ public static class OptionRegistration
     {
         services.Configure<GrpcOptions>(configuration.GetSection(GrpcOptions.OptionName));
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.OptionName));
+        services.Configure<ServiceOptions>(configuration.GetSection(ServiceOptions.OptionName));
         
         return services;
     }

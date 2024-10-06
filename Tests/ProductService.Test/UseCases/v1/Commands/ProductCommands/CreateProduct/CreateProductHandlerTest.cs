@@ -6,6 +6,8 @@ using ProductService.Application.Models.Request.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -57,8 +59,8 @@ public class CreateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.NotNull(response.ErrorMessage);
-        Assert.Equal("Product already exists", response.ErrorMessage);
+        Assert.NotNull(response.ErrorMessageCode);
+        Assert.Equal(ResponseErrorMessageCode.ERR_PRODUCT_0003, response.ErrorMessageCode);
     }
 
     [Fact]
@@ -92,7 +94,7 @@ public class CreateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-        Assert.Empty(response.ErrorMessage);
+        Assert.Empty(response.ErrorMessageCode);
     }
 
     [Fact]
@@ -114,8 +116,8 @@ public class CreateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.NotNull(response.ErrorMessage);
-        Assert.Equal("Some error has occurred!", response.ErrorMessage);
+        Assert.NotNull(response.ErrorMessageCode);
+        Assert.Equal(ResponseErrorMessageCode.ERR_SYS_0001, response.ErrorMessageCode);
     }
 
     [Fact]
@@ -146,7 +148,7 @@ public class CreateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.NotNull(response.ErrorMessage);
-        Assert.Equal("Some error has occurred!", response.ErrorMessage);
+        Assert.NotNull(response.ErrorMessageCode);
+        Assert.Equal("Some error has occurred!", response.ErrorMessageCode);
     }
 }

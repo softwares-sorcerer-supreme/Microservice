@@ -13,7 +13,7 @@ public static class GrpcRegistration
         var grpcOptions = new GrpcOptions();
         configuration.GetSection(GrpcOptions.OptionName).Bind(grpcOptions);
 
-        services.AddScoped<IProductService, Application.Services.GrpcService.ProductService>();
+        services.AddScoped<IProductService, Services.ProductService>();
         services.AddGrpcClient<ProductProtoService.ProductProtoServiceClient>(
             o => o.Address = new Uri(grpcOptions.ProductServiceUrl));
 

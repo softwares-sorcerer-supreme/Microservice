@@ -1,8 +1,8 @@
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
-using ProductService.Infrastructure.Middleware;
 using ProductService.Infrastructure.StartupRegistration;
 using ProductService.Persistence.StartupRegistration;
+using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +21,19 @@ builder.Services
     .AddConfigureApiVersioning()
     .AddGrpcConfiguration()
     .AddAuthenticationConfiguration(builder.Configuration)
-    .AddOptionConfiguration(builder.Configuration);
+    .AddOptionConfiguration(builder.Configuration)
+    .AddHttpClientCustom(builder.Configuration)
+    .AddDIConfiguration();
     // .AddConfigureLogging(builder)
+
+    var loggerFactory = LoggerFactory.Create(
+        builder => builder
+            // add console as logging target
+            .AddConsole()
+            // add debug output as logging target
+            .AddDebug()
+            // set minimum level to log
+            .SetMinimumLevel(LogLevel.Debug));
 
 var app = builder.Build();
 

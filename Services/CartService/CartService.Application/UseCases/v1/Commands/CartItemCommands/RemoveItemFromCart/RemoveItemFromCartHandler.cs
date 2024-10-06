@@ -5,6 +5,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
@@ -49,7 +51,7 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
             if (cart == null)
             {
                 _logger.LogWarning($"{functionName} Cart does not exist");
-                return CreateErrorResponse(ResponseStatusCode.BadRequest, "Cart does not exist");
+                return CreateErrorResponse(ResponseStatusCode.BadRequest, ResponseErrorMessageCode.ERR_CART_0001);
             }
 
             var cartItem = await _unitOfWork.CartItem.GetQueryable()
@@ -59,15 +61,15 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
             if (cartItem == null)
             {
                 _logger.LogWarning($"{functionName} CartItem does not exist");
-                return CreateErrorResponse(ResponseStatusCode.BadRequest, "CartItem does not exist");
+                return CreateErrorResponse(ResponseStatusCode.BadRequest, ResponseErrorMessageCode.ERR_CART_0002);
             }
 
             quantity = cartItem.Quantity;
             var productResponse = await _productService.UpdateProductQuantity(cartItem.ProductId, -quantity);
             if (productResponse.Status != ResponseStatusCode.OK.ToInt())
             {
-                _logger.LogWarning($"{functionName} {productResponse.ErrorMessage}");
-                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessage);
+                _logger.LogWarning($"{functionName} Update product error");
+                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessageCode);
             }
             
             isUpdatedQuantity = true;
@@ -81,8 +83,7 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occured!";
-            //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
+            response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
 
             // Rollback the product quantity
             if (isUpdatedQuantity)
@@ -101,7 +102,7 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
         return new RemoveItemFromCartResponse
         {
             Status = statusCode.ToInt(),
-            ErrorMessage = errorMessage
+            ErrorMessageCode = errorMessage
         };
     }
 }

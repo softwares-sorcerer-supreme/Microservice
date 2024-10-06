@@ -6,6 +6,8 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
+using Shared.Constants;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
@@ -38,26 +40,23 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
         var isUpdatedQuantity = false;
         try
         {
-            var cart = await _unitOfWork.Cart.GetQueryable()
-                .FirstOrDefaultAsync(x => x.Id == cartId, cancellationToken);
+            var cart = await _unitOfWork.Cart.GetQueryable().FirstOrDefaultAsync(x => x.Id == cartId, cancellationToken);
 
             if (cart == null)
             {
                 _logger.LogWarning($"{functionName} Cart does not exist");
-                return CreateErrorResponse(ResponseStatusCode.BadRequest, "Cart does not exist");
+                return CreateErrorResponse(ResponseStatusCode.BadRequest, ResponseErrorMessageCode.ERR_CART_0001);
             }
 
             var cartItem = await _unitOfWork.CartItem.GetQueryable()
-                .FirstOrDefaultAsync(x => x.ProductId == payload.ProductId && x.CartId == cartId,
-                    cancellationToken);
+                .FirstOrDefaultAsync(x => x.ProductId == payload.ProductId && x.CartId == cartId, cancellationToken);
 
-            var productResponse =
-                   await _productService.UpdateProductQuantity(payload.ProductId, payload.Quantity);
+            var productResponse = await _productService.UpdateProductQuantity(payload.ProductId, payload.Quantity);
 
             if (productResponse.Status != ResponseStatusCode.OK.ToInt())
             {
-                _logger.LogWarning($"{functionName} {productResponse.ErrorMessage}");
-                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessage);
+                _logger.LogWarning($"{functionName} Update product quantity failed");
+                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessageCode);
             }
 
             isUpdatedQuantity = true;
@@ -84,14 +83,14 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{functionName} Error occurred => {ex.Message}");
+            _logger.LogError(ex, $"{functionName} has error: {ex.Message}");
             
             // Rollback the product quantity
             if (isUpdatedQuantity)
             {
                 await _productService.UpdateProductQuantity(payload.ProductId, -payload.Quantity);
             }
-            return CreateErrorResponse(ResponseStatusCode.InternalServerError, $"An error has occurred");
+            return CreateErrorResponse(ResponseStatusCode.InternalServerError, ResponseErrorMessageCode.ERR_SYS_0001);
         }
 
         return response;
@@ -102,7 +101,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
         return new AddItemToCartResponse
         {
             Status = statusCode.ToInt(),
-            ErrorMessage = errorMessage
+            ErrorMessageCode = errorMessage
         };
     }
 }

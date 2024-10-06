@@ -5,6 +5,7 @@ using Moq;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 
@@ -52,7 +53,7 @@ public class GetProductByIdsHandlerTest
         Assert.NotNull(response.Data);
         Assert.Equal(3, response.Data.Count);
         Assert.All(response.Data, product => Assert.Contains(productIds, id => id == product.Id));
-        Assert.Empty(response.ErrorMessage); // Check that there is no error message
+        Assert.Empty(response.ErrorMessageCode); // Check that there is no error message
     }
 
     [Fact]
@@ -75,7 +76,7 @@ public class GetProductByIdsHandlerTest
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
         Assert.NotNull(response.Data);
         Assert.Empty(response.Data);
-        Assert.Empty(response.ErrorMessage); // Check that there is no error message
+        Assert.Empty(response.ErrorMessageCode); // Check that there is no error message
     }
 
     [Fact]
@@ -94,7 +95,7 @@ public class GetProductByIdsHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.Equal("Something went wrong", response.ErrorMessage);
+        Assert.Equal("Something went wrong", response.ErrorMessageCode);
         Assert.Null(response.Data);
     }
 }

@@ -5,6 +5,7 @@ using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
@@ -42,7 +43,6 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
             {
                 _logger.LogWarning($"{functionName} Product already exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
-                response.ErrorMessage = "Product already exists";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
@@ -63,7 +63,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"Some error has occurred!";
+            // $"Some error has occurred!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

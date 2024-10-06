@@ -12,6 +12,11 @@ public static class ApiVersioningRegistration
             x.AssumeDefaultVersionWhenUnspecified = true;
             x.ReportApiVersions = true;
             x.UnsupportedApiVersionStatusCode = StatusCodes.Status400BadRequest;
+        })
+        .AddApiExplorer(x =>
+        {
+            x.GroupNameFormat = "'v'VVV";
+            x.SubstituteApiVersionInUrl = true;
         });
 
         return services;

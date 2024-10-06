@@ -54,3 +54,32 @@ services:
       - "5433:5432"
     volumes:
       - postgres_cartservice_data:/var/lib/postgresql/data2/
+      
+  authservice.db:
+    container_name: authservice_db
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=authdb
+    restart: always
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_authservice_data:/var/lib/postgresql/data2/
+        
+  redis:
+    container_name: "redis"
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+        
+  consul:
+    container_name: "consul"
+    restart: always
+    ports:
+      - '8500:8500'
+    volumes:
+      - consul-data:/consul/data

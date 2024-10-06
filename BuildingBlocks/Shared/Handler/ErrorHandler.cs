@@ -1,16 +1,13 @@
 ﻿using Newtonsoft.Json;
+using Shared.Models.Response;
 using Shared.Validation;
 
 namespace Shared.Handler
 {
-    public class ErrorHandler
+    public class ErrorHandler : ErrorResponse
     {
-        public int status { get; set; }
-        public string statusText { get; set; }
-        public string errorMessage { get; set; }
-        public string errorMessageCode { get; set; }
-        public List<ValidationError> errors { get; set; }
-        public object data { get; set; }
+        public string ErrorMessage { get; set; }
+        public List<ValidationError> ErrorDetails { get; set; }
 
         public override string ToString()
         {

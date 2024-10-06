@@ -6,6 +6,7 @@ using ProductService.Application.Models.Request.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -65,7 +66,7 @@ public class UpdateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-        Assert.Empty(response.ErrorMessage); // Check that there is no error message
+        Assert.Empty(response.ErrorMessageCode); // Check that there is no error message
     }
 
     [Fact]
@@ -90,7 +91,7 @@ public class UpdateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Product does not exists", response.ErrorMessage);
+        Assert.Equal("Product does not exists", response.ErrorMessageCode);
     }
 
     [Fact]
@@ -111,6 +112,6 @@ public class UpdateProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.Equal("CreateProductHandler Handler => Some error has occurred!", response.ErrorMessage);
+        Assert.Equal("CreateProductHandler Handler => Some error has occurred!", response.ErrorMessageCode);
     }
 }

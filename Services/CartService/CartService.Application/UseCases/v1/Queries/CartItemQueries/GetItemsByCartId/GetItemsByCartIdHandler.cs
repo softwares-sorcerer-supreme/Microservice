@@ -7,7 +7,10 @@ using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Models.Response;
 using CartService.Domain.Entities;
+using Polly.Registry;
 using ProductService.Application.Grpc.Protos;
+using Shared.Constants;
+using Shared.Enums;
 
 namespace CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
 
@@ -16,7 +19,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
     private readonly ILogger<GetItemsByCartIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IProductService _productService;
-
+    
     public GetItemsByCartIdHandler
     (
         ILogger<GetItemsByCartIdHandler> logger,
@@ -45,7 +48,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
             if (cart == null)
             {
                 _logger.LogWarning($"{functionName} Cart does not exist");
-                return CreateErrorResponse(ResponseStatusCode.NotFound, "Cart does not exist");
+                return CreateErrorResponse(ResponseStatusCode.NotFound, ResponseErrorMessageCode.ERR_CART_0001);
             }
 
             var cartItems = await GetCartItemsByCartIdAsync(request.CartId, cancellationToken);
@@ -57,7 +60,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
             var productResponse = await _productService.GetProductsByIds(cartItems.Select(ci => ci.ProductId).ToList());
             if (productResponse.Status != ResponseStatusCode.OK.ToInt() || productResponse.Products.Count == 0)
             {
-                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessage);
+                return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessageCode);
             }
 
             var items = MapProductsToItemDatas(cartItems, productResponse.Products.ToList());
@@ -66,7 +69,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Error in GetItemsByCartIdHandler");
-            return CreateErrorResponse(ResponseStatusCode.InternalServerError, "Something went wrong");
+            return CreateErrorResponse(ResponseStatusCode.InternalServerError, ResponseErrorMessageCode.ERR_SYS_0001);
         }
     }
 
@@ -119,7 +122,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         return new GetItemsByCartIdResponse
         {
             Status = status.ToInt(),
-            ErrorMessage = errorMessage
+            ErrorMessageCode = errorMessage
         };
     }
 }

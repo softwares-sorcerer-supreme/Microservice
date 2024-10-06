@@ -6,6 +6,8 @@ service ProductProtoService {
   rpc UpdateProductQuantity(UpdateProductQuantityRequest) returns (ProductModelResponse);
   rpc GetProductsByIds(GetProductsByIdsRequest) returns (GetProductsByIdsResponse);
   rpc GetProductsById(GetProductsByIdRequest) returns (ProductModelResponse);
+  rpc TestSeverStreaming(TestSeverStreamingRequest) returns (stream TestSeverStreamingResponse);
+  rpc TestClientStreaming(stream TestSeverStreamingRequest) returns (TestSeverStreamingResponse);
 }
 
 message UpdateProductQuantityRequest {
@@ -20,8 +22,7 @@ message GetProductsByIdsRequest {
 message GetProductsByIdsResponse {
   repeated ProductModel products = 1;
   int32 status = 2;
-  string errorMessage = 3;
-  string errorMessageCode = 4;
+  string errorMessageCode = 3;
 }
 
 message GetProductsByIdRequest {
@@ -31,8 +32,7 @@ message GetProductsByIdRequest {
 message ProductModelResponse {
   ProductModel product = 1;
   int32 status = 2;
-  string errorMessage = 3;
-  string errorMessageCode = 4;
+  string errorMessageCode = 3;
 }
 
 message ProductModel {
@@ -40,4 +40,20 @@ message ProductModel {
   string name = 2;
   int32 quantity = 3;
   string price = 4;
+}
+
+message TestSeverStreamingRequest {
+  string id = 1;
+}
+
+message TestSeverStreamingResponse {
+  string id = 1;
+}
+
+message TestClientStreamingRequest {
+  string id = 1;
+}
+
+message TestClientStreamingResponse {
+  string id = 1;
 }

@@ -5,6 +5,7 @@ using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProductQuantity;
@@ -48,7 +49,6 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
-                response.ErrorMessage = "Product does not exists";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
@@ -58,7 +58,6 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
             {
                 _logger.LogWarning($"{functionName} Product quantity is not enough");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
-                response.ErrorMessage = "Product quantity is not enough";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
@@ -81,7 +80,7 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occurred!";
+            // $"{functionName} Some error has occurred!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

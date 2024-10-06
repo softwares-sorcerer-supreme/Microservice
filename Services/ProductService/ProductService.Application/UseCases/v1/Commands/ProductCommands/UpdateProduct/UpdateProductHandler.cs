@@ -5,6 +5,7 @@ using ProductService.Application.Models.Response.Products;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
@@ -45,7 +46,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
-                response.ErrorMessage = "Product does not exists";
+                // "Product does not exists";
                 //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
@@ -63,7 +64,7 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occurred!";
+            // $"{functionName} Some error has occurred!";
             //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;

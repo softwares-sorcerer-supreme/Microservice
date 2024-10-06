@@ -2,6 +2,7 @@
   "SwaggerEndPoints": [
     {
       "Key": "Product",
+      "TransformByOcelotConfig":false, //This is used to transform the swagger endpoint by Ocelot, its allow version 
       "Config": [
         {
           "Name": "Product API",
@@ -12,11 +13,28 @@
     },
     {
       "Key": "Cart",
+      "TransformByOcelotConfig":false, //This is used to transform the swagger endpoint by Ocelot, its allow version 
       "Config": [
         {
           "Name": "Cart API",
           "Version": "v1",
           "Url": "https://localhost:5002/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Authentication",
+      "TransformByOcelotConfig":false, //This is used to transform the swagger endpoint by Ocelot, its allow version 
+      "Config": [
+        {
+          "Name": "Authentication API",
+          "Version": "v1",
+          "Url": "https://localhost:5001/swagger/v1/swagger.json"
+        },
+        {
+          "Name": "Authentication API",
+          "Version": "v2",
+          "Url": "https://localhost:5001/swagger/v2/swagger.json"
         }
       ]
     }

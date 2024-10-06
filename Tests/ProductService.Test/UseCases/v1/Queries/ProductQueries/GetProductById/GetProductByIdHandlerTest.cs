@@ -5,6 +5,7 @@ using Moq;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -55,7 +56,7 @@ public class GetProductByIdHandlerTest
         Assert.Equal(existingProduct.Name, response.Data.Name);
         Assert.Equal(existingProduct.Price, response.Data.Price);
         Assert.Equal(existingProduct.Quantity, response.Data.Quantity);
-        Assert.Empty(response.ErrorMessage); // Check that there is no error message
+        Assert.Empty(response.ErrorMessageCode); // Check that there is no error message
     }
 
     [Fact]
@@ -76,7 +77,7 @@ public class GetProductByIdHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.BadRequest, response.Status);
-        Assert.Equal("Product does not exists", response.ErrorMessage);
+        Assert.Equal("Product does not exists", response.ErrorMessageCode);
         Assert.Null(response.Data);
     }
 
@@ -96,7 +97,7 @@ public class GetProductByIdHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.Equal("Something went wrong", response.ErrorMessage);
+        Assert.Equal("Something went wrong", response.ErrorMessageCode);
         Assert.Null(response.Data);
     }
 }

@@ -5,6 +5,7 @@ using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.CommonExtension;
+using Shared.Enums;
 using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
@@ -42,8 +43,7 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
                 response.Status = ResponseStatusCode.NotFound.ToInt();
-                response.ErrorMessage = "Product does not exists";
-                //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
+                // response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
                 return response;
             }
@@ -57,8 +57,7 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");
             response.Status = ResponseStatusCode.InternalServerError.ToInt();
-            response.ErrorMessage = $"{functionName} Some error has occured!";
-            //response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
+            // response.ErrorMessageCode = ResponseStatusCode.BadRequest.ToInt();
 
             return response;
         }

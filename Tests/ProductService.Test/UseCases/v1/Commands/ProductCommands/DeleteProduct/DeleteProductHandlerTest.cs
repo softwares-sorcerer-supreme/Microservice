@@ -5,6 +5,7 @@ using Moq;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
+using Shared.Enums;
 using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
@@ -58,7 +59,7 @@ public class DeleteProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.OK, response.Status);
-        Assert.Empty(response.ErrorMessage); // Check that there is no error message
+        Assert.Empty(response.ErrorMessageCode); // Check that there is no error message
     }
 
     [Fact]
@@ -80,7 +81,7 @@ public class DeleteProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.NotFound, response.Status);
-        Assert.Equal("Product does not exists", response.ErrorMessage);
+        Assert.Equal("Product does not exists", response.ErrorMessageCode);
     }
 
     [Fact]
@@ -98,6 +99,6 @@ public class DeleteProductHandlerTest
 
         // Assert
         Assert.Equal((int)ResponseStatusCode.InternalServerError, response.Status);
-        Assert.Equal("DeleteProductHandler => Some error has occured!", response.ErrorMessage);
+        Assert.Equal("DeleteProductHandler => Some error has occured!", response.ErrorMessageCode);
     }
 }

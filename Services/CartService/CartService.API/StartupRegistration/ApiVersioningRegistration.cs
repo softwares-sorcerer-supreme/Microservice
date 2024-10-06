@@ -9,9 +9,14 @@ public static class ApiVersioningRegistration
         services.AddApiVersioning(x =>
         {
             x.DefaultApiVersion = new ApiVersion(1, 0);
-            x.AssumeDefaultVersionWhenUnspecified = true;
             x.ReportApiVersions = true;
+            x.AssumeDefaultVersionWhenUnspecified = true;
             x.UnsupportedApiVersionStatusCode = StatusCodes.Status400BadRequest;
+        })
+        .AddApiExplorer(x =>
+        {
+            x.GroupNameFormat = "'v'VVV";
+            x.SubstituteApiVersionInUrl = true;
         });
 
         return services;
