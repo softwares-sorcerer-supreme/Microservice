@@ -2,4 +2,4 @@
 
 namespace ProductService.Application.Models.Response.Products;
 
-public class CreateProductResponse : ErrorResponse;
+public class CreateProductResponse : BaseResponse;

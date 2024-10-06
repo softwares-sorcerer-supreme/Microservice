@@ -2,7 +2,7 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses;
 
-public class LoginResponse : ErrorResponse
+public class LoginResponse : BaseResponse
 {
     public LoginData Data { get; set; }
 }

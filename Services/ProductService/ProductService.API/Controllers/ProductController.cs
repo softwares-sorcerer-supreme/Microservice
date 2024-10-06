@@ -7,6 +7,7 @@ using ProductService.Application.Services;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
+using ProductService.Application.UseCases.v1.Queries.CartQueries.HealthCheckCartService;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProducts;
 using Shared.Models.Request;
@@ -20,19 +21,17 @@ namespace ProductService.API.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ICartClient _cartClient;
-    public ProductController(IMediator mediator, ICartClient cartClient)
+    public ProductController(IMediator mediator)
     {
         _mediator = mediator;
-        _cartClient = cartClient;
     }
     
     [HttpGet]
-    [Route("test")]
+    [Route("test-resilience")]
     public async Task<IActionResult> Test(CancellationToken cancellationToken)
     {
-        await _cartClient.HealthCheckCartService(cancellationToken);
-        return Ok();
+        var response = await _mediator.Send(new HealthCheckCartServiceQuery(), cancellationToken);
+        return Ok(response);
     }
     
     [HttpGet]

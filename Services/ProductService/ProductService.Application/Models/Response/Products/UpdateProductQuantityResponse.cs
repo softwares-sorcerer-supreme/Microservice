@@ -2,7 +2,7 @@ using Shared.Models.Response;
 
 namespace ProductService.Application.Models.Response.Products;
 
-public class UpdateProductQuantityResponse : ErrorResponse
+public class UpdateProductQuantityResponse : BaseResponse
 {
     public ProductDataResponse Data { get; set; }
 }
