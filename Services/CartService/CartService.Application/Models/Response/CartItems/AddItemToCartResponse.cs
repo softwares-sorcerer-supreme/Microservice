@@ -2,4 +2,4 @@
 
 namespace CartService.Application.Models.Response.CartItems;
 
-public class AddItemToCartResponse : ErrorResponse;
+public class AddItemToCartResponse : BaseResponse;

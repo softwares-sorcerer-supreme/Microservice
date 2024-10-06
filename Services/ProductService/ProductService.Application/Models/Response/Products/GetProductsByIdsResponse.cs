@@ -2,7 +2,7 @@ using Shared.Models.Response;
 
 namespace ProductService.Application.Models.Response.Products;
 
-public class GetProductsByIdsResponse : ErrorResponse
+public class GetProductsByIdsResponse : BaseResponse
 {
     public List<ProductDataResponse> Data { get; set; }
 }

@@ -2,4 +2,4 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses;
 
-public class RegisterResponse : ErrorResponse;
+public class RegisterResponse : BaseResponse;

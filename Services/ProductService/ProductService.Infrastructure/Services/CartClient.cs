@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Services;
 using Shared.HttpClientCustom;
-using Shared.Models.Response;
 
 namespace ProductService.Infrastructure.Services;
 
@@ -22,13 +21,16 @@ public class CartClient : ICartClient
 
     public async Task HealthCheckCartService(CancellationToken cancellationToken)
     {
-        var funcName = $"{nameof(CartClient)} {nameof(HealthCheckCartService)}";
+        const string funcName = $"{nameof(CartClient)} {nameof(HealthCheckCartService)}";
         _logger.LogInformation(funcName);
 
         try
         {
             var response = await _cartServiceClient.GetAsync<object>("/api/v1/Cart/health-check", cancellationToken);
-            _logger.LogInformation("after call cart service");
+            if (response == null)
+            {
+                _logger.LogError($"{funcName} has error: response is null");
+            }
         }
         catch (Exception ex)
         {

@@ -88,7 +88,7 @@ public class ExceptionHandleMiddleware
             var error = ex.ValidationResultModel.Errors.FirstOrDefault();
             if (error != null)
             {
-                var response = new ErrorHandler
+                var response = new BaseHandler
                 {
                     Status = httpContext.Response.StatusCode,
                     ErrorMessage = error.ErrorMessage,
@@ -128,7 +128,7 @@ public class ExceptionHandleMiddleware
 
         await context.Response.WriteAsync
         (
-            new ErrorHandler
+            new BaseHandler
             {
                 Status = context.Response.StatusCode,
                 ErrorMessage = message,

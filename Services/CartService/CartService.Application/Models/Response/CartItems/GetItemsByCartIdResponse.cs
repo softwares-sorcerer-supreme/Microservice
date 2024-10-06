@@ -3,7 +3,7 @@ using Shared.Models.Response;
 
 namespace CartService.Application.Models.Response.CartItems;
 
-public class GetItemsByCartIdResponse : ErrorResponse
+public class GetItemsByCartIdResponse : BaseResponse
 {
     public GetItemByCartData Data { get; set; }
 }

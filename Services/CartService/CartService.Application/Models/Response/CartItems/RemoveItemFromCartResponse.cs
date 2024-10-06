@@ -2,4 +2,4 @@ using Shared.Models.Response;
 
 namespace CartService.Application.Models.Response.CartItems;
 
-public class RemoveItemFromCartResponse : ErrorResponse;
+public class RemoveItemFromCartResponse : BaseResponse;
