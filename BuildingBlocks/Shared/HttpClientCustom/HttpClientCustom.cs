@@ -10,7 +10,6 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
     private readonly HttpClient _httpClient;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<HttpClientCustom<T>> _logger;
-    private readonly ResiliencePipelineProvider<string> _resiliencePipelineProvider;
     
     public HttpClientCustom
     (
@@ -23,20 +22,21 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
         _httpClient = httpClient;
         _httpClientFactory = httpClientFactory;
     }
-    
+
     public async Task<TResult?> GetAsync<TResult>(string path, CancellationToken cancellationToken)
     {
         var functionName = $"{nameof(IHttpClientCustom<T>)}_{typeof(T).Name}-{path}-{nameof(GetAsync)} => ";
         try
         {
-            _logger.LogDebug($"{functionName} is called ...");
-            
-            var response = await _httpClient.GetAsync(path, cancellationToken);
+        _logger.LogInformation($"{functionName} is called ...");
 
-            response.EnsureSuccessStatusCode();
+        var response = await _httpClient.GetAsync(path, cancellationToken);
 
-            var result = await response.Content.ReadAsStringAsync(cancellationToken);
-            return JsonConvert.DeserializeObject<TResult>(result);
+        response.EnsureSuccessStatusCode();
+
+        var result = await response.Content.ReadAsStringAsync(cancellationToken);
+        return default;
+        // return JsonConvert.DeserializeObject<TResult>(result);
         }
         catch (Exception ex)
         {

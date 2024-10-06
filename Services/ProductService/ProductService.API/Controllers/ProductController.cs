@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Application.Models.Request.Products;
 using ProductService.Application.Models.Response.Products;
+using ProductService.Application.Services;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
@@ -19,9 +20,19 @@ namespace ProductService.API.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public ProductController(IMediator mediator)
+    private readonly ICartClient _cartClient;
+    public ProductController(IMediator mediator, ICartClient cartClient)
     {
         _mediator = mediator;
+        _cartClient = cartClient;
+    }
+    
+    [HttpGet]
+    [Route("test")]
+    public async Task<IActionResult> Test(CancellationToken cancellationToken)
+    {
+        await _cartClient.HealthCheckCartService(cancellationToken);
+        return Ok();
     }
     
     [HttpGet]

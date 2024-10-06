@@ -3,14 +3,22 @@ namespace Shared.HttpClientCustom;
 
 public class ServiceOptions
 {
-    public static readonly string OptionName = "Services";
+    public const string OptionName = "Services";
+    
+    public ProductServiceClient ProductService { get; set; }
+    public OrderServiceClient OrderService { get; set; }
+    public CartServiceClient CartService { get; set; }
 }
+
+public class ProductServiceClient : ResilienceConfig;
+public class OrderServiceClient : ResilienceConfig;
+public class CartServiceClient : ResilienceConfig;
 
 public class ResilienceConfig
 {
     public string ServiceName { get; set; }
     public string Url { get; set; }
-    public int HttpClientTimeout { get; set; } = 6;
+    public int HttpClientTimeout { get; set; } = 5;
     public bool IsEnableRetry { get; set; }
     public bool IsEnableCircuitBreaker { get; set; }
     public RetryOptions Retry { get; set; } = new();

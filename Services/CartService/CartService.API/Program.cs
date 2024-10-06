@@ -27,6 +27,16 @@ builder.Services
     // .AddNpgSql(pgConnectionString)
     // .AddRedis(redisConnectionString);
 
+    var loggerFactory = LoggerFactory.Create(
+        builder => builder
+            // add console as logging target
+            .AddConsole()
+            // add debug output as logging target
+            .AddDebug()
+            // set minimum level to log
+            .SetMinimumLevel(LogLevel.Debug));
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

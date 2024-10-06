@@ -50,11 +50,14 @@ public class CartController : ControllerBase
         var response = await _mediator.Send(new RemoveItemFromCartCommand(request), cancellationToken);
         return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode);
     }
-    
+
     [HttpGet]
-    [Route("health")]
-    public IActionResult HealthCheck()
+    [Route("health-check")]
+    public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
     {
-        return Ok();
+        Console.WriteLine("health-check called: " + DateTime.Now.ToLongTimeString());
+        await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+        Console.WriteLine("health-check done: " + DateTime.Now.ToLongTimeString());
+        return Ok("Ok");
     }
 }

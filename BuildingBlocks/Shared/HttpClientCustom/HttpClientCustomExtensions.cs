@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Polly;
 using Shared.Constants;
 using Shared.HttpClientCustom.Resilience;
 
@@ -15,19 +16,20 @@ public static class HttpClientCustomExtensions
         var logger = services.BuildServiceProvider().GetService<ILogger<IHttpClientCustom<T>>>();
 
         var httpClientBuilder = services.AddHttpClient<IHttpClientCustom<T>, HttpClientCustom<T>>(clientName, c =>
-            {
-                c.BaseAddress = new Uri(clientConfig.Url);
-                c.DefaultRequestHeaders.Add("Accept", "application/json");
-                c.Timeout = TimeSpan.FromMinutes(clientConfig.HttpClientTimeout);
-            })
-            .SetHandlerLifetime(TimeSpan.FromMinutes(clientConfig.HttpClientTimeout * 2));
+        {
+            c.BaseAddress = new Uri(clientConfig.Url);
+            c.DefaultRequestHeaders.Add("Accept", "application/json");
+        });
 
         if (clientConfig.IsEnableRetry)
         {
             httpClientBuilder.AddResilienceHandler
             (
                 ResiliencePipelineConst.HttpRetry,
-                (_, _) => PollyResilienceStrategy.Retry(clientConfig.Retry)
+                (resiliencePipelineBuilder, _) =>
+                    resiliencePipelineBuilder
+                        .AddRetry(PollyResilienceStrategies.Retry(clientConfig.Retry, logger))
+                        .AddTimeout(PollyResilienceStrategies.Timeout(clientConfig.HttpClientTimeout))
             );
         }
         
@@ -36,7 +38,9 @@ public static class HttpClientCustomExtensions
             httpClientBuilder.AddResilienceHandler
             (
                 ResiliencePipelineConst.HttpCircuitBreaker,
-                (_, _) => PollyResilienceStrategy.CircuitBreaker(clientConfig.CircuitBreaker, logger)
+                (resiliencePipelineBuilder, _) =>
+                    resiliencePipelineBuilder.AddCircuitBreaker(
+                        PollyResilienceStrategies.CircuitBreaker(clientConfig.CircuitBreaker, logger))
             );
         }
 
