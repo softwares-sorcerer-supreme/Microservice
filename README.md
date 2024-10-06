@@ -1,8 +1,9 @@
 # Overview
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
+This project is mainly focused on showcasing my technical skills, with less emphasis on the business side.
 
-I am planning to build architect like this:
+I am planning to build architecture like this, this image just illustration my project, not 100% exactly what I am building:
 
 <img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Ocelot API Gateway"/>
 
@@ -23,9 +24,9 @@ I am planning to build architect like this:
     - [x] gRPC
     - [ ] HTTP
 - ##### Asynchronous:
-    - [ ] Event Message (RabbitMQ/Kafka)
+    - [ ] Event Message (MassTransit)
 
-#### Architecture (each services): 
+#### Architecture (each service): 
 - [x] Clean Architecture  
 
 #### Validations: 
@@ -57,7 +58,7 @@ I am planning to build architect like this:
     - [ ] Log collectors (FluentD/(Logstash, FileBeat))
 
 - ##### Tracing:
-    - [ ] Jeager/Zipkin
+    - [ ] Jaeger/Zipkin
 
 - ##### Metrics:
     - [ ] Prometheus (Alert, ...)
@@ -71,9 +72,11 @@ I am planning to build architect like this:
     - [x] Postgres (EF Core)
 - ##### Cart Service:
     - [x] Postgres (EF Core)
+    - [ ] MongoDB
 - ##### Product Service:
-    - [x] Postgres (EF Core)
-    - [ ] MongoDB (Dapper)
+    - [x] Postgres
+    - [X] EF Core
+    - [X] Dapper
 
 ## Services:
 - [x] AuthService (Identity Server 4)
