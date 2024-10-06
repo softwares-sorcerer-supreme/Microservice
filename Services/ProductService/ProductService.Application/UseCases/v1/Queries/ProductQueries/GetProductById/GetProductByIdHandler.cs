@@ -5,7 +5,6 @@ using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductById;
 
