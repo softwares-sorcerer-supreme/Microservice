@@ -13,7 +13,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddDatabaseConfiguration(builder.Configuration)
@@ -22,13 +21,15 @@ builder.Services
     .AddConfigureApiVersioning()
     .AddGrpcConfiguration(builder.Configuration)
     .AddAuthenticationConfiguration(builder.Configuration)
+    .AddAuthorizationRegistration()
     .AddOptionConfiguration(builder.Configuration)
+    .AddCustomSwaggerConfiguration()
     .AddHealthChecks();
     // .AddNpgSql(pgConnectionString)
     // .AddRedis(redisConnectionString);
 
     var loggerFactory = LoggerFactory.Create(
-        builder => builder
+        loggingBuilder => loggingBuilder
             // add console as logging target
             .AddConsole()
             // add debug output as logging target
@@ -48,6 +49,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandleMiddleware>();
+app.UseAuthentication();
 app.UseAuthorization();
 //HealthCheck Middleware
 

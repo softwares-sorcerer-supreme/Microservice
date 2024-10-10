@@ -14,11 +14,8 @@ public static class AuthenticationRegistration
         var jwtOptions = new JwtOptions();
         configuration.GetSection(JwtOptions.OptionName).Bind(jwtOptions);
 
-        services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme; // "Bearer"
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        }).AddJwtBearer(options =>
+        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
         {
             // it's recommended to check the type header to avoid "JWT confusion" attacks
             options.TokenValidationParameters.ValidTypes = ["at+jwt"];
@@ -28,11 +25,11 @@ public static class AuthenticationRegistration
             options.SaveToken = true;
             options.TokenValidationParameters = new TokenValidationParameters
             {
-                ValidateAudience = true, // Validate that the token was intended for your API
-                ValidateIssuer = true, // Validate that the token was issued by your IdentityServer4
+                ValidateAudience = false, // Validate that the token was intended for your API
+                ValidateIssuer = false, // Validate that the token was issued by your IdentityServer4
                 ValidateIssuerSigningKey = true, // Validate the token signature with the signing key
                 RequireExpirationTime = true, // Ensure the token has an expiration
-                ValidateLifetime = true // Ensure the token is still valid
+                ValidateLifetime = true, // Ensure the token is still valid,
             };
 
             // SignalR

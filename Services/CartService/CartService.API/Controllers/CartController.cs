@@ -4,6 +4,7 @@ using CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCar
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 using CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Shared.Models.Response;
 
@@ -53,6 +54,7 @@ public class CartController : ControllerBase
 
     [HttpGet]
     [Route("health-check")]
+    [Authorize(Policy = "UserPolicy")]
     public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
     {
         Console.WriteLine("health-check called: " + DateTime.Now.ToLongTimeString());
