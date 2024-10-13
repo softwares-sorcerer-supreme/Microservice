@@ -2,7 +2,8 @@ using System.Linq.Expressions;
 
 namespace CartService.Domain.Abstraction.Repositories.MongoDb;
 
-//Can be replace with IRepositoryBase, in fact it is the same, can use IRepositoryBase instead of IMongoRepository
+//Can be replaced with IRepositoryBase, in real case clean architecture, we can use IRepositoryBase as a base interface for all repositories and for all database
+//But for this example, I will use IMongoRepository as a base interface for all mongo repositories
 public interface IMongoRepository<TDocument>: IDisposable where TDocument : class
 {
     IQueryable<TDocument> AsQueryable();

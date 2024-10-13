@@ -5,6 +5,7 @@ using MongoDB.EntityFrameworkCore.Extensions;
 namespace CartService.Persistence.MongoDB;
 
 //Use EF Core to interact with MongoDB
+//currently not used
 public class ApplicationMongoDbContext : DbContext
 {
     public DbSet<Cart> Carts { get; init; }
