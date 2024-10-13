@@ -67,6 +67,19 @@ services:
     volumes:
       - postgres_authservice_data:/var/lib/postgresql/data2/
         
+  cartservice.db.mongo:
+    container_name: cartservice_db_mongo
+    command: [--auth]
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_cartservice_data:/data/db
+      - "./mongo-entrypoint/:/docker-entrypoint-initdb.d/"
+  
   redis:
     container_name: "redis"
     image: redis:latest
@@ -76,10 +89,10 @@ services:
     volumes:
       - redis-data:/data
         
-  consul:
-    container_name: "consul"
-    restart: always
-    ports:
-      - '8500:8500'
-    volumes:
-      - consul-data:/consul/data
+#  consul:
+#    container_name: "consul"
+#    restart: always
+#    ports:
+#      - '8500:8500'
+#    volumes:
+#      - consul-data:/consul/data

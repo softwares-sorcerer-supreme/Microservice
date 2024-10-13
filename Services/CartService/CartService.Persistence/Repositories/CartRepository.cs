@@ -4,4 +4,4 @@ using CartService.Domain.Entities;
 namespace CartService.Persistence.Repositories;
 
 public class CartRepository(ApplicationDbContext context)
-    : RepositoryBase<Cart, Guid>(context), ICartRepository;
+    : RepositoryBase<Cart>(context), ICartRepository;

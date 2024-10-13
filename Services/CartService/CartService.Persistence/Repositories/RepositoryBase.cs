@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CartService.Persistence.Repositories;
 
-public class RepositoryBase<TEntity, TKey> : IRepositoryBase<TEntity, TKey> where TEntity : class
+public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class
 {
     private readonly ApplicationDbContext _context;
     private readonly DbSet<TEntity> _dbSet;
 
-    public RepositoryBase(ApplicationDbContext context)
+    protected RepositoryBase(ApplicationDbContext context)
     {
         _context = context;
         _dbSet = _context.Set<TEntity>();

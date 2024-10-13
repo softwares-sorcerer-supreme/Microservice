@@ -3,6 +3,8 @@ using CartService.Application.Models.Request.CartItems;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 using CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
+using CartService.Domain.Abstraction.Repositories.MongoDb;
+using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +18,16 @@ namespace CartService.API.Controllers;
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;
-    public CartController(IMediator mediator)
+    private readonly ICartMongoRepository _mongoRepository;
+
+    public CartController
+    (
+        IMediator mediator,
+        ICartMongoRepository mongoRepository
+    )
     {
         _mediator = mediator;
+        _mongoRepository = mongoRepository;
     }
 
     [HttpGet]
@@ -61,5 +70,22 @@ public class CartController : ControllerBase
         await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
         Console.WriteLine("health-check done: " + DateTime.Now.ToLongTimeString());
         return Ok("Ok");
+    }
+
+    [HttpPost]
+    [Route("test-insert-mongo")]
+    public async Task<IActionResult> TestMongo(Cart cart, CancellationToken cancellationToken)
+    {
+        await _mongoRepository.InsertOneAsync(cart, cancellationToken);
+        return Ok("Ok");
+    }
+    
+
+    [HttpPost]
+    [Route("test-mongo-search")]
+    public async Task<IActionResult> TestMongo(Guid id, CancellationToken cancellationToken)
+    {
+        var a = await _mongoRepository.FindOneAsync(filterExpression => filterExpression.Id == id, cancellationToken);
+        return Ok(a);
     }
 }

@@ -131,7 +131,7 @@ public class ExceptionHandleMiddleware
             new BaseHandler
             {
                 Status = context.Response.StatusCode,
-                ErrorMessage = message,
+                ErrorMessage = message + " - " + exception.Message,
                 ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001
             }.ToString()
         );

@@ -27,6 +27,7 @@
 	  <ProjectReference Include="..\CartService.Application\CartService.Application.csproj" />
 	  <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
 	  <ProjectReference Include="..\CartService.Infrastructure\CartService.Infrastructure.csproj" />
+	  <ProjectReference Include="..\CartService.Persistence.MongoDB\CartService.Persistence.MongoDB.csproj" />
 	  <ProjectReference Include="..\CartService.Persistence\CartService.Persistence.csproj" />
 	</ItemGroup>
 

@@ -66,7 +66,6 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
             if (cartItem != null)
             {
                 cartItem.Quantity += payload.Quantity;
-                await _unitOfWork.CartItem.UpdateAsync(cartItem, cancellationToken);
             }
             else
             {

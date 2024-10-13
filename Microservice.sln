@@ -70,6 +70,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Caching", "BuildingBlocks\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventMessage", "BuildingBlocks\EventMessage\EventMessage.csproj", "{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CartService.Persistence.MongoDB", "Services\CartService\CartService.Persistence.MongoDB\CartService.Persistence.MongoDB.csproj", "{85FB9F24-7537-4AC6-B7A7-244C618D6381}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mongo-entrypoint", "mongo-entrypoint", "{F2B7881F-6D9F-4A17-9B43-D9C3B48185BE}"
+	ProjectSection(SolutionItems) = preProject
+		mongo-entrypoint\entrypoint.js = mongo-entrypoint\entrypoint.js
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -164,6 +171,10 @@ Global
 		{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85FB9F24-7537-4AC6-B7A7-244C618D6381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85FB9F24-7537-4AC6-B7A7-244C618D6381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85FB9F24-7537-4AC6-B7A7-244C618D6381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85FB9F24-7537-4AC6-B7A7-244C618D6381}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -194,6 +205,8 @@ Global
 		{669C9042-30FB-4E33-9493-40ED7B239C7A} = {67249AAF-8E5B-4E1B-BCFE-95327FC444AC}
 		{F5402B1C-23D9-424D-ABA9-F2118344D39C} = {43D7B24D-09B8-434C-BE7D-3A095554B852}
 		{3FD1A75F-ED6C-4BF1-B8A7-0D037DD6463E} = {43D7B24D-09B8-434C-BE7D-3A095554B852}
+		{85FB9F24-7537-4AC6-B7A7-244C618D6381} = {2E666886-49F2-4C0E-89DE-65817E140A1F}
+		{F2B7881F-6D9F-4A17-9B43-D9C3B48185BE} = {44768745-922D-46EA-95A3-86AEBA7FD7BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18615BBD-8E6C-41BE-AD00-6135E4BED765}

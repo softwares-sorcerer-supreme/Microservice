@@ -2,4 +2,4 @@
 
 namespace CartService.Domain.Abstraction.Repositories;
 
-public interface ICartRepository : IRepositoryBase<Cart, Guid>;
+public interface ICartRepository : IRepositoryBase<Cart>;

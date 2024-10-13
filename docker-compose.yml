@@ -28,13 +28,17 @@ services:
   authservice.db:
     image: postgres
     
+  cartservice.db.mongo:
+    image: mongo
+
   redis:
     image: redis:latest
     
-  consul:
-    image: consul:latest
+#  consul:
+#    image: consul:latest
 
 volumes:
+  mongo_cartservice_data:
   postgres_productservice_data:
   postgres_cartservice_data:
   postgres_authservice_data:

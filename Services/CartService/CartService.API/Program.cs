@@ -1,6 +1,7 @@
 using CartService.API.StartupRegistration;
 using CartService.Application.StartupRegistration;
 using CartService.Infrastructure.StartupRegistration;
+using CartService.Persistence.MongoDB.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -24,6 +25,7 @@ builder.Services
     .AddAuthorizationRegistration()
     .AddOptionConfiguration(builder.Configuration)
     .AddCustomSwaggerConfiguration()
+    .AddMongoDbConfiguration()
     .AddHealthChecks();
     // .AddNpgSql(pgConnectionString)
     // .AddRedis(redisConnectionString);

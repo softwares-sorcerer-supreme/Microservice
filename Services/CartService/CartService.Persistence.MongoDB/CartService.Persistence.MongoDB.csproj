@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Caching\Caching.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
+      <ProjectReference Include="..\CartService.Application\CartService.Application.csproj" />
+      <ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.4" />
+      <PackageReference Include="MongoDB.Driver" Version="2.29.0" />
+      <PackageReference Include="MongoDB.EntityFrameworkCore" Version="8.0.0" />
+    </ItemGroup>
+
+</Project>
