@@ -1,6 +1,8 @@
 using CartService.API.StartupRegistration;
 using CartService.Application.StartupRegistration;
+using CartService.Domain.Abstraction;
 using CartService.Infrastructure.StartupRegistration;
+using CartService.Persistence;
 using CartService.Persistence.MongoDB.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
 using HealthChecks.UI.Client;
@@ -14,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services
     .AddDatabaseConfiguration(builder.Configuration)

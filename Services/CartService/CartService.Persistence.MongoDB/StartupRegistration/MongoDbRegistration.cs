@@ -1,8 +1,9 @@
-using System.Security.Authentication;
-using CartService.Domain.Abstraction.Repositories.MongoDb;
+using CartService.Domain.Abstraction;
+using CartService.Domain.Abstraction.Repositories;
 using CartService.Domain.Entities;
 using CartService.Persistence.MongoDB.Options;
 using CartService.Persistence.MongoDB.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
@@ -26,13 +27,14 @@ public static class MongoDbRegistration
         var database = mongoClient.GetDatabase(mongoDbSettings.DatabaseName);
 
         // Can use EF Core with MongoDB
-        // services.AddDbContext<ApplicationMongoDbContext>(o => o.UseMongoDB(mongoClient, mongoDbSettings.DatabaseName));
+        services.AddDbContext<ApplicationMongoDbContext>(o => o.UseMongoDB(mongoClient, mongoDbSettings.DatabaseName));
 
         // Register the MongoDB context or direct collections
         services.AddSingleton(database);
-        services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
-        services.AddScoped<ICartItemMongoRepository, CartItemRepository>();
-        services.AddScoped<ICartMongoRepository, CartRepository>();
+        // services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
+        services.AddScoped<IUnitOfWorkMongoDb, UnitOfWorkMongoDb>();
+        services.AddScoped<ICartItemRepository, CartItemRepository>();
+        services.AddScoped<ICartRepository, CartRepository>();
 
         ClassMappingConfiguration(database);
 
