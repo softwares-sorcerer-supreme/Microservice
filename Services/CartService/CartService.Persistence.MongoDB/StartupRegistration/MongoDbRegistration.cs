@@ -25,10 +25,6 @@ public static class MongoDbRegistration
         var mongoClient = new MongoClient(settings);
         var database = mongoClient.GetDatabase(mongoDbSettings.DatabaseName);
 
-        // Can use EF Core with MongoDB
-        // services.AddDbContext<ApplicationMongoDbContext>(o => o.UseMongoDB(mongoClient, mongoDbSettings.DatabaseName));
-
-        // Register the MongoDB context or direct collections
         services.AddSingleton(database);
         services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
         services.AddScoped<ICartItemMongoRepository, CartItemRepository>();
