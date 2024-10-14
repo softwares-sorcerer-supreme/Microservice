@@ -3,11 +3,12 @@ using CartService.Application.Models.Request.CartItems;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 using CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
-using CartService.Domain.Abstraction.Repositories.MongoDb;
+using CartService.Domain.Abstraction;
 using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shared.Models.Response;
 
 namespace CartService.API.Controllers;
@@ -18,16 +19,16 @@ namespace CartService.API.Controllers;
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly ICartMongoRepository _mongoRepository;
+    private readonly IUnitOfWorkMongoDb _unitOfWorkMongoDb;
 
     public CartController
     (
         IMediator mediator,
-        ICartMongoRepository mongoRepository
+        IUnitOfWorkMongoDb unitOfWorkMongoDb
     )
     {
         _mediator = mediator;
-        _mongoRepository = mongoRepository;
+        _unitOfWorkMongoDb = unitOfWorkMongoDb;
     }
 
     [HttpGet]
@@ -76,16 +77,17 @@ public class CartController : ControllerBase
     [Route("test-insert-mongo")]
     public async Task<IActionResult> TestMongo(Cart cart, CancellationToken cancellationToken)
     {
-        await _mongoRepository.InsertOneAsync(cart, cancellationToken);
+        await _unitOfWorkMongoDb.Cart.AddAsync(cart, cancellationToken);
+        await _unitOfWorkMongoDb.SaveChangesAsync(cancellationToken);
         return Ok("Ok");
     }
     
-
     [HttpPost]
     [Route("test-mongo-search")]
     public async Task<IActionResult> TestMongo(Guid id, CancellationToken cancellationToken)
     {
-        var a = await _mongoRepository.FindOneAsync(filterExpression => filterExpression.Id == id, cancellationToken);
-        return Ok(a);
+        var a = _unitOfWorkMongoDb.Cart.GetQueryable();
+        var result = await a.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
+        return Ok(result);
     }
 }
