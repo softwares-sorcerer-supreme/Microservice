@@ -19,18 +19,15 @@ namespace CartService.API.Controllers;
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;
-    // private readonly ICartMongoRepository _mongoRepository;
     private readonly IUnitOfWorkMongoDb _unitOfWorkMongoDb;
 
     public CartController
     (
         IMediator mediator,
-        // ICartMongoRepository mongoRepository,
         IUnitOfWorkMongoDb unitOfWorkMongoDb
     )
     {
         _mediator = mediator;
-        // _mongoRepository = mongoRepository;
         _unitOfWorkMongoDb = unitOfWorkMongoDb;
     }
 
