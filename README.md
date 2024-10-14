@@ -72,7 +72,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [x] Postgres (EF Core)
 - ##### Cart Service:
     - [x] Postgres (EF Core)
-    - [x] MongoDB
+    - [x] MongoDB (2 approach: EF Core and IMongoCollection)
 - ##### Product Service:
     - [x] Postgres
     - [X] EF Core
