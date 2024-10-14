@@ -13,7 +13,7 @@ I am planning to build architecture like this, this image just illustration my p
 #### API Gateway:
 - [x] Ocelot
 - [ ] Load Balancing
-- [ ] Rate limiting
+- [x] Rate limiting
 - [ ] Service Discovery (Consul)
 
 #### Authentication, Authorization:
@@ -22,7 +22,7 @@ I am planning to build architecture like this, this image just illustration my p
 #### Communication:
 - ##### Synchronous:
     - [x] gRPC
-    - [ ] HTTP
+    - [x] HTTP
 - ##### Asynchronous:
     - [ ] Event Message (MassTransit)
 
@@ -72,7 +72,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [x] Postgres (EF Core)
 - ##### Cart Service:
     - [x] Postgres (EF Core)
-    - [ ] MongoDB
+    - [x] MongoDB
 - ##### Product Service:
     - [x] Postgres
     - [X] EF Core
