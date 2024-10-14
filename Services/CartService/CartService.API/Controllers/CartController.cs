@@ -4,7 +4,6 @@ using CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCar
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 using CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsByCartId;
 using CartService.Domain.Abstraction;
-using CartService.Domain.Abstraction.Repositories.MongoDb;
 using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

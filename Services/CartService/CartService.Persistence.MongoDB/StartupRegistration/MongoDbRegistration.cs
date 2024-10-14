@@ -1,14 +1,9 @@
 using CartService.Domain.Abstraction;
 using CartService.Domain.Abstraction.Repositories;
-using CartService.Domain.Entities;
 using CartService.Persistence.MongoDB.Options;
 using CartService.Persistence.MongoDB.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver;
 using Shared.Extensions;
 
@@ -31,48 +26,11 @@ public static class MongoDbRegistration
 
         // Register the MongoDB context or direct collections
         services.AddSingleton(database);
-        // services.AddScoped(typeof(IMongoRepository<>), typeof(MongoRepository<>));
         services.AddScoped<IUnitOfWorkMongoDb, UnitOfWorkMongoDb>();
         services.AddScoped<ICartItemRepository, CartItemRepository>();
         services.AddScoped<ICartRepository, CartRepository>();
 
-        ClassMappingConfiguration(database);
-
         return services;
-    }
-
-    private static void ClassMappingConfiguration(IMongoDatabase database)
-    {
-        BsonClassMap.RegisterClassMap<Cart>(cm =>
-        {
-            cm.AutoMap();
-            cm.MapIdMember(c => c.Id)
-                .SetIdGenerator(new GuidGenerator())
-                .SetSerializer(new GuidSerializer(BsonType.Binary));
-
-            cm.SetIgnoreExtraElements(true);
-        });
-        
-        
-        BsonClassMap.RegisterClassMap<CartItem>(cm =>
-        {
-            cm.AutoMap();
-            cm.MapMember(c => c.CartId)
-                .SetSerializer(new GuidSerializer(BsonType.String));
-            cm.MapMember(c => c.ProductId)
-                .SetSerializer(new GuidSerializer(BsonType.String));
-
-            cm.SetIgnoreExtraElements(true);
-        });
-
-        // Create a unique index on CartId and ProductId
-        var cartItemCollection = database.GetCollection<CartItem>(nameof(CartItem));
-        var indexKeysDefinition = Builders<CartItem>.IndexKeys
-            .Ascending(c => c.CartId)
-            .Ascending(c => c.ProductId);
-        var indexOptions = new CreateIndexOptions { Unique = true };
-        var indexModel = new CreateIndexModel<CartItem>(indexKeysDefinition, indexOptions);
-        cartItemCollection.Indexes.CreateOne(indexModel);
     }
     
 }
