@@ -1,4 +1,3 @@
-using System.Security.Authentication;
 using CartService.Domain.Abstraction.Repositories.MongoDb;
 using CartService.Domain.Entities;
 using CartService.Persistence.MongoDB.Options;
