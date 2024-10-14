@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Polly;
 using Shared.Constants;
-using Shared.HttpClientCustom.Resilience;
+using Shared.Resilience;
 
 namespace Shared.HttpClientCustom;
 

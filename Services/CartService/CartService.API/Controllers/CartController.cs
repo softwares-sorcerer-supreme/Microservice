@@ -43,6 +43,7 @@ public class CartController : ControllerBase
 
     [HttpPost]
     [Route("{id}/products")]
+    [Authorize(Policy = "AdminPolicy")]
     public async Task<IActionResult> AddItemToCart(Guid id, [FromBody] AddItemToCartRequest request,CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new AddItemToCartCommand(id, request), cancellationToken);
@@ -51,6 +52,7 @@ public class CartController : ControllerBase
 
     [HttpDelete]
     [Route("{id}/products/{productId}")]
+    [Authorize(Policy = "AdminPolicy")]
     public async Task<IActionResult> RemoveItemFromCart(Guid id, Guid productId, CancellationToken cancellationToken)
     {
         var request = new RemoveItemFromCartRequest
@@ -64,12 +66,9 @@ public class CartController : ControllerBase
 
     [HttpGet]
     [Route("health-check")]
-    [Authorize(Policy = "UserPolicy")]
     public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
     {
-        Console.WriteLine("health-check called: " + DateTime.Now.ToLongTimeString());
-        await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
-        Console.WriteLine("health-check done: " + DateTime.Now.ToLongTimeString());
+        await Task.Delay(TimeSpan.FromSeconds(6), cancellationToken);
         return Ok("Ok");
     }
 

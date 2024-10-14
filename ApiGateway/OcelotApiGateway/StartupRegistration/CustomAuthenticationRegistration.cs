@@ -1,7 +1,13 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Ocelot.Configuration;
+using Ocelot.Provider.Polly.Interfaces;
+using Polly;
+using Polly.Retry;
 
 namespace ApiGateway.StartupRegistration;
+
+
 
 public static class CustomAuthenticationRegistration
 {

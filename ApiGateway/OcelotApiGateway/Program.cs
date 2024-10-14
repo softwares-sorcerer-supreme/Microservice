@@ -1,7 +1,9 @@
+using ApiGateway.ResilienceProvider;
 using ApiGateway.StartupRegistration;
 using MMLib.SwaggerForOcelot.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
+using Ocelot.Provider.Polly;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,12 +14,12 @@ builder.Configuration.AddOcelotWithSwaggerSupport(options =>
     options.Folder = routes;
 });
 
-builder.Services.AddOcelot(builder.Configuration);
-builder.Services.AddSwaggerForOcelot(builder.Configuration);
+builder.Services
+    .AddOcelot(builder.Configuration)
+    // .AddPolly<RetryProvider>(); QosProvider is not implemented yet
+    .AddPolly();
 
-// builder.Configuration.SetBasePath(Directory.GetCurrentDirectory())
-//     .AddOcelot(routes, builder.Environment)
-//     .AddEnvironmentVariables();
+builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

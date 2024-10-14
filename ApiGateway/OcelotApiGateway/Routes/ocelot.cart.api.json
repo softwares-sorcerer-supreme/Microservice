@@ -23,10 +23,6 @@
         "Period": "60s",
         "PeriodTimespan": 5,
         "Limit": 100
-      },
-      "AuthenticationOptions": {
-        "AuthenticationProviderKeys": [ "IdentityApiKey" ],
-        "AllowedScopes": []
       }
     }
   ]

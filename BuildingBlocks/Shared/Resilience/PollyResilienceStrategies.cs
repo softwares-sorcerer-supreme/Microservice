@@ -4,8 +4,9 @@ using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Retry;
 using Polly.Timeout;
+using Shared.HttpClientCustom;
 
-namespace Shared.HttpClientCustom.Resilience;
+namespace Shared.Resilience;
 
 public static class PollyResilienceStrategies
 {
