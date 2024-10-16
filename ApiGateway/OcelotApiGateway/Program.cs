@@ -17,6 +17,7 @@ builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 builder.Services
     .AddOcelot(builder.Configuration)
     // .AddPolly<RetryProvider>(); QosProvider is not implemented yet
+    // .AddCustomLoadBalancer<CustomLoadBalancer>();
     .AddPolly();
 
 builder.Services.AddSwaggerForOcelot(builder.Configuration);

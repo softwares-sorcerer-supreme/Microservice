@@ -1,18 +1,12 @@
 {
   "GlobalConfiguration": {
     "BaseUrl": "https://localhost:5000",
-
     //Rate limits
     "RateLimitOptions": {
       "DisableRateLimitHeaders": false,
       "QuotaExceededMessage": "Customize Tips!",
       "HttpStatusCode": 429, // default is 429
       "ClientIdHeader": "MyRateLimiting"
-    },
-    "QoSOptions": {
-      "ExceptionsAllowedBeforeBreaking": 3,
-      "DurationOfBreak": 1000,
-      "TimeoutValue": 1000
     }
   }
 }

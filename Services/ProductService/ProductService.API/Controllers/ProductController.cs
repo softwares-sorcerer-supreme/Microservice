@@ -1,5 +1,6 @@
 using Asp.Versioning;
 using MediatR;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using ProductService.Application.Models.Request.Products;
 using ProductService.Application.Models.Response.Products;
@@ -82,6 +83,12 @@ public class ProductController : ControllerBase
         return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
     }
     
+    [HttpGet]
+    [Route("load-balancer")]
+    public async Task<IActionResult> LoadBalancer(CancellationToken cancellationToken)
+    {
+        return Ok($"Address: {Request.GetDisplayUrl()}");
+    }
     
     
 }

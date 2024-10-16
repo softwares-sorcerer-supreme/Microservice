@@ -7,6 +7,7 @@ using CartService.Domain.Abstraction;
 using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shared.Models.Response;
@@ -68,8 +69,14 @@ public class CartController : ControllerBase
     [Route("health-check")]
     public async Task<IActionResult> HealthCheck(CancellationToken cancellationToken)
     {
-        await Task.Delay(TimeSpan.FromSeconds(6), cancellationToken);
-        return Ok("Ok");
+        throw new Exception("Test Exception");
+    }
+
+    [HttpGet]
+    [Route("load-balancer")]
+    public async Task<IActionResult> LoadBalancer(CancellationToken cancellationToken)
+    {
+        return Ok($"Address: {Request.GetDisplayUrl()}");
     }
 
     [HttpPost]

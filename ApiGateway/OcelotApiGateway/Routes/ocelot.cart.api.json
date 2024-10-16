@@ -7,6 +7,10 @@
         {
           "Host": "localhost",
           "Port": 5002
+        },
+        {
+          "Host": "localhost",
+          "Port": 5005
         }
       ],
       "UpstreamPathTemplate": "/api/v{api_version}/cart/{everything}",
@@ -23,6 +27,14 @@
         "Period": "60s",
         "PeriodTimespan": 5,
         "Limit": 100
+      },
+      "QoSOptions": {
+        "ExceptionsAllowedBeforeBreaking": 3,
+        "DurationOfBreak": 1000,
+        "TimeoutValue": 1000
+      },
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
       }
     }
   ]
