@@ -12,9 +12,10 @@ I am planning to build architecture like this, this image just illustration my p
 ## Structure:
 #### API Gateway:
 - [x] Ocelot
-- [ ] Load Balancing
-- [x] Rate limiting
-- [ ] Service Discovery (Consul)
+- [ ] YARP
+    - [ ] Load Balancing
+    - [x] Rate limiting
+    - [ ] Service Discovery (Consul)
 
 #### Authentication, Authorization:
 - [x] JWT
