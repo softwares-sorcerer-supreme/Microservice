@@ -16,7 +16,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [X] QoS
     - [x] Rate limiting
 - [ ] YARP
-    - [ ] Service Discovery (Consul)
+- [ ] Service Discovery (Consul)
 
 #### Authentication, Authorization:
 - [x] JWT
