@@ -85,6 +85,7 @@ I am planning to build architecture like this, this image just illustration my p
 - [x] CartService
 - [x] ProductService
 - [ ] NotificationService
+- [ ] BackgroundService
 
 ## Technique:
 - ##### Distributed Lock:
