@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Abstraction.Repositories;
+using ProductService.Persistence.Interceptors;
 using ProductService.Persistence.Repositories;
 
 namespace ProductService.Persistence.StartupRegistration;
@@ -14,7 +15,12 @@ public static class DatabaseRegistration
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
-        services.AddDbContext<ApplicationDbContext>(o => o.UseNpgsql(connectionStringBuilder.ConnectionString));
+
+        services.AddSingleton<AuditableEntityInterceptor>();
+
+        services.AddDbContext<ApplicationDbContext>((sp, builder) => builder
+                .UseNpgsql(connectionStringBuilder.ConnectionString)
+                .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IReadOnlyRepository, ReadOnlyRepository>();
 

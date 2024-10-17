@@ -23,6 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
 		<ProjectReference Include="..\CartService.Domain\CartService.Domain.csproj" />
 	</ItemGroup>
 
