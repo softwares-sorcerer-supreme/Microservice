@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <Folder Include="IntegrationEvents\" />
+      <Folder Include="Queues\" />
     </ItemGroup>
 
 </Project>
