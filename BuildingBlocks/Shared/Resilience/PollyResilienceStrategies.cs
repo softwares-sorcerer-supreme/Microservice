@@ -1,8 +1,9 @@
 using System.Net;
+using System.Net.Sockets;
+using System.Threading.RateLimiting;
 using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
 using Polly;
-using Polly.Retry;
 using Polly.Timeout;
 using Shared.HttpClientCustom;
 
@@ -45,7 +46,7 @@ public static class PollyResilienceStrategies
         };
     }
 
-    public static RetryStrategyOptions<HttpResponseMessage> Retry(RetryOptions options, ILogger logger)
+    public static HttpRetryStrategyOptions Retry(RetryOptions options, ILogger logger)
     {
         return new HttpRetryStrategyOptions
         {
@@ -88,12 +89,41 @@ public static class PollyResilienceStrategies
         };
     }
     
-    public static TimeoutStrategyOptions Timeout(int timeoutInSeconds)
+    public static HttpTimeoutStrategyOptions Timeout(int timeoutInSeconds)
     {
-        return new TimeoutStrategyOptions
+        return new HttpTimeoutStrategyOptions
         {
             Timeout = TimeSpan.FromSeconds(timeoutInSeconds),
         };
     }
+    
+    public static HttpRateLimiterStrategyOptions RateLimit(RateLimitOptions options, ILogger logger)
+    {
+        return new HttpRateLimiterStrategyOptions
+        {
+            // Create a rate limiter to allow a maximum of 100 concurrent executions and a queue of 50.
+            DefaultRateLimiterOptions = new ConcurrencyLimiterOptions
+            {
+                PermitLimit = options.PermitLimit,
+                QueueLimit = options.QueueLimit
+            },
+            OnRejected = args =>
+            {
+                logger.LogWarning($"Rate limit exceeded. Time: {DateTime.Now.ToShortTimeString()}");
+                return ValueTask.CompletedTask;
+            },
+        };
+        
+        // Create a rate limiter that allows 100 executions per minute.
+        // new ResiliencePipelineBuilder()
+        //     .AddRateLimiter(new SlidingWindowRateLimiter(
+        //         new SlidingWindowRateLimiterOptions
+        //         {
+        //             PermitLimit = 100,
+        //             Window = TimeSpan.FromMinutes(1)
+        //         }));
+        
+    }
+    
     
 }

@@ -21,8 +21,10 @@ public class ResilienceConfig
     public int HttpClientTimeout { get; set; } = 5;
     public bool IsEnableRetry { get; set; }
     public bool IsEnableCircuitBreaker { get; set; }
+    public bool IsEnableRateLimit { get; set; }
     public RetryOptions Retry { get; set; } = new();
     public CircuitBreakerOptions CircuitBreaker { get; set; } = new();
+    public RateLimitOptions RateLimit { get; set; } = new();
 }
 
 public class RetryOptions
@@ -37,4 +39,10 @@ public class CircuitBreakerOptions
     public double SamplingDurationInSeconds { get; set; } = 10;
     public int MinimumThroughput { get; set; } = 10;
     public double BreakDurationInSeconds { get; set; } = 30;
+}
+
+public class RateLimitOptions
+{
+    public int PermitLimit { get; set; } = 1000;
+    public int QueueLimit { get; set; }
 }

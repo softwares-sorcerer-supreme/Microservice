@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Threading.RateLimiting;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Shared.Constants;
@@ -39,8 +40,33 @@ public static class HttpClientCustomExtensions
             (
                 ResiliencePipelineConst.HttpCircuitBreaker,
                 (resiliencePipelineBuilder, _) =>
-                    resiliencePipelineBuilder.AddCircuitBreaker(
-                        PollyResilienceStrategies.CircuitBreaker(clientConfig.CircuitBreaker, logger))
+                    resiliencePipelineBuilder
+                        .AddCircuitBreaker(PollyResilienceStrategies.CircuitBreaker(clientConfig.CircuitBreaker, logger))
+            );
+        }
+        
+        if (clientConfig.IsEnableRateLimit)
+        {
+            httpClientBuilder.AddResilienceHandler
+            (
+                ResiliencePipelineConst.HttpRateLimit,
+                (resiliencePipelineBuilder, context) =>
+                {
+                    // var options = context.GetOptions<ConcurrencyLimiterOptions>();
+                    //
+                    // // This call enables dynamic reloading of the pipeline
+                    // // when the named ConcurrencyLimiterOptions change.
+                    // context.EnableReloads<ConcurrencyLimiterOptions>("my-concurrency-options");
+
+                    // var limiter = new ConcurrencyLimiter(options);
+                    
+                    resiliencePipelineBuilder
+                        .AddRateLimiter(PollyResilienceStrategies.RateLimit(clientConfig.RateLimit, logger));
+                    
+                    // Dispose of the limiter when the pipeline is disposed.
+                    // context.OnPipelineDisposed(() => limiter.Dispose());
+                }
+                    
             );
         }
 
