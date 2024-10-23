@@ -99,7 +99,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [ ] Inbox Pattern
 - ##### Resilience (Polly):
     - [x] Circuit Breaker
-    - [ ] Bulkhead Pattern
+    - [ ] Bulkhead Pattern/Rate Limiter
     - [x] Timeout/Retry Strategy
 # Usage
 ### Applying Migrations
