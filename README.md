@@ -19,7 +19,8 @@ I am planning to build architecture like this, this image just illustration my p
 - [ ] Service Discovery (Consul)
 
 #### Authentication, Authorization:
-- [x] JWT
+- [x] OAuth2 (Grant Type: ResourceOwnerPassword)
+- [x] Policy
 
 #### Communication:
 - ##### Synchronous:
