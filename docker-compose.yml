@@ -19,6 +19,12 @@ services:
       context: .
       dockerfile: Services/ProductService/ProductService.API/Dockerfile
 
+  notificationservice.api:
+    image: notificationservice.api
+    build:
+      context: .
+      dockerfile: Services/NotificationService/NotificationService.API/Dockerfile
+
   productservice.db:
     image: postgres
   
@@ -33,6 +39,9 @@ services:
 
   redis:
     image: redis:latest
+    
+  rabbitmq:
+    image: rabbitmq:3-management
     
 #  consul:
 #    image: consul:latest
