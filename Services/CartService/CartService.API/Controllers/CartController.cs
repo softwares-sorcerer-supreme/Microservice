@@ -1,4 +1,5 @@
 using Asp.Versioning;
+using CartService.Application.Abstractions.Services.EventMessageService;
 using CartService.Application.Models.Request.CartItems;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 using CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
@@ -20,16 +21,21 @@ namespace CartService.API.Controllers;
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;
+    
+    //Only for test
     private readonly IUnitOfWorkMongoDb _unitOfWorkMongoDb;
+    private readonly ISendMessageService _sendMessageService;
 
     public CartController
     (
         IMediator mediator,
-        IUnitOfWorkMongoDb unitOfWorkMongoDb
+        IUnitOfWorkMongoDb unitOfWorkMongoDb,
+        ISendMessageService sendMessageService
     )
     {
         _mediator = mediator;
         _unitOfWorkMongoDb = unitOfWorkMongoDb;
+        _sendMessageService = sendMessageService;
     }
 
     [HttpGet]
@@ -96,4 +102,13 @@ public class CartController : ControllerBase
         var result = await a.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
         return Ok(result);
     }
+    
+    [HttpGet]
+    [Route("test-event-message")]
+    public async Task<IActionResult> TestEventMessage(CancellationToken cancellationToken)
+    {
+        await _sendMessageService.SendAddToCartNotification(cancellationToken);
+        return Ok("Ok");
+    }
+    
 }

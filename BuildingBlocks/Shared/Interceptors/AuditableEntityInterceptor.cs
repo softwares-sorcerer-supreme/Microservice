@@ -1,18 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.DependencyInjection;
 using Shared.Abstractions.Entities;
 using Shared.HttpContextCustom;
 
-namespace ProductService.Persistence.Interceptors;
+namespace Shared.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
-    private readonly ICustomHttpContextAccessor _httpContextAccessor;
-
-    public AuditableEntityInterceptor(ICustomHttpContextAccessor httpContextAccessor)
+    private readonly IServiceProvider _serviceProvider;
+    public AuditableEntityInterceptor(IServiceProvider serviceProvider)
     {
-        _httpContextAccessor = httpContextAccessor;
+        _serviceProvider = serviceProvider;
     }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
@@ -29,10 +29,17 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
-    public void UpdateEntities(DbContext? context)
+    private void UpdateEntities(DbContext? context)
     {
-        if (context == null) return;
-        var userId = _httpContextAccessor.GetCurrentUserId();
+        if (context == null)
+        {
+            return;
+        }
+        
+        using var scope = _serviceProvider.CreateScope();
+        var customHttpContext = scope.ServiceProvider.GetRequiredService<ICustomHttpContextAccessor>();
+        
+        var userId = customHttpContext.GetCurrentUserId();
         foreach (var entry in context.ChangeTracker.Entries<IAuditable>())
         {
             if (entry.State is EntityState.Added or EntityState.Modified || entry.HasChangedOwnedEntities())

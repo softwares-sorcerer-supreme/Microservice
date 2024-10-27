@@ -5,6 +5,7 @@ using CartService.Infrastructure.StartupRegistration;
 using CartService.Persistence;
 using CartService.Persistence.MongoDB.StartupRegistration;
 using CartService.Persistence.StartupRegistration;
+using EventMessage.Registrations;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Shared.Middlewares;
@@ -23,12 +24,13 @@ builder.Services
     .AddValidators()
     .AddCustomMediator()
     .AddConfigureApiVersioning()
-    .AddGrpcConfiguration(builder.Configuration)
+    .AddServicesConfiguration(builder.Configuration)
     .AddAuthenticationConfiguration(builder.Configuration)
     .AddAuthorizationRegistration()
     .AddOptionConfiguration(builder.Configuration)
     .AddCustomSwaggerConfiguration()
     .AddMongoDbConfiguration()
+    .AddMassTransitConfiguration()
     .AddHealthChecks();
     // .AddNpgSql(pgConnectionString)
     // .AddRedis(redisConnectionString);

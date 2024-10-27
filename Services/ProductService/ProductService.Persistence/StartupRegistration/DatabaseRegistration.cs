@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Abstraction.Repositories;
-using ProductService.Persistence.Interceptors;
 using ProductService.Persistence.Repositories;
+using Shared.Interceptors;
 
 namespace ProductService.Persistence.StartupRegistration;
 

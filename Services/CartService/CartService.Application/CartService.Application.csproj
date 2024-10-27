@@ -24,4 +24,8 @@
 		</Protobuf>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Abstractions\" />
+	</ItemGroup>
+
 </Project>

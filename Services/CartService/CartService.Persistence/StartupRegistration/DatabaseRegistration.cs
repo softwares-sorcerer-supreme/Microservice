@@ -1,8 +1,8 @@
 ﻿using CartService.Domain.Abstraction;
-using CartService.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Interceptors;
 
 namespace CartService.Persistence.StartupRegistration;
 

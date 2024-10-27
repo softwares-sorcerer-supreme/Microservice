@@ -1,3 +1,4 @@
+using System.Reflection;
 using EventMessage.Registrations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMassTransitConfiguration();
+builder.Services.AddMassTransitConfiguration(Assembly.GetExecutingAssembly());
 
 var app = builder.Build();
 

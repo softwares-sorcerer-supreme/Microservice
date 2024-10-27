@@ -1,3 +1,5 @@
+using System.Reflection;
+using EventMessage.Registrations;
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
 using ProductService.Infrastructure.StartupRegistration;
@@ -24,6 +26,7 @@ builder.Services
     .AddOptionConfiguration(builder.Configuration)
     .AddHttpClientCustom(builder.Configuration)
     .AddDIConfiguration();
+    // .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
     // .AddConfigureLogging(builder)
 
     var loggerFactory = LoggerFactory.Create(
