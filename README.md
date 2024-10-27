@@ -19,7 +19,8 @@ I am planning to build architecture like this, this image just illustration my p
 - [ ] Service Discovery (Consul)
 
 #### Authentication, Authorization:
-- [x] JWT
+- [x] OAuth2 (Grant Type: ResourceOwnerPassword)
+- [x] Policy
 
 #### Communication:
 - ##### Synchronous:
@@ -99,7 +100,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [ ] Inbox Pattern
 - ##### Resilience (Polly):
     - [x] Circuit Breaker
-    - [ ] Bulkhead Pattern
+    - [x] Bulkhead Pattern/Rate Limiter
     - [x] Timeout/Retry Strategy
 # Usage
 ### Applying Migrations
