@@ -18,7 +18,8 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
         var funcName = $"{nameof(SendNotificationConsumer)} - {nameof(Consume)} - Correlation = {context.Message.CorrelationId} =>";
         try
         {
-            
+            var id = context.Message.Content.Id;
+            Console.WriteLine(id);
         }
         catch (Exception ex)
         {

@@ -35,7 +35,6 @@ public static class MassTransitRegistration
                     cfg.ConfigureEndpoints(ctx);
                 });
             }
-
         });
 
         services.AddScoped<IMessageSender, MessageSender>();

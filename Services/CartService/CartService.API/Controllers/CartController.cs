@@ -105,10 +105,24 @@ public class CartController : ControllerBase
     
     [HttpGet]
     [Route("test-event-message")]
-    public async Task<IActionResult> TestEventMessage(CancellationToken cancellationToken)
+    public async Task<IActionResult> TestEventMessage(SendMessageType type, CancellationToken cancellationToken)
     {
-        await _sendMessageService.SendAddToCartNotification(cancellationToken);
+        if (type == SendMessageType.Publish)
+        {
+            await _sendMessageService.PublishAddToCartNotification(cancellationToken);
+        }
+        else
+        {
+            await _sendMessageService.SendAddToCartNotification(cancellationToken);
+        }
+        
         return Ok("Ok");
     }
     
+}
+
+public enum SendMessageType
+{
+    Send = 1,
+    Publish
 }

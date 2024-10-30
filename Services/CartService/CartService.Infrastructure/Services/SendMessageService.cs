@@ -35,7 +35,27 @@ public class SendMessageService : ISendMessageService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(SendMessageService)} => {ex.Message}");
+            _logger.LogError(ex, $"{nameof(PublishAddToCartNotification)} => {ex.Message}");
+        }
+    }
+
+    public async Task PublishAddToCartNotification(CancellationToken cancellationToken)
+    {
+        try
+        {
+            var id = new Guid();
+            Console.WriteLine(id);
+            await _messageSender.PublishMessage<SendNotification>(new
+            {
+                Content = new SendNotificationEvent
+                {
+                    Id = id,
+                }
+            }, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{nameof(PublishAddToCartNotification)} => {ex.Message}");
         }
     }
     

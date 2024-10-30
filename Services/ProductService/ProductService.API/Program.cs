@@ -1,5 +1,3 @@
-using System.Reflection;
-using EventMessage.Registrations;
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
 using ProductService.Infrastructure.StartupRegistration;
