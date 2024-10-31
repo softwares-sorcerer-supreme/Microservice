@@ -27,7 +27,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [x] gRPC
     - [x] HTTP
 - ##### Asynchronous:
-    - [ ] Event Message (MassTransit)
+    - [x] Event Message (MassTransit)
 
 #### Architecture (each service): 
 - [x] Clean Architecture  
@@ -85,7 +85,7 @@ I am planning to build architecture like this, this image just illustration my p
 - [x] AuthService (Identity Server 4)
 - [x] CartService
 - [x] ProductService
-- [ ] NotificationService
+- [x] NotificationService
 - [ ] BackgroundService
 
 ## Technique:
