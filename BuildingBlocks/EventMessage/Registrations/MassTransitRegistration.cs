@@ -1,7 +1,10 @@
+using System.Net.Mime;
 using System.Reflection;
 using EventMessage.Core;
 using EventMessage.Options;
 using MassTransit;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
 
@@ -40,4 +43,17 @@ public static class MassTransitRegistration
         services.AddScoped<IMessageSender, MessageSender>();
         return services;
     }
+    
+    public static WebApplication UseMassTransitHealthCheck(this WebApplication app)
+    {
+        app.MapHealthChecks("/health/ready", new HealthCheckOptions()
+        {
+            Predicate = (check) => check.Tags.Contains("ready"),
+        });
+
+        app.MapHealthChecks("/health/live", new HealthCheckOptions());
+        
+        return app;
+    }
+    
 }

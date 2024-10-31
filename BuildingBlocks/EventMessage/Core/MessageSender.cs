@@ -49,14 +49,7 @@ public class MessageSender : IMessageSender
         try
         {
             _logger.LogDebug($"{funcName} is called ...");
-            // var kebabFormatter =  new KebabCaseEndpointNameFormatter(false);
-            // var queueName = kebabFormatter.SanitizeName(typeof(T).Name);
-            //
-            // if (!string.IsNullOrWhiteSpace(queueName))
-            // {
-            // _logger.LogDebug($"{funcName} QueueName: {queueName}");
             await _publishEndpoint.Publish<T>(eventModel, cancellationToken);
-            // }
         }
         catch (Exception ex)
         {

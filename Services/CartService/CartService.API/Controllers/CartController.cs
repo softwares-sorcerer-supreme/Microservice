@@ -103,6 +103,12 @@ public class CartController : ControllerBase
         return Ok(result);
     }
     
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="type">Send = 1, Publish = 2</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns></returns>
     [HttpGet]
     [Route("test-event-message")]
     public async Task<IActionResult> TestEventMessage(SendMessageType type, CancellationToken cancellationToken)

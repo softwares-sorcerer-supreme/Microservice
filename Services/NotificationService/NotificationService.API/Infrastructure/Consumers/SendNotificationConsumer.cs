@@ -7,7 +7,6 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
 {
     private readonly ILogger<SendNotificationConsumer> _logger;
     
-    
     public SendNotificationConsumer(ILogger<SendNotificationConsumer> logger)
     {
         _logger = logger;
@@ -16,10 +15,11 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
     public async Task Consume(ConsumeContext<SendNotification> context)
     {
         var funcName = $"{nameof(SendNotificationConsumer)} - {nameof(Consume)} - Correlation = {context.Message.CorrelationId} =>";
+        _logger.LogInformation(funcName);
+
         try
         {
             var id = context.Message.Content.Id;
-            Console.WriteLine(id);
         }
         catch (Exception ex)
         {
@@ -29,12 +29,10 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
 }
 
 
-class SendNotificationConsumerDefinition :
-    ConsumerDefinition<SendNotificationConsumer>
+class SendNotificationConsumerDefinition : ConsumerDefinition<SendNotificationConsumer>
 {
     public SendNotificationConsumerDefinition()
     {
-        
     }
 
     protected override void ConfigureConsumer(IReceiveEndpointConfigurator endpointConfigurator,

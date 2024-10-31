@@ -23,29 +23,13 @@ public class SendMessageService : ISendMessageService
 
     public async Task SendAddToCartNotification(CancellationToken cancellationToken)
     {
+        const string funcName = $"{nameof(SendAddToCartNotification)} =>";
+        _logger.LogInformation(funcName);
         try
         {
+            var id = Guid.NewGuid();
+            Console.WriteLine(funcName + " " + id);
             await _messageSender.SendMessage<SendNotification>(new
-            {
-                Content = new SendNotificationEvent
-                {
-                    Id = Guid.NewGuid(),
-                }
-            }, cancellationToken);
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, $"{nameof(PublishAddToCartNotification)} => {ex.Message}");
-        }
-    }
-
-    public async Task PublishAddToCartNotification(CancellationToken cancellationToken)
-    {
-        try
-        {
-            var id = new Guid();
-            Console.WriteLine(id);
-            await _messageSender.PublishMessage<SendNotification>(new
             {
                 Content = new SendNotificationEvent
                 {
@@ -55,7 +39,29 @@ public class SendMessageService : ISendMessageService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(PublishAddToCartNotification)} => {ex.Message}");
+            _logger.LogError(ex, $"{funcName} => {ex.Message}");
+        }
+    }
+
+    public async Task PublishAddToCartNotification(CancellationToken cancellationToken)
+    {
+        const string funcName = $"{nameof(PublishAddToCartNotification)} =>";
+        _logger.LogInformation(funcName);
+        try
+        {
+            var id = Guid.NewGuid();
+            Console.WriteLine(funcName + " " + id);
+            await _messageSender.PublishMessage<PublishNotification>(new
+            {
+                Content = new SendNotificationEvent
+                {
+                    Id = id,
+                }
+            }, cancellationToken);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"{funcName} => {ex.Message}");
         }
     }
     
