@@ -60,7 +60,7 @@ I am planning to build architecture like this, this image just illustration my p
 - [x] Redis
 
 #### Monitoring:
-- [ ] OpenTelemetry
+- [x] OpenTelemetry
 - ##### Logging:
     - [x] ElasitcSearch, Kibana, Serilog
     - [ ] Grafana, Loki
@@ -70,7 +70,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [ ] Jaeger/Zipkin
 
 - ##### Metrics:
-    - [ ] Prometheus (Alert, ...)
+    - [x] Prometheus (Alert, ...)
 
 #### Local Deployment:
 - [x] Docker
