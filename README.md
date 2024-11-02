@@ -8,7 +8,7 @@ I am planning to build architecture like this, this image just illustration my p
 <img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Ocelot API Gateway"/>
 
 ##Logging
-<img src="https://i.ytimg.com/vi/0Mzft2Kcev0/maxresdefault.jpg" alt="Kibana Logging Visualize"/>
+<img src="https://github.com/softwares-sorcerer-supreme/Microservice/blob/main/Visualize/kibana-logging.png" alt="Kibana Logging Visualize"/>
 
 # Components:
 
