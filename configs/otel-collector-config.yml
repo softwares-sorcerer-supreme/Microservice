@@ -14,7 +14,7 @@ exporters:
   prometheus:
     endpoint: "0.0.0.0:8889"
 
-  otlphttp/jaeger:
+  jaeger:
     endpoint: "http://jaeger:4319"
     tls:
       insecure: true
@@ -37,7 +37,7 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [otlphttp/jaeger]
+      exporters: [jaeger]
     metrics:
       receivers: [otlp]
       processors: [batch]

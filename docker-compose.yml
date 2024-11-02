@@ -56,7 +56,7 @@ services:
     image: grafana/grafana
     
   jaeger:
-    image: jaegertracing/all-in-one:1.49
+    image: jaegertracing/all-in-one
   
   otel-collector:
       image: otel/opentelemetry-collector:latest
