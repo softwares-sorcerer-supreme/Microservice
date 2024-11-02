@@ -1,0 +1,14 @@
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+#  - job_name: "services"
+#    # metrics_path defaults to '/metrics'
+#    # scheme defaults to 'http'.
+#    scrape_interval: 30s # poll very quickly for a more responsive demo
+#    static_configs:
+##      - targets: ["ocelotapigateway:5000", "cartservice.api:5000", "productservice.api:5000", "notificationservice.api:5000"] #Use when run on docker
+#      - targets: ["host.docker.internal:5000", "host.docker.internal:5001", "host.docker.internal:5002", "host.docker.internal:5003"] #When run on localhost
+  - job_name: 'otel-collector'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['otel-collector:8889']
+      - targets: ['otel-collector:8888']

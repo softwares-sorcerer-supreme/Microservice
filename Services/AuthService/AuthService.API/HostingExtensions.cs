@@ -29,7 +29,8 @@ internal static class HostingExtensions
             .AddRedisConfiguration()
             .AddCustomHttpContextAccessor()
             .AddConfigureApiVersioning()
-            .AddCustomSwaggerConfiguration();
+            .AddCustomSwaggerConfiguration()
+            .AddOtelConfiguration(builder.Environment, builder.Configuration);
         
         builder.Host.UseLogging(builder.Configuration);
         

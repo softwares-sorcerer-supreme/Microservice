@@ -11,7 +11,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddMassTransitConfiguration(Assembly.GetExecutingAssembly());
+builder.Services.AddMassTransitConfiguration(Assembly.GetExecutingAssembly())
+    .AddOtelConfiguration(builder.Environment, builder.Configuration);
+
 builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();

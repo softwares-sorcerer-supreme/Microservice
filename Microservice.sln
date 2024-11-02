@@ -83,6 +83,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NotificationService.API", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Observability", "BuildingBlocks\Observability\Observability.csproj", "{AE64D959-3D50-4C05-AA57-E064846E3BF1}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "configs", "configs", "{92ACEDE1-1959-41E8-87DB-9B75174FBCA0}"
+	ProjectSection(SolutionItems) = preProject
+		configs\prometheus.yml = configs\prometheus.yml
+		configs\datasource.yml = configs\datasource.yml
+		configs\otel-collector-config.yml = configs\otel-collector-config.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -224,6 +231,7 @@ Global
 		{D58AEE91-76FB-4DF4-A3EE-5D299765FDFB} = {26F5BC69-17EF-4AB5-A73C-C072ED6B0BF5}
 		{7E02C293-A230-41D6-86DA-055CF40B7B94} = {D58AEE91-76FB-4DF4-A3EE-5D299765FDFB}
 		{AE64D959-3D50-4C05-AA57-E064846E3BF1} = {43D7B24D-09B8-434C-BE7D-3A095554B852}
+		{92ACEDE1-1959-41E8-87DB-9B75174FBCA0} = {44768745-922D-46EA-95A3-86AEBA7FD7BF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {18615BBD-8E6C-41BE-AD00-6135E4BED765}

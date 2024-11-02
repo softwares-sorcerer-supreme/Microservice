@@ -24,7 +24,8 @@ builder.Services
     .AddAuthenticationConfiguration(builder.Configuration)
     .AddOptionConfiguration(builder.Configuration)
     .AddHttpClientCustom(builder.Configuration)
-    .AddDIConfiguration();
+    .AddDIConfiguration()
+    .AddOtelConfiguration(builder.Environment, builder.Configuration);
 // .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
 // .AddConfigureLogging(builder)
 

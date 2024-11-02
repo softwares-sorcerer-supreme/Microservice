@@ -1,6 +1,7 @@
 using ApiGateway.ResilienceProvider;
 using ApiGateway.StartupRegistration;
 using MMLib.SwaggerForOcelot.DependencyInjection;
+using Observability.Registrations;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Polly;
@@ -15,6 +16,7 @@ builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 });
 
 builder.Services
+    .AddOtelConfiguration(builder.Environment, builder.Configuration)
     .AddOcelot(builder.Configuration)
     // .AddPolly<RetryProvider>(); QosProvider is not implemented yet
     // .AddCustomLoadBalancer<CustomLoadBalancer>();
