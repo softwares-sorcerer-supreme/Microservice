@@ -7,10 +7,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\BuildingBlocks\EventMessage\EventMessage.csproj" />
-	  <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
-	  <ProjectReference Include="..\ProductService.Application\ProductService.Application.csproj" />
-	  <ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj" />
+		<ProjectReference Include="..\..\..\BuildingBlocks\EventMessage\EventMessage.csproj"/>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj"/>
+		<ProjectReference Include="..\ProductService.Application\ProductService.Application.csproj"/>
+		<ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj"/>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Observability\Observability.csproj"/>
 	</ItemGroup>
 
 	<ItemGroup>

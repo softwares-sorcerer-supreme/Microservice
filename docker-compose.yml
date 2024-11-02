@@ -43,6 +43,12 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.14
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.14
+
 #  consul:
 #    image: consul:latest
 
@@ -51,6 +57,8 @@ volumes:
   postgres_productservice_data:
   postgres_cartservice_data:
   postgres_authservice_data:
+  elasticsearch-data:
+    driver: local
   redis-data:
     driver: local
   consul-data:

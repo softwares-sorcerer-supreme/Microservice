@@ -1,5 +1,6 @@
 using System.Reflection;
 using EventMessage.Registrations;
+using Observability.Registrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMassTransitConfiguration(Assembly.GetExecutingAssembly());
+builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();
 

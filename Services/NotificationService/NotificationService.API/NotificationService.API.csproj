@@ -13,20 +13,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Application\" />
-      <Folder Include="Controllers\" />
+        <Folder Include="Application\"/>
+        <Folder Include="Controllers\"/>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\Caching\Caching.csproj" />
-      <ProjectReference Include="..\..\..\BuildingBlocks\EventMessage\EventMessage.csproj" />
-      <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
+        <ProjectReference Include="..\..\..\BuildingBlocks\Caching\Caching.csproj"/>
+        <ProjectReference Include="..\..\..\BuildingBlocks\EventMessage\EventMessage.csproj"/>
+        <ProjectReference Include="..\..\..\BuildingBlocks\Observability\Observability.csproj"/>
+        <ProjectReference Include="..\..\..\BuildingBlocks\Observability\Observability.csproj"/>
+        <ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj"/>
     </ItemGroup>
 
 </Project>

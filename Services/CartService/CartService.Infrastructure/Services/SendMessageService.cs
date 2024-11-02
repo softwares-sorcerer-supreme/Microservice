@@ -28,7 +28,6 @@ public class SendMessageService : ISendMessageService
         try
         {
             var id = Guid.NewGuid();
-            Console.WriteLine(funcName + " " + id);
             await _messageSender.SendMessage<SendNotification>(new
             {
                 Content = new SendNotificationEvent
@@ -50,7 +49,6 @@ public class SendMessageService : ISendMessageService
         try
         {
             var id = Guid.NewGuid();
-            Console.WriteLine(funcName + " " + id);
             await _messageSender.PublishMessage<PublishNotification>(new
             {
                 Content = new SendNotificationEvent

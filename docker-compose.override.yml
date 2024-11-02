@@ -96,6 +96,34 @@ services:
       - '15672:15672'
     restart: always
         
+  elasticsearch:
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    environment:
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    restart: always
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+
+  kibana:
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    #      - ELASTICSEARCH_USERNAME=elastic
+    #      - ELASTICSEARCH_PASSWORD=DkIedPPSCb
+    ports:
+      - "5601:5601"
+    depends_on:
+      - elasticsearch
+    restart: always
+        
 #  consul:
 #    container_name: "consul"
 #    restart: always

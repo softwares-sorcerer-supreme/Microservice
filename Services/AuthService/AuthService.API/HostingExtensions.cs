@@ -4,6 +4,7 @@ using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
 using Caching.StartupRegistration;
 using Microsoft.OpenApi.Models;
+using Observability.Registrations;
 using Serilog;
 using Shared.HttpContextCustom;
 using Shared.Middlewares;
@@ -29,6 +30,8 @@ internal static class HostingExtensions
             .AddCustomHttpContextAccessor()
             .AddConfigureApiVersioning()
             .AddCustomSwaggerConfiguration();
+        
+        builder.Host.UseLogging(builder.Configuration);
         
         return builder.Build();
     }

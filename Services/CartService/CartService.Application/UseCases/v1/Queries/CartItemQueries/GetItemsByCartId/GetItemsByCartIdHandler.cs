@@ -68,7 +68,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{functionName} Error in GetItemsByCartIdHandler");
+            _logger.LogError(ex, $"{functionName} Has error: {ex.Message}");
             return CreateErrorResponse(ResponseStatusCode.InternalServerError, ResponseErrorMessageCode.ERR_SYS_0001);
         }
     }

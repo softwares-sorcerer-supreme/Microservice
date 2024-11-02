@@ -1,3 +1,4 @@
+using Observability.Registrations;
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
 using ProductService.Infrastructure.StartupRegistration;
@@ -24,17 +25,10 @@ builder.Services
     .AddOptionConfiguration(builder.Configuration)
     .AddHttpClientCustom(builder.Configuration)
     .AddDIConfiguration();
-    // .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
-    // .AddConfigureLogging(builder)
+// .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
+// .AddConfigureLogging(builder)
 
-    var loggerFactory = LoggerFactory.Create(
-        builder => builder
-            // add console as logging target
-            .AddConsole()
-            // add debug output as logging target
-            .AddDebug()
-            // set minimum level to log
-            .SetMinimumLevel(LogLevel.Debug));
+builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();
 

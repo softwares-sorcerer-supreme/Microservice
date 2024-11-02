@@ -8,6 +8,7 @@ using CartService.Persistence.StartupRegistration;
 using EventMessage.Registrations;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Observability.Registrations;
 using Shared.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,18 +33,10 @@ builder.Services
     .AddMongoDbConfiguration()
     .AddMassTransitConfiguration()
     .AddHealthChecks();
-    // .AddNpgSql(pgConnectionString)
-    // .AddRedis(redisConnectionString);
+// .AddNpgSql(pgConnectionString)
+// .AddRedis(redisConnectionString);
 
-    var loggerFactory = LoggerFactory.Create(
-        loggingBuilder => loggingBuilder
-            // add console as logging target
-            .AddConsole()
-            // add debug output as logging target
-            .AddDebug()
-            // set minimum level to log
-            .SetMinimumLevel(LogLevel.Debug));
-
+builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();
 
