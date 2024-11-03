@@ -70,7 +70,7 @@ I am planning to build architecture like this, this image just illustration my p
     - [ ] Log collectors (FluentD/(Logstash, FileBeat))
 
 - ##### Tracing:
-    - [ ] Jaeger/Zipkin
+    - [x] Jaeger/Zipkin
 
 - ##### Metrics:
     - [x] Prometheus (Alert, ...)
