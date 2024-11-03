@@ -27,7 +27,7 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
         }
     }
 }
-
+    
 
 class SendNotificationConsumerDefinition : ConsumerDefinition<SendNotificationConsumer>
 {
