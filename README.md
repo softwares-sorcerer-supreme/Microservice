@@ -13,6 +13,9 @@ I am planning to build architecture like this, this image just illustration my p
 ### Metrics:
 <img src="https://github.com/softwares-sorcerer-supreme/Microservice/blob/main/Visualize/grafana-metrics.png" alt="Grafana Metric Visualize"/>
 
+### Tracing:
+<img src="https://github.com/softwares-sorcerer-supreme/Microservice/blob/main/Visualize/jaeger-tracing.png" alt="Grafana Metric Visualize"/>
+
 # Components:
 
 ## Structure:
