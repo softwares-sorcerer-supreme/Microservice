@@ -4,7 +4,7 @@ using Shared.Validation;
 
 namespace Shared.Handler
 {
-    public class BaseHandler : BaseResponse
+    public record BaseHandler : BaseResponse
     {
         public string ErrorMessage { get; set; }
         public List<ValidationError> ErrorDetails { get; set; }

@@ -129,7 +129,7 @@ services:
     networks:
       - microservices-network
     ports:
-      - 9090:9090
+      - "9090:9090"
     volumes:
       - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
       
@@ -138,7 +138,7 @@ services:
     networks:
       - microservices-network 
     ports:
-      - 3000:3000
+      - "3000:3000"
     volumes:
       - ./configs/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
 #      - ./configs/dashboard.yml:/etc/grafana/provisioning/dashboards/dashboard.yml
@@ -163,10 +163,22 @@ services:
       - "8888:8888" # Prometheus metrics exposed by the collector
       - "8889:8889" # Prometheus exporter metrics
       - "4317:4317" # OTLP gRPC receiver
-    depends_on:
+    depends_on: 
       - jaeger
     networks:
       - microservices-network
+        
+  debezium:
+    container_name: "debezium"
+    image: debezium/server:latest
+    ports:
+      - "8083:8083"
+#    volumes:
+#      - ./configs/debezium.properties:/kafka/config/debezium.properties
+    depends_on:
+      - rabbitmq
+      - productservice.db
+    restart: always
 
 #  consul:
 #    container_name: "consul"

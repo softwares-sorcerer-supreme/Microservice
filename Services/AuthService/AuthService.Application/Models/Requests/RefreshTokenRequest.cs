@@ -1,6 +1,6 @@
 namespace AuthService.Application.Models.Requests;
 
-public class RefreshTokenRequest
+public record RefreshTokenRequest
 {
     public string RefreshToken { get; set; }
 }

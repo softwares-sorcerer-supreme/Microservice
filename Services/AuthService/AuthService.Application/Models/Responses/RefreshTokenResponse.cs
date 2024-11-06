@@ -2,12 +2,12 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses;
 
-public class RefreshTokenResponse : BaseResponse
+public record RefreshTokenResponse : BaseResponse
 {
     public RefreshTokenData Data { get; set; }
 }
 
-public class RefreshTokenData
+public record RefreshTokenData
 {
     public string AccessToken { get; set; }
     public string RefreshToken { get; set; }

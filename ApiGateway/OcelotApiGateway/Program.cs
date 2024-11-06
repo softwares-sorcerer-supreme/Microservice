@@ -1,4 +1,3 @@
-using ApiGateway.ResilienceProvider;
 using ApiGateway.StartupRegistration;
 using MMLib.SwaggerForOcelot.DependencyInjection;
 using Observability.Registrations;

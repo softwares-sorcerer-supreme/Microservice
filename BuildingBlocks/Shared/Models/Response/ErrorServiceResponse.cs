@@ -1,6 +1,6 @@
 namespace Shared.Models.Response;
 
-public class ErrorServiceResponse
+public record ErrorServiceResponse
 {
     public bool HasError { get; set; }
     public int Status { get; set; }

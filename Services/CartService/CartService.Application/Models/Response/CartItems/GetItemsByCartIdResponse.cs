@@ -3,18 +3,18 @@ using Shared.Models.Response;
 
 namespace CartService.Application.Models.Response.CartItems;
 
-public class GetItemsByCartIdResponse : BaseResponse
+public record GetItemsByCartIdResponse : BaseResponse
 {
     public GetItemByCartData Data { get; set; }
 }
 
-public class GetItemByCartData
+public record GetItemByCartData
 {
     public List<ItemDatas> Items { get; set; }
     public decimal TotalPrice { get; set; }
 }
 
-public class ItemDatas : ProductDto
+public record ItemDatas : ProductDto
 {
     public int Quantity { get; set; }
 }

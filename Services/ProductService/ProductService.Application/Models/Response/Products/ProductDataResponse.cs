@@ -1,6 +1,6 @@
 namespace ProductService.Application.Models.Response.Products;
 
-public class ProductDataResponse
+public record ProductDataResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;

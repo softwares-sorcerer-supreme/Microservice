@@ -3,7 +3,7 @@ using Ocelot.Provider.Polly.Interfaces;
 using Polly;
 using Polly.Retry;
 
-namespace ApiGateway.ResilienceProvider;
+namespace ApiGateway.OcelotCustomFeature.ResilienceProvider;
 
 public class RetryProvider : IPollyQoSResiliencePipelineProvider<HttpResponseMessage>
 {

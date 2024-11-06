@@ -1,6 +1,6 @@
 namespace AuthService.Application.Models.Dtos;
 
-public class UserDto
+public record UserDto
 {
     public string Id { get; set; } = string.Empty;
     public string Username { get; set; } = string.Empty;

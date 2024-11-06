@@ -60,6 +60,10 @@ services:
   
   otel-collector:
       image: otel/opentelemetry-collector:latest
+      
+  debezium:
+    image: debezium/server:latest
+      
 #  consul:
 #    image: consul:latest
 

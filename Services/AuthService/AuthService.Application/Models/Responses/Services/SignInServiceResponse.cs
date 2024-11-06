@@ -3,12 +3,12 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses.Services;
 
-public class SignInServiceResponse : ErrorServiceResponse
+public record SignInServiceResponse : ErrorServiceResponse
 {
     public SignInServiceData Data { get; set; }
 }
 
-public class SignInServiceData
+public record SignInServiceData
 {
     public UserDto User { get; set; }
 }

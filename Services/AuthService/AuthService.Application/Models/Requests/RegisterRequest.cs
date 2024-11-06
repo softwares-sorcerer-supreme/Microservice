@@ -1,6 +1,6 @@
 namespace AuthService.Application.Models.Requests;
 
-public class RegisterRequest
+public record RegisterRequest
 {
     public string Email { get; set; }
     public string Password { get; set; }

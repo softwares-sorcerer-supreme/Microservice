@@ -3,7 +3,7 @@ using Shared.Models.Dtos;
 
 namespace Shared.Models.Response;
 
-public class BaseResponse
+public record BaseResponse
 {
     public int Status { get; set; }
     public string ErrorMessageCode { get; set; } = string.Empty;

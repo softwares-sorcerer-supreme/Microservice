@@ -1,6 +1,6 @@
-using System.Globalization;
 using ProductService.Application.Grpc.Protos;
 using ProductService.Application.Models.Response.Products;
+using System.Globalization;
 
 namespace ProductService.Application.Extensions;
 
