@@ -1,6 +1,6 @@
 namespace EventMessage.IntegrationEvents;
 
-public class SendNotificationEvent
+public record SendNotificationEvent
 {
     public Guid Id { get; set; }
 }

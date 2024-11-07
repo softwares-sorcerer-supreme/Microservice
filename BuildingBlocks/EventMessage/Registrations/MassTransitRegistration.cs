@@ -46,7 +46,7 @@ public static class MassTransitRegistration
     
     public static WebApplication UseMassTransitHealthCheck(this WebApplication app)
     {
-        app.MapHealthChecks("/health/ready", new HealthCheckOptions()
+        app.MapHealthChecks("/health/ready", new HealthCheckOptions
         {
             Predicate = (check) => check.Tags.Contains("ready"),
         });
