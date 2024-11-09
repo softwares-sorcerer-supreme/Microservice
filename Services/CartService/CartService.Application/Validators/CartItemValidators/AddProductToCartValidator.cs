@@ -10,7 +10,7 @@ public class AddProductToCartValidator : AbstractValidator<AddItemToCartCommand>
         RuleFor(x => x.Payload)
             .NotNull()
             .WithMessage("Invalid data value");
-        
+
         RuleFor(x => x.Payload.Quantity)
             .GreaterThan(0)
             .WithMessage("Quantity must be greater than 0");

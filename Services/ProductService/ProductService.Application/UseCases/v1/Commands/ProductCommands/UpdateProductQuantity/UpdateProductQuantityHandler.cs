@@ -2,11 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
-using ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProductQuantity;
 
@@ -75,7 +73,6 @@ public class UpdateProductQuantityHandler : IRequestHandler<UpdateProductQuantit
                 Price = product.Price
             };
         }
-
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");

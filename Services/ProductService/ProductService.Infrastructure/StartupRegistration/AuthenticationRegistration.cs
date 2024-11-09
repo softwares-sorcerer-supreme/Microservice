@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +21,7 @@ public static class AuthenticationRegistration
         {
             // it's recommended to check the type header to avoid "JWT confusion" attacks
             options.TokenValidationParameters.ValidTypes = ["at+jwt"];
-            
+
             options.Authority = jwtOptions.Authority; // Set this to your IdentityServer4 URL
             options.RequireHttpsMetadata = false; // Set to true in production environments
             options.SaveToken = true;

@@ -1,16 +1,15 @@
-﻿using System.Text;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Polly.Registry;
+using System.Text;
 
 namespace Shared.HttpClientCustom;
 
-public class HttpClientCustom<T> : IHttpClientCustom<T> 
+public class HttpClientCustom<T> : IHttpClientCustom<T>
 {
     private readonly HttpClient _httpClient;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly ILogger<HttpClientCustom<T>> _logger;
-    
+
     public HttpClientCustom
     (
         HttpClient httpClient,
@@ -28,15 +27,15 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
         var functionName = $"{nameof(IHttpClientCustom<T>)}_{typeof(T).Name}-{path}-{nameof(GetAsync)} => ";
         try
         {
-        _logger.LogInformation($"{functionName} is called ...");
+            _logger.LogInformation($"{functionName} is called ...");
 
-        var response = await _httpClient.GetAsync(path, cancellationToken);
+            var response = await _httpClient.GetAsync(path, cancellationToken);
 
-        response.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
-        var result = await response.Content.ReadAsStringAsync(cancellationToken);
-        return default;
-        // return JsonConvert.DeserializeObject<TResult>(result);
+            var result = await response.Content.ReadAsStringAsync(cancellationToken);
+            return default;
+            // return JsonConvert.DeserializeObject<TResult>(result);
         }
         catch (Exception ex)
         {
@@ -44,7 +43,7 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
             return default;
         }
     }
-    
+
     public async Task<TResult?> GetAsync<TResult>(string host, string path, CancellationToken cancellationToken)
     {
         var requestUri = $"{host}/{path}";
@@ -71,15 +70,15 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
             return default;
         }
     }
-    
+
     public async Task<TResult?> PostAsync<TResult>(string path, string jsonContent, CancellationToken cancellationToken)
     {
         var functionName = $"{nameof(IHttpClientCustom<T>)}_{typeof(T).Name}-{path}-{nameof(PostAsync)} => ";
-        
+
         try
         {
             _logger.LogDebug($"{functionName} is called ...");
-            
+
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var response = await _httpClient.PostAsync(path, content, cancellationToken);
@@ -95,16 +94,16 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
             return default;
         }
     }
-    
+
     public async Task<TResult?> PostAsync<TResult>(string host, string path, string jsonContent, CancellationToken cancellationToken)
     {
         var requestUri = $"{host}/{path}";
         var functionName = $"{nameof(HttpClientCustom<T>)} - {nameof(PostAsync)} =>";
-        
+
         try
         {
             _logger.LogDebug($"{functionName} is called {requestUri}-{typeof(T).Name} => JsonContent = {jsonContent}");
-            
+
             var content = new StringContent(jsonContent, Encoding.UTF8, "application/json");
 
             var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);

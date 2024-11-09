@@ -7,7 +7,7 @@ namespace AuthService.Infrastructure.Identity;
 public class CustomResourceOwnerPasswordValidator : IResourceOwnerPasswordValidator
 {
     private readonly ILogger<CustomResourceOwnerPasswordValidator> _logger;
-        
+
     public CustomResourceOwnerPasswordValidator(ILogger<CustomResourceOwnerPasswordValidator> logger)
     {
         _logger = logger;
@@ -17,7 +17,7 @@ public class CustomResourceOwnerPasswordValidator : IResourceOwnerPasswordValida
     {
         const string functionName = $"{nameof(CustomResourceOwnerPasswordValidator)} - {nameof(ValidateAsync)} => ";
         _logger.LogInformation($"{functionName} UserName = {context.UserName}, ClientId = {context.Request.ClientId}");
-        
+
         try
         {
             context.Result = new GrantValidationResult(context.UserName, GrantType.ResourceOwnerPassword);

@@ -27,7 +27,7 @@ public static class LoggingRegistration
                 .ReadFrom.Configuration(configuration)
                 .Enrich.FromLogContext()
                 .WriteTo.Console(new CompactJsonFormatter());
-            
+
             if (elkOptions is { Enabled: true })
             {
                 logger.WriteTo.Elasticsearch([new Uri(elkOptions.ElasticSearchUrl)], opts =>
@@ -46,7 +46,7 @@ public static class LoggingRegistration
                     // transport.Authentication(new ApiKey(base64EncodedApiKey)); // ApiKey
                 });
             }
-            
+
             hostBuilder.UseSerilog(logger.CreateLogger());
 
             return hostBuilder;

@@ -6,7 +6,6 @@ using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductByIds;
 
@@ -14,6 +13,7 @@ public class GetProductByIdsHandler : IRequestHandler<GetProductByIdsQuery, GetP
 {
     private readonly ILogger<GetProductByIdsHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
+
     public GetProductByIdsHandler(ILogger<GetProductByIdsHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
@@ -34,17 +34,17 @@ public class GetProductByIdsHandler : IRequestHandler<GetProductByIdsQuery, GetP
         try
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
-                    where productIds.Contains(product.Id)
-                    select new ProductDataResponse
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Price = product.Price,
-                        Quantity = product.Quantity,
-                    })
+                                     where productIds.Contains(product.Id)
+                                     select new ProductDataResponse
+                                     {
+                                         Id = product.Id,
+                                         Name = product.Name,
+                                         Price = product.Price,
+                                         Quantity = product.Quantity,
+                                     })
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
-            
+
             response.Data = productData;
             return response;
         }

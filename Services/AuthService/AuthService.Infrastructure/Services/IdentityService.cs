@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AuthService.Application.Abstraction.Interfaces;
 using AuthService.Application.Models.Dtos;
 using AuthService.Application.Models.Responses.Services;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
+using System.Text.Json;
 
 namespace AuthService.Infrastructure.Services;
 
@@ -20,7 +20,7 @@ public class IdentityService : IIdentityService
     private readonly HttpClient _httpClient;
     private readonly ILogger<IdentityService> _logger;
     private readonly RoleManager<IdentityRole> _roleManager;
-    
+
     public IdentityService
     (
         UserManager<ApplicationUser> userManager,
@@ -86,7 +86,7 @@ public class IdentityService : IIdentityService
     {
         return await _httpClient.RequestPasswordTokenAsync(request, cancellationToken);
     }
-    
+
     public async Task SignOutAsync()
     {
         await _signInManager.SignOutAsync();
@@ -100,11 +100,11 @@ public class IdentityService : IIdentityService
         {
             HasError = true,
         };
-        
+
         try
         {
             var user = await _userManager.FindByEmailAsync(userDto.Email);
-            if(user != null)
+            if (user != null)
             {
                 _logger.LogWarning($"{functionName} User already exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
@@ -136,7 +136,7 @@ public class IdentityService : IIdentityService
             {
                 roleStr = RoleConst.Guest;
             }
-            
+
             var role = await _roleManager.FindByNameAsync(roleStr);
             if (role == null)
             {
@@ -155,9 +155,8 @@ public class IdentityService : IIdentityService
                 await _userManager.DeleteAsync(user);
                 return response;
             }
-            
+
             response.HasError = false;
-            
         }
         catch (Exception e)
         {

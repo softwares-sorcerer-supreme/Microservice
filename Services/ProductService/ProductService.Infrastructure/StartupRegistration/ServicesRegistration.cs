@@ -9,7 +9,7 @@ public static class ServicesRegistration
     public static IServiceCollection AddDIConfiguration(this IServiceCollection services)
     {
         services.AddScoped<ICartClient, CartClient>();
-        
+
         return services;
     }
 }

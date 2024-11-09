@@ -23,6 +23,7 @@ namespace AuthService.API.Pages.Home
                 ?.InformationalVersion.Split('+').First()
                 ?? "unavailable";
         }
+
         public IdentityServerLicense? License { get; }
     }
 }

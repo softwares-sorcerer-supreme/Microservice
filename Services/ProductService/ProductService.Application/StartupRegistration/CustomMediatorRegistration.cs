@@ -1,7 +1,7 @@
-﻿using System.Reflection;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using ProductService.Application.Behaviors;
+using System.Reflection;
 
 namespace ProductService.Application.StartupRegistration;
 

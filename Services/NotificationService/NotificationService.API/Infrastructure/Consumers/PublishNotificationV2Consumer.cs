@@ -6,12 +6,12 @@ namespace NotificationService.API.Infrastructure.Consumers;
 public class PublishNotificationV2Consumer : IConsumer<PublishNotification>
 {
     private readonly ILogger<PublishNotificationV2Consumer> _logger;
-    
+
     public PublishNotificationV2Consumer(ILogger<PublishNotificationV2Consumer> logger)
     {
         _logger = logger;
     }
-    
+
     public async Task Consume(ConsumeContext<PublishNotification> context)
     {
         var funcName = $"{nameof(PublishNotificationV2Consumer)} - {nameof(Consume)} - Correlation = {context.Message.CorrelationId} =>";
@@ -27,8 +27,7 @@ public class PublishNotificationV2Consumer : IConsumer<PublishNotification>
     }
 }
 
-
-class PublishNotificationConsumerV2Definition: ConsumerDefinition<PublishNotificationConsumer>
+internal class PublishNotificationConsumerV2Definition : ConsumerDefinition<PublishNotificationConsumer>
 {
     public PublishNotificationConsumerV2Definition()
     {

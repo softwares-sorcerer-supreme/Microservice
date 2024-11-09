@@ -1,5 +1,4 @@
-﻿using System.Threading.RateLimiting;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Shared.Constants;
@@ -33,7 +32,7 @@ public static class HttpClientCustomExtensions
                         .AddTimeout(PollyResilienceStrategies.Timeout(clientConfig.HttpClientTimeout))
             );
         }
-        
+
         if (clientConfig.IsEnableCircuitBreaker)
         {
             httpClientBuilder.AddResilienceHandler
@@ -44,7 +43,7 @@ public static class HttpClientCustomExtensions
                         .AddCircuitBreaker(PollyResilienceStrategies.CircuitBreaker(clientConfig.CircuitBreaker, logger))
             );
         }
-        
+
         if (clientConfig.IsEnableRateLimit)
         {
             httpClientBuilder.AddResilienceHandler
@@ -59,19 +58,19 @@ public static class HttpClientCustomExtensions
                     // context.EnableReloads<ConcurrencyLimiterOptions>("my-concurrency-options");
 
                     // var limiter = new ConcurrencyLimiter(options);
-                    
+
                     resiliencePipelineBuilder
                         .AddRateLimiter(PollyResilienceStrategies.RateLimit(clientConfig.RateLimit, logger));
-                    
+
                     // Dispose of the limiter when the pipeline is disposed.
                     // context.OnPipelineDisposed(() => limiter.Dispose());
                 }
-                    
+
             );
         }
 
         return services;
     }
-    
-    #endregion
+
+    #endregion Public Methods
 }

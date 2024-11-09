@@ -7,6 +7,7 @@ namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProdu
 public class GetProductsQuery : IRequest<GetProductsResponse>
 {
     public PagingRequest Payload { get; set; }
+
     public GetProductsQuery(PagingRequest payload)
     {
         Payload = payload;

@@ -7,4 +7,3 @@ public static class EnumExtensions
         return Convert.ToInt32(value);
     }
 }
-

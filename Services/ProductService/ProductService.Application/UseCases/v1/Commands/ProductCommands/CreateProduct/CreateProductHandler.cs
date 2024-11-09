@@ -6,7 +6,6 @@ using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProduct;
 
@@ -14,6 +13,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
 {
     private readonly ILogger<CreateProductHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
+
     public CreateProductHandler(ILogger<CreateProductHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
@@ -48,14 +48,14 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Create
                 return response;
             }
 
-            var productEntity = new Product 
+            var productEntity = new Product
             {
                 IsDeleted = false,
                 Name = payload.Name,
                 Price = payload.Price,
                 Quantity = payload.Quantity,
             };
-            
+
             await _unitOfWork.Product.AddAsync(productEntity, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

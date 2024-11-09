@@ -12,7 +12,7 @@ public class RedisService : IRedisService
     private readonly IDistributedCache _distributedCache;
     private readonly IDatabase Database;
     private readonly IConnectionMultiplexer _connectionMultiplexer;
-    
+
     private const string ClearCacheLuaScript =
     "for _,k in ipairs(redis.call('KEYS', ARGV[1])) do\n" +
     "    redis.call('DEL', k)\n" +
@@ -486,7 +486,7 @@ public class RedisService : IRedisService
         // the lock is automatically released at the end of the using block
         await using var redLock = await redLockFactory
             .CreateLockAsync(resource, expiryTime);
-        
+
         if (redLock.IsAcquired)
         {
             await func();
@@ -571,7 +571,7 @@ public class RedisService : IRedisService
     }
 
     #region Lists and Sets
-    
+
     public Task<long> ListLeftPushAsync<T>(string key, T item, When when = When.Always)
         where T : class
     {
@@ -692,7 +692,7 @@ public class RedisService : IRedisService
         return await Database.SortedSetDecrementAsync(key, entryBytes, value).ConfigureAwait(false);
     }
 
-    #endregion
+    #endregion Lists and Sets
 
     public async Task KeysDeleteAsync(params string[] keys)
     {
@@ -700,7 +700,6 @@ public class RedisService : IRedisService
 
         await this.Database.KeyDeleteAsync(keys.Select(x => (RedisKey)x).ToArray());
     }
-
 
     public async Task<bool> KeyExistsAsync(string key)
     {

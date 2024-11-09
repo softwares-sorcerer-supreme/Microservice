@@ -31,7 +31,7 @@ builder.Services
     .AddOptionConfiguration(builder.Configuration)
     .AddCustomSwaggerConfiguration()
     .AddMongoDbConfiguration()
-    .AddMassTransitConfiguration()    
+    .AddMassTransitConfiguration()
     .AddOtelConfiguration(builder.Environment, builder.Configuration)
     .AddHealthChecks();
 // .AddNpgSql(pgConnectionString)

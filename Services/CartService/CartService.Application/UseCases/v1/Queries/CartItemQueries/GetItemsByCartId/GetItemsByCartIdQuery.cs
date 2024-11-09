@@ -6,6 +6,7 @@ namespace CartService.Application.UseCases.v1.Queries.CartItemQueries.GetItemsBy
 public class GetItemsByCartIdQuery : IRequest<GetItemsByCartIdResponse>
 {
     public Guid CartId { get; set; }
+
     public GetItemsByCartIdQuery(Guid cartId)
     {
         CartId = cartId;

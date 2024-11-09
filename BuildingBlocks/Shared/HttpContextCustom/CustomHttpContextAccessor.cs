@@ -1,13 +1,14 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using IdentityModel;
+﻿using IdentityModel;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Shared.HttpContextCustom;
 
 public interface ICustomHttpContextAccessor
 {
     string GetCurrentUserId();
+
     bool IsUserAuthenticated();
 }
 

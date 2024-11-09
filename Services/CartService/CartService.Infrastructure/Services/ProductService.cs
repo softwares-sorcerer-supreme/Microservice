@@ -10,7 +10,7 @@ public class ProductService : IProductService
 {
     private readonly ProductProtoService.ProductProtoServiceClient _productProtoServiceClient;
     private readonly ILogger<ProductService> _logger;
-    
+
     public ProductService(ProductProtoService.ProductProtoServiceClient productProtoServiceClient, ILogger<ProductService> logger)
     {
         _productProtoServiceClient = productProtoServiceClient;
@@ -21,7 +21,7 @@ public class ProductService : IProductService
     {
         const string functionName = $"{nameof(ProductService)} => {nameof(GetProductsByIds)} => ";
         _logger.LogInformation($"{functionName} {string.Join(",", ids)}");
-        
+
         var response = new GetProductsByIdsResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
@@ -53,7 +53,7 @@ public class ProductService : IProductService
     {
         const string functionName = $"{nameof(ProductService)} => {nameof(UpdateProductQuantity)} => ";
         _logger.LogInformation($"{functionName} ProductId = {id}; Quantity = {quantity}");
-        
+
         var response = new ProductModelResponse
         {
             Status = ResponseStatusCode.OK.ToInt()
@@ -118,7 +118,7 @@ public class ProductService : IProductService
             Console.WriteLine("Server streaming response: " + current + ", Time: " + TimeSpan.TicksPerMicrosecond);
         }
     }
-    
+
     // Test client streaming
     public async Task TestClientStreaming()
     {
@@ -137,5 +137,4 @@ public class ProductService : IProductService
         _logger.LogInformation($"Client streaming response: {response}");
         Console.WriteLine("Client streaming response: " + response);
     }
-    
 }

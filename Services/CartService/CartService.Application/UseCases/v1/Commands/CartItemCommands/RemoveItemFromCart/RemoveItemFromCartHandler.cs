@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 
@@ -71,11 +70,11 @@ public class RemoveItemFromCartHandler : IRequestHandler<RemoveItemFromCartComma
                 _logger.LogWarning($"{functionName} Update product error");
                 return CreateErrorResponse((ResponseStatusCode)productResponse.Status, productResponse.ErrorMessageCode);
             }
-            
+
             isUpdatedQuantity = true;
             var productPrice = decimal.Parse(productResponse.Product.Price);
             cart.TotalPrice -= quantity * productPrice;
-            
+
             await _unitOfWork.CartItem.RemoveAsync(cartItem, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

@@ -133,7 +133,6 @@ namespace AuthService.API.Pages.Device
             return Page();
         }
 
-
         private async Task<bool> SetViewModelAsync(string userCode)
         {
             var request = await _interaction.GetAuthorizationContextAsync(userCode);

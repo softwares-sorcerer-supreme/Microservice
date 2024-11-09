@@ -1,5 +1,3 @@
-using System.Net.Mime;
-using System.Reflection;
 using EventMessage.Core;
 using EventMessage.Options;
 using MassTransit;
@@ -7,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
+using System.Reflection;
 
 namespace EventMessage.Registrations;
 
@@ -17,24 +16,25 @@ public static class MassTransitRegistration
         var currentEnv = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
         var rabbitMqOption = services.GetOptions<RabbitMqOption>(RabbitMqOption.OptionName);
-        
+
         services.AddMassTransit(busConfigurator =>
         {
-            if(entryAssembly is not null)
+            if (entryAssembly is not null)
             {
                 busConfigurator.AddConsumers(entryAssembly);
             }
-            
+
             busConfigurator.SetKebabCaseEndpointNameFormatter();
             if (currentEnv is "Development")
             {
-                busConfigurator.UsingRabbitMq((ctx,cfg) =>
+                busConfigurator.UsingRabbitMq((ctx, cfg) =>
                 {
-                    cfg.Host(rabbitMqOption.HostName, rabbitMqOption.Port, rabbitMqOption.VirtualHost, h => {
+                    cfg.Host(rabbitMqOption.HostName, rabbitMqOption.Port, rabbitMqOption.VirtualHost, h =>
+                    {
                         h.Username(rabbitMqOption.Username);
                         h.Password(rabbitMqOption.Password);
                     });
-                    
+
                     cfg.ConfigureEndpoints(ctx);
                 });
             }
@@ -43,7 +43,7 @@ public static class MassTransitRegistration
         services.AddScoped<IMessageSender, MessageSender>();
         return services;
     }
-    
+
     public static WebApplication UseMassTransitHealthCheck(this WebApplication app)
     {
         app.MapHealthChecks("/health/ready", new HealthCheckOptions
@@ -52,8 +52,7 @@ public static class MassTransitRegistration
         });
 
         app.MapHealthChecks("/health/live", new HealthCheckOptions());
-        
+
         return app;
     }
-    
 }

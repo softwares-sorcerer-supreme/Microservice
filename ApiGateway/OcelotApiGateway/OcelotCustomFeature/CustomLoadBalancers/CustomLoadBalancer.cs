@@ -28,5 +28,6 @@ public class CustomLoadBalancer : ILoadBalancer
         }
     }
 
-    public void Release(ServiceHostAndPort hostAndPort) { }
+    public void Release(ServiceHostAndPort hostAndPort)
+    { }
 }

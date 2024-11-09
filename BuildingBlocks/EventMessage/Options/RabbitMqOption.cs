@@ -3,7 +3,7 @@ namespace EventMessage.Options;
 public class RabbitMqOption
 {
     public const string OptionName = "RabbitMqSettings";
-    
+
     public string HostName { get; set; }
     public ushort Port { get; set; }
     public string VirtualHost { get; set; }

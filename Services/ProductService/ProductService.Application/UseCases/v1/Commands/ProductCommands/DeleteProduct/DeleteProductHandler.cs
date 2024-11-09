@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using ProductService.Application.Models.Response.Products;
 using ProductService.Domain.Abstraction;
-using ProductService.Domain.Entities;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.DeleteProduct;
 
@@ -14,13 +12,13 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
 {
     private readonly ILogger<DeleteProductHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
-    
+
     public DeleteProductHandler(ILogger<DeleteProductHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
         _unitOfWork = unitOfWork;
     }
-    
+
     public async Task<DeleteProductResponse> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(DeleteProductHandler)} =>";
@@ -47,9 +45,9 @@ public class DeleteProductHandler : IRequestHandler<DeleteProductCommand, Delete
 
                 return response;
             }
-            
+
             product.IsDeleted = true;
-            
+
             await _unitOfWork.Product.UpdateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

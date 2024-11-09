@@ -19,7 +19,7 @@ public class AddItemToCartPostProcessor : IRequestPostProcessor<AddItemToCartCom
         _logger = logger;
         _sendMessageService = sendMessageService;
     }
-    
+
     public async Task Process(AddItemToCartCommand request, AddItemToCartResponse response, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(AddItemToCartPostProcessor)} =>";

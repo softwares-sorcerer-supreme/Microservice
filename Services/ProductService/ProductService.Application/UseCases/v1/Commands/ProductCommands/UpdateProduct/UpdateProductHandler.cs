@@ -6,7 +6,6 @@ using ProductService.Application.UseCases.v1.Commands.ProductCommands.CreateProd
 using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.UpdateProduct;
 
@@ -55,11 +54,10 @@ public class UpdateProductHandler : IRequestHandler<UpdateProductCommand, Update
             product.Name = payload.Name;
             product.Price = payload.Price;
             product.Quantity = payload.Quantity;
-            
+
             await _unitOfWork.Product.UpdateAsync(product, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }
-        
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} Has error => {ex.Message}");

@@ -1,14 +1,12 @@
 ﻿using CartService.Application.Models.Response.CartItems;
 using CartService.Application.Services.GrpcService;
 using CartService.Domain.Abstraction;
+using CartService.Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Shared.CommonExtension;
-using Shared.Models.Response;
-using CartService.Domain.Entities;
-using Polly.Registry;
 using ProductService.Application.Grpc.Protos;
+using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
 
@@ -19,7 +17,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
     private readonly ILogger<GetItemsByCartIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IProductService _productService;
-    
+
     public GetItemsByCartIdHandler
     (
         ILogger<GetItemsByCartIdHandler> logger,
@@ -40,8 +38,8 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
-        var cartId = request.CartId;;
-        
+        var cartId = request.CartId; ;
+
         try
         {
             var cart = await _unitOfWork.Cart.GetQueryable().FirstOrDefaultAsync(c => c.Id == cartId, cancellationToken);

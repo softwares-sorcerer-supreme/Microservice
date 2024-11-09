@@ -14,7 +14,7 @@ public class LoginPostProcessor : IRequestPostProcessor<LoginCommand, LoginRespo
     private readonly IRedisService _redisService;
     private readonly ILogger<LoginPostProcessor> _logger;
     private readonly Options.ClientOptions _clientOptions;
-    
+
     public LoginPostProcessor
     (
         IRedisService redisService,
@@ -26,20 +26,20 @@ public class LoginPostProcessor : IRequestPostProcessor<LoginCommand, LoginRespo
         _logger = logger;
         _clientOptions = clientOptions.Value;
     }
-    
+
     public async Task Process(LoginCommand request, LoginResponse response, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(LoginPostProcessor)} =>";
         _logger.LogInformation($"{functionName}");
-        
+
         try
         {
-            if(response.Status != ResponseStatusCode.OK.ToInt())
+            if (response.Status != ResponseStatusCode.OK.ToInt())
             {
                 _logger.LogWarning($"{functionName} Error while logging in");
                 return;
             }
-            
+
             var postProcessorData = response.Data;
             await _redisService.HashSetAsync(AuthCacheKeysConst.RefreshTokenStoresKey, postProcessorData.UserId, postProcessorData.RefreshToken, TimeSpan.FromSeconds(_clientOptions.UserCredentials.RefreshTokenLifetime));
         }

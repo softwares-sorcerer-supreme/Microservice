@@ -6,12 +6,12 @@ namespace NotificationService.API.Infrastructure.Consumers;
 public class SendNotificationConsumer : IConsumer<SendNotification>
 {
     private readonly ILogger<SendNotificationConsumer> _logger;
-    
+
     public SendNotificationConsumer(ILogger<SendNotificationConsumer> logger)
     {
         _logger = logger;
     }
-    
+
     public async Task Consume(ConsumeContext<SendNotification> context)
     {
         var funcName = $"{nameof(SendNotificationConsumer)} - {nameof(Consume)} - Correlation = {context.Message.CorrelationId} =>";
@@ -27,9 +27,8 @@ public class SendNotificationConsumer : IConsumer<SendNotification>
         }
     }
 }
-    
 
-class SendNotificationConsumerDefinition : ConsumerDefinition<SendNotificationConsumer>
+internal class SendNotificationConsumerDefinition : ConsumerDefinition<SendNotificationConsumer>
 {
     public SendNotificationConsumerDefinition()
     {

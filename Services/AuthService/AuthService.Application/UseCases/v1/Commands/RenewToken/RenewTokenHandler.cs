@@ -20,7 +20,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
     private readonly ILogger<RenewTokenHandler> _logger;
     private readonly Options.ClientOptions _clientOptions;
     private readonly ICustomHttpContextAccessor _httpContextAccessor;
-    
+
     public RenewTokenHandler
     (
         IIdentityService identityService,
@@ -45,7 +45,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
-        
+
         var payload = request.Payload;
         try
         {
@@ -59,7 +59,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
                 response.ErrorMessageCode = ResponseErrorMessageCode.ERR_AUTH_0009;
                 return response;
             }
-            
+
             if (refreshToken != cachedRefreshToken)
             {
                 _logger.LogWarning($"{functionName} Refresh token not match");
@@ -75,7 +75,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
                 ClientSecret = _clientOptions.UserCredentials.ClientSecret,
                 RefreshToken = refreshToken
             };
-            
+
             var tokenResponse = await _identityService.RefreshTokenAsync(refreshTokenRequest);
             if (!string.IsNullOrEmpty(tokenResponse.Error))
             {
@@ -84,7 +84,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
                 response.ErrorMessageCode = ResponseErrorMessageCode.ERR_SYS_0001;
                 return response;
             }
-            
+
             var data = new RefreshTokenData
             {
                 AccessToken = tokenResponse.AccessToken,
@@ -93,7 +93,7 @@ public class RenewTokenHandler : IRequestHandler<RenewTokenCommand, RefreshToken
                 TokenType = tokenResponse.TokenType,
                 UserId = userId
             };
-            
+
             response.Data = data;
             return response;
         }

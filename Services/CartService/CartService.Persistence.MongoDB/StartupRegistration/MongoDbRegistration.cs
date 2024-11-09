@@ -32,5 +32,4 @@ public static class MongoDbRegistration
 
         return services;
     }
-    
 }

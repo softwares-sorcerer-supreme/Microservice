@@ -7,6 +7,7 @@ namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.RemoveIt
 public class RemoveItemFromCartCommand : IRequest<RemoveItemFromCartResponse>
 {
     public RemoveItemFromCartRequest Payload { get; set; }
+
     public RemoveItemFromCartCommand(RemoveItemFromCartRequest payload)
     {
         Payload = payload;

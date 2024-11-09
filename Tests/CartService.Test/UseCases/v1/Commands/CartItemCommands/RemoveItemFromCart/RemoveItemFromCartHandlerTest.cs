@@ -11,7 +11,6 @@ using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace CartService.Test.UseCases.v1.Commands.CartItemCommands.RemoveItemFromCart;
 
@@ -30,7 +29,7 @@ public class RemoveItemFromCartHandlerTest
         _mockLogger = new Mock<ILogger<RemoveItemFromCartHandler>>();
         _handlerTest = new RemoveItemFromCartHandler(
             _mockLogger.Object,
-            _mockUnitOfWork.Object, 
+            _mockUnitOfWork.Object,
             _mockProductService.Object
             );
         _fixture = new Fixture();
@@ -65,13 +64,13 @@ public class RemoveItemFromCartHandlerTest
             CartId = cartId,
             ProductId = Guid.NewGuid(),
         };
-        
+
         var request = _fixture.Build<RemoveItemFromCartCommand>()
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         _mockUnitOfWork.Setup(uow => uow.Cart.GetQueryable())
             .Returns(new List<Cart> { cart }.AsQueryable().BuildMock());
 
@@ -96,13 +95,13 @@ public class RemoveItemFromCartHandlerTest
             CartId = cartId,
             ProductId = Guid.NewGuid(),
         };
-        
+
         var request = _fixture.Build<RemoveItemFromCartCommand>()
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         var cartItem = new CartItem
         {
             CartId = request.Payload.CartId,
@@ -145,13 +144,13 @@ public class RemoveItemFromCartHandlerTest
             CartId = cartId,
             ProductId = Guid.NewGuid(),
         };
-        
+
         var request = _fixture.Build<RemoveItemFromCartCommand>()
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         var cartItem = new CartItem
         {
             CartId = request.Payload.CartId,
@@ -194,13 +193,13 @@ public class RemoveItemFromCartHandlerTest
             CartId = cartId,
             ProductId = Guid.NewGuid(),
         };
-        
+
         var request = _fixture.Build<RemoveItemFromCartCommand>()
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         var cartItem = new CartItem
         {
             CartId = request.Payload.CartId,

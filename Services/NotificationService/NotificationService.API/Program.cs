@@ -1,6 +1,6 @@
-using System.Reflection;
 using EventMessage.Registrations;
 using Observability.Registrations;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 

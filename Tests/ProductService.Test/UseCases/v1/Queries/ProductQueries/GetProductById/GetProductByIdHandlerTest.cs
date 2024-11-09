@@ -6,7 +6,6 @@ using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductBy
 using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.Enums;
-using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
 

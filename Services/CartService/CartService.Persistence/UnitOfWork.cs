@@ -10,7 +10,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly DbContext _context;
     public ICartRepository Cart { get; set; }
     public ICartItemRepository CartItem { get; set; }
-    
+
     public UnitOfWork(ApplicationDbContext context)
     {
         _context = context;
@@ -22,7 +22,6 @@ public class UnitOfWork : IUnitOfWork
     {
         await _context.SaveChangesAsync(cancellationToken);
     }
-
 
     public async ValueTask DisposeAsync()
     {

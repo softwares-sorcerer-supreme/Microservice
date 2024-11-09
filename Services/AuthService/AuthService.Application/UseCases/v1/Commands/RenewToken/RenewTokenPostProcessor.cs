@@ -1,7 +1,6 @@
 using AuthService.Application.Constants;
 using AuthService.Application.Models.Responses;
 using AuthService.Application.Options;
-using AuthService.Application.UseCases.v1.Commands.Login;
 using Caching.Services;
 using MediatR.Pipeline;
 using Microsoft.Extensions.Logging;
@@ -16,7 +15,7 @@ public class RenewTokenPostProcessor : IRequestPostProcessor<RenewTokenCommand, 
     private readonly IRedisService _redisService;
     private readonly ILogger<RenewTokenPostProcessor> _logger;
     private readonly ClientOptions _clientOptions;
-    
+
     public RenewTokenPostProcessor
     (
         IRedisService redisService,
@@ -28,15 +27,15 @@ public class RenewTokenPostProcessor : IRequestPostProcessor<RenewTokenCommand, 
         _logger = logger;
         _clientOptions = clientOptions.Value;
     }
-    
+
     public async Task Process(RenewTokenCommand request, RefreshTokenResponse response, CancellationToken cancellationToken)
     {
         const string functionName = $"{nameof(RenewTokenPostProcessor)} =>";
         _logger.LogInformation($"{functionName}");
-        
+
         try
         {
-            if(response.Status != ResponseStatusCode.OK.ToInt())
+            if (response.Status != ResponseStatusCode.OK.ToInt())
             {
                 _logger.LogWarning($"{functionName} Error while logging in");
                 return;

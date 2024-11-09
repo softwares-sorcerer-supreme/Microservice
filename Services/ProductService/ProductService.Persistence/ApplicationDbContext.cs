@@ -1,6 +1,6 @@
-﻿using System.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProductService.Domain.Entities;
+using System.Data;
 
 namespace ProductService.Persistence;
 
@@ -9,7 +9,7 @@ public class ApplicationDbContext : DbContext
     public ApplicationDbContext()
     {
     }
-    
+
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
     {
     }

@@ -21,9 +21,10 @@ namespace CartService.API.Controllers;
 public class CartController : ControllerBase
 {
     private readonly IMediator _mediator;
-    
+
     //Only for test
     private readonly IUnitOfWorkMongoDb _unitOfWorkMongoDb;
+
     private readonly ISendMessageService _sendMessageService;
 
     public CartController
@@ -40,7 +41,6 @@ public class CartController : ControllerBase
 
     [HttpGet]
     [Route("{id}/products")]
-    
     public async Task<IActionResult> GetItemsByCartId(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetItemsByCartIdQuery(id), cancellationToken);
@@ -51,7 +51,7 @@ public class CartController : ControllerBase
     [HttpPost]
     [Route("{id}/products")]
     [Authorize(Policy = "AdminPolicy")]
-    public async Task<IActionResult> AddItemToCart(Guid id, [FromBody] AddItemToCartRequest request,CancellationToken cancellationToken)
+    public async Task<IActionResult> AddItemToCart(Guid id, [FromBody] AddItemToCartRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new AddItemToCartCommand(id, request), cancellationToken);
         return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode);
@@ -93,7 +93,7 @@ public class CartController : ControllerBase
         await _unitOfWorkMongoDb.SaveChangesAsync(cancellationToken);
         return Ok("Ok");
     }
-    
+
     [HttpPost]
     [Route("test-mongo-search")]
     public async Task<IActionResult> TestMongo(Guid id, CancellationToken cancellationToken)
@@ -102,9 +102,9 @@ public class CartController : ControllerBase
         var result = await a.Where(x => x.Id == id).FirstOrDefaultAsync(cancellationToken);
         return Ok(result);
     }
-    
+
     /// <summary>
-    /// 
+    ///
     /// </summary>
     /// <param name="type">Send = 1, Publish = 2</param>
     /// <param name="cancellationToken"></param>
@@ -121,10 +121,9 @@ public class CartController : ControllerBase
         {
             await _sendMessageService.SendAddToCartNotification(cancellationToken);
         }
-        
+
         return Ok("Ok");
     }
-    
 }
 
 public enum SendMessageType

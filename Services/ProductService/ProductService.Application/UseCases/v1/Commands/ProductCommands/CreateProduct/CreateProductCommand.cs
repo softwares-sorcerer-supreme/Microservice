@@ -7,6 +7,7 @@ namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.Create
 public class CreateProductCommand : IRequest<CreateProductResponse>
 {
     public CreateProductRequest Payload { get; set; }
+
     public CreateProductCommand(CreateProductRequest payload)
     {
         Payload = payload;

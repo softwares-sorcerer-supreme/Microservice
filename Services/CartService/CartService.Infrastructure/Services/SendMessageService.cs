@@ -62,5 +62,4 @@ public class SendMessageService : ISendMessageService
             _logger.LogError(ex, $"{funcName} => {ex.Message}");
         }
     }
-    
 }

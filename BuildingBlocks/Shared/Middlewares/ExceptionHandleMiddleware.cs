@@ -1,8 +1,8 @@
-﻿using System.Net;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Shared.Constants;
 using Shared.Handler;
 using Shared.Validation;
+using System.Net;
 
 namespace Shared.Middlewares;
 

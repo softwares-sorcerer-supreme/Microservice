@@ -10,7 +10,7 @@ public static class GrpcRegistration
         services.AddGrpc();
         return services;
     }
-    
+
     public static WebApplication MapGrpcConfiguration(this WebApplication app)
     {
         app.MapGrpcService<Application.Services.ProductService>();

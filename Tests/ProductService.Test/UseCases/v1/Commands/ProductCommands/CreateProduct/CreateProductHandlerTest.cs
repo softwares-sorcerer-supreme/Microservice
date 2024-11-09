@@ -8,7 +8,6 @@ using ProductService.Domain.Abstraction;
 using ProductService.Domain.Entities;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
 

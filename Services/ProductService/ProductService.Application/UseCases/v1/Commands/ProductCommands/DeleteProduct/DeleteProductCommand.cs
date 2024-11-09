@@ -6,6 +6,7 @@ namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.Delete
 public class DeleteProductCommand : IRequest<DeleteProductResponse>
 {
     public Guid Id { get; set; }
+
     public DeleteProductCommand(Guid id)
     {
         Id = id;

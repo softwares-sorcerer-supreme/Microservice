@@ -10,7 +10,6 @@ using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductBy
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 using Xunit;
 using Assert = Xunit.Assert;
 
@@ -156,7 +155,7 @@ public class ProductServiceTests
         Assert.Equal(ResponseErrorMessageCode.ERR_PRODUCT_0001, response.ErrorMessageCode);
     }
 
-    #endregion
+    #endregion UpdateProductQuantity
 
     #region GetProductsById
 
@@ -220,5 +219,5 @@ public class ProductServiceTests
         Assert.Equal(ResponseErrorMessageCode.ERR_PRODUCT_0001, response.ErrorMessageCode);
     }
 
-    #endregion
+    #endregion GetProductsById
 }

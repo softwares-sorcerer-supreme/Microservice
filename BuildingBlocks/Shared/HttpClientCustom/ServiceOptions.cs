@@ -1,17 +1,18 @@
-
 namespace Shared.HttpClientCustom;
 
 public class ServiceOptions
 {
     public const string OptionName = "Services";
-    
+
     public ProductServiceClient ProductService { get; set; }
     public OrderServiceClient OrderService { get; set; }
     public CartServiceClient CartService { get; set; }
 }
 
 public class ProductServiceClient : ResilienceConfig;
+
 public class OrderServiceClient : ResilienceConfig;
+
 public class CartServiceClient : ResilienceConfig;
 
 public class ResilienceConfig

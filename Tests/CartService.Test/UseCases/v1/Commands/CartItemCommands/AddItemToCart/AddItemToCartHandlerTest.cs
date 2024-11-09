@@ -11,7 +11,6 @@ using ProductService.Application.Grpc.Protos;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace CartService.Test.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 
@@ -22,13 +21,13 @@ public class AddItemToCartHandlerTest
     private readonly Mock<ILogger<AddItemToCartHandler>> _mockLogger;
     private readonly AddItemToCartHandler _handler;
     private readonly IFixture _fixture;
-    
+
     public AddItemToCartHandlerTest()
     {
         _mockUnitOfWork = new Mock<IUnitOfWork>();
         _mockProductService = new Mock<IProductService>();
         _mockLogger = new Mock<ILogger<AddItemToCartHandler>>();
-        _handler = new AddItemToCartHandler(_mockLogger.Object, _mockUnitOfWork.Object, _mockProductService.Object );
+        _handler = new AddItemToCartHandler(_mockLogger.Object, _mockUnitOfWork.Object, _mockProductService.Object);
         _fixture = new Fixture();
     }
 
@@ -39,7 +38,7 @@ public class AddItemToCartHandlerTest
         var request = _fixture.Build<AddItemToCartCommand>()
             .With(x => x.Payload, _fixture.Create<AddItemToCartRequest>())
             .Create();
-        
+
         _mockUnitOfWork.Setup(uow => uow.Cart.GetQueryable())
             .Returns(new List<Cart>().AsQueryable().BuildMock());
 
@@ -61,7 +60,7 @@ public class AddItemToCartHandlerTest
             ProductId = Guid.NewGuid(),
             Quantity = 1
         };
-        
+
         var request = _fixture.Build<AddItemToCartCommand>()
             .With(x => x.CartId, cartId)
             .With(x => x.Payload, payloadRequest)
@@ -69,7 +68,7 @@ public class AddItemToCartHandlerTest
 
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         var productResponse = new ProductModelResponse
         {
             Status = ResponseStatusCode.BadRequest.ToInt(),
@@ -111,14 +110,14 @@ public class AddItemToCartHandlerTest
             ProductId = Guid.NewGuid(),
             Quantity = 1
         };
-        
+
         var request = _fixture.Build<AddItemToCartCommand>()
             .With(x => x.CartId, cartId)
             .With(x => x.Payload, payloadRequest)
             .Create();
         var cart = _fixture.Create<Cart>();
         cart.Id = cartId;
-        
+
         var productResponse = new ProductModelResponse
         {
             Status = ResponseStatusCode.OK.ToInt(),

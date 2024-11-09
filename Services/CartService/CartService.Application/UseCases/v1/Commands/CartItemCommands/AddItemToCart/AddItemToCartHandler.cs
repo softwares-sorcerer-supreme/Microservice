@@ -8,7 +8,6 @@ using Microsoft.Extensions.Logging;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace CartService.Application.UseCases.v1.Commands.CartItemCommands.AddItemToCart;
 
@@ -83,7 +82,7 @@ public class AddItemToCartHandler : IRequestHandler<AddItemToCartCommand, AddIte
         catch (Exception ex)
         {
             _logger.LogError(ex, $"{functionName} has error: {ex.Message}");
-            
+
             // Rollback the product quantity
             if (isUpdatedQuantity)
             {

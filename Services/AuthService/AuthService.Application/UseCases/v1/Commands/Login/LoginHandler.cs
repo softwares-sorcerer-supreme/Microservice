@@ -1,4 +1,3 @@
-using System.Text.Json;
 using AuthService.Application.Abstraction.Interfaces;
 using AuthService.Application.Constants;
 using AuthService.Application.Models.Responses;
@@ -9,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
+using System.Text.Json;
 
 namespace AuthService.Application.UseCases.v1.Commands.Login;
 

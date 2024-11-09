@@ -10,8 +10,8 @@ public class LoginValidator : AbstractValidator<LoginCommand>
         RuleFor(x => x.Payload.Username)
             .NotEmpty()
             .WithMessage("Username is required");
-            // .EmailAddress()
-            // .WithMessage("Email is not valid");
+        // .EmailAddress()
+        // .WithMessage("Email is not valid");
 
         RuleFor(x => x.Payload.Password)
             .NotEmpty()

@@ -1,6 +1,5 @@
 using Caching.Options;
 using Caching.Services;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
 using StackExchange.Redis;
@@ -19,14 +18,14 @@ public static class RedisConfiguration
         (
             opt =>
              ConnectionMultiplexer.Connect(new ConfigurationOptions
-                {
-                    EndPoints = { redisUrl },
-                    AbortOnConnectFail = false,
-                    Ssl = redisOptions.IsSSL,
-                    Password = redisOptions.Password
-                })
+             {
+                 EndPoints = { redisUrl },
+                 AbortOnConnectFail = false,
+                 Ssl = redisOptions.IsSSL,
+                 Password = redisOptions.Password
+             })
         );
-        
+
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = redisUrl;
@@ -38,7 +37,7 @@ public static class RedisConfiguration
         });
 
         services.AddScoped<IRedisService, RedisService>();
-        
+
         return services;
     }
 }

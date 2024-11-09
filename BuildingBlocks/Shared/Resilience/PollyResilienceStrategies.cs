@@ -1,11 +1,10 @@
-using System.Net;
-using System.Net.Sockets;
-using System.Threading.RateLimiting;
 using Microsoft.Extensions.Http.Resilience;
 using Microsoft.Extensions.Logging;
 using Polly;
 using Polly.Timeout;
 using Shared.HttpClientCustom;
+using System.Net;
+using System.Threading.RateLimiting;
 
 namespace Shared.Resilience;
 
@@ -77,7 +76,7 @@ public static class PollyResilienceStrategies
                     or HttpStatusCode.GatewayTimeout
                     or HttpStatusCode.ServiceUnavailable
                 } => PredicateResult.True(),
-            
+
                 _ => PredicateResult.False()
             },
             OnRetry = args =>
@@ -88,7 +87,7 @@ public static class PollyResilienceStrategies
             }
         };
     }
-    
+
     public static HttpTimeoutStrategyOptions Timeout(int timeoutInSeconds)
     {
         return new HttpTimeoutStrategyOptions
@@ -96,7 +95,7 @@ public static class PollyResilienceStrategies
             Timeout = TimeSpan.FromSeconds(timeoutInSeconds),
         };
     }
-    
+
     public static HttpRateLimiterStrategyOptions RateLimit(RateLimitOptions options, ILogger logger)
     {
         return new HttpRateLimiterStrategyOptions
@@ -113,7 +112,7 @@ public static class PollyResilienceStrategies
                 return ValueTask.CompletedTask;
             },
         };
-        
+
         // Create a rate limiter that allows 100 executions per minute.
         // new ResiliencePipelineBuilder()
         //     .AddRateLimiter(new SlidingWindowRateLimiter(
@@ -122,8 +121,5 @@ public static class PollyResilienceStrategies
         //             PermitLimit = 100,
         //             Window = TimeSpan.FromMinutes(1)
         //         }));
-        
     }
-    
-    
 }

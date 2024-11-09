@@ -1,9 +1,9 @@
-﻿using IdentityModel;
+﻿using AuthService.Persistence.Identity;
+using IdentityModel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Security.Claims;
-using AuthService.Persistence.Identity;
 
 namespace AuthService.API;
 

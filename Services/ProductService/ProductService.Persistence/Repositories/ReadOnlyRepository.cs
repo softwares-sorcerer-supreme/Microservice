@@ -1,6 +1,6 @@
-using System.Data;
 using Dapper;
 using ProductService.Domain.Abstraction.Repositories;
+using System.Data;
 
 namespace ProductService.Persistence.Repositories;
 

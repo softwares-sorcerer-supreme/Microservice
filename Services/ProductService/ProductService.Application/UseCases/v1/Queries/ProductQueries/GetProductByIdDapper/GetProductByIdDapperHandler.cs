@@ -39,7 +39,7 @@ public class GetProductByIdDapperHandler : IRequestHandler<GetProductByIdDapperQ
         {
             const string query = "SELECT * FROM \"Products\" WHERE \"Id\" = @Id";
             var product = await _readOnlyRepository.QueryFirstOrDefaultAsync<Product>(query, new { Id = productId }, cancellationToken: cancellationToken);
-            
+
             response.Data = new ProductDataResponse
             {
                 Id = product.Id,
@@ -47,7 +47,7 @@ public class GetProductByIdDapperHandler : IRequestHandler<GetProductByIdDapperQ
                 Price = product.Price,
                 Quantity = product.Quantity
             };
-            
+
             return response;
         }
         catch (Exception ex)

@@ -54,8 +54,6 @@ namespace AuthService.API.Pages
         {
             _noConsentMatchingRequest(logger, returnUrl, null);
         }
-
-
     }
 
     internal static class EventIds
@@ -66,6 +64,7 @@ namespace AuthService.API.Pages
         // Consent
         //////////////////////////////
         private const int ConsentEventsStart = UIEventsStart + 1000;
+
         public const int InvalidId = ConsentEventsStart + 0;
         public const int NoConsentMatchingRequest = ConsentEventsStart + 1;
 
@@ -73,16 +72,15 @@ namespace AuthService.API.Pages
         // External Login
         //////////////////////////////
         private const int ExternalLoginEventsStart = UIEventsStart + 2000;
+
         public const int ExternalClaims = ExternalLoginEventsStart + 0;
 
         //////////////////////////////
         // CIBA
         //////////////////////////////
         private const int CibaEventsStart = UIEventsStart + 3000;
+
         public const int InvalidBackchannelLoginId = CibaEventsStart + 0;
         public const int NoMatchingBackchannelLoginRequest = CibaEventsStart + 1;
-
-
-
     }
 }

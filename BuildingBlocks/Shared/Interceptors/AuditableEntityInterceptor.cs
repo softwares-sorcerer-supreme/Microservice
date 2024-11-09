@@ -10,6 +10,7 @@ namespace Shared.Interceptors;
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
     private readonly IServiceProvider _serviceProvider;
+
     public AuditableEntityInterceptor(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
@@ -35,10 +36,10 @@ public class AuditableEntityInterceptor : SaveChangesInterceptor
         {
             return;
         }
-        
+
         using var scope = _serviceProvider.CreateScope();
         var customHttpContext = scope.ServiceProvider.GetRequiredService<ICustomHttpContextAccessor>();
-        
+
         var userId = customHttpContext.GetCurrentUserId();
         foreach (var entry in context.ChangeTracker.Entries<IAuditable>())
         {

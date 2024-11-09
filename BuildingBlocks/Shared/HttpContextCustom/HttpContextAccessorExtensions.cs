@@ -11,5 +11,5 @@ public static class HttpContextAccessorExtensions
         services.AddHttpContextAccessor();
         services.TryAddSingleton<ICustomHttpContextAccessor, CustomHttpContextAccessor>();
         return services;
-    } 
+    }
 }

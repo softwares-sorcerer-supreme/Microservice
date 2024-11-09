@@ -6,9 +6,9 @@ namespace ProductService.Application.UseCases.v1.Commands.ProductCommands.Update
 
 public class UpdateProductCommand : IRequest<UpdateProductResponse>
 {
-    public Guid Id { get; set; }   
+    public Guid Id { get; set; }
     public UpdateProductRequest Payload { get; set; }
-    
+
     public UpdateProductCommand(Guid id, UpdateProductRequest payload)
     {
         Id = id;

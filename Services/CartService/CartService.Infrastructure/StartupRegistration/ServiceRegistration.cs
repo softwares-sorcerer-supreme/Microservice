@@ -21,8 +21,7 @@ public static class ServiceRegistration
 
         //Event message
         services.AddScoped<ISendMessageService, SendMessageService>();
-        
+
         return services;
     }
-
 }

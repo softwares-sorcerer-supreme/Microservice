@@ -3,7 +3,6 @@ using AuthService.Application.StartupRegistration;
 using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
 using Caching.StartupRegistration;
-using Microsoft.OpenApi.Models;
 using Observability.Registrations;
 using Serilog;
 using Shared.HttpContextCustom;
@@ -17,7 +16,7 @@ internal static class HostingExtensions
     {
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
-        
+
         builder.Services.AddRazorPages();
 
         builder.Services.AddAuthenticationConfiguration(builder.Configuration)
@@ -31,9 +30,9 @@ internal static class HostingExtensions
             .AddConfigureApiVersioning()
             .AddCustomSwaggerConfiguration()
             .AddOtelConfiguration(builder.Environment, builder.Configuration);
-        
+
         builder.Host.UseLogging(builder.Configuration);
-        
+
         return builder.Build();
     }
 
@@ -48,10 +47,10 @@ internal static class HostingExtensions
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Authentication - V1");
                 c.SwaggerEndpoint("/swagger/v2/swagger.json", "Authentication - V2");
-            });            
+            });
             app.UseDeveloperExceptionPage();
         }
-        
+
         app.UseMiddleware<ExceptionHandleMiddleware>();
         app.UseHttpsRedirection();
         app.UseStaticFiles();

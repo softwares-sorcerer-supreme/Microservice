@@ -6,6 +6,7 @@ namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProdu
 public class GetProductByIdQuery : IRequest<GetProductByIdResponse>
 {
     public Guid Id { get; set; }
+
     public GetProductByIdQuery(Guid id)
     {
         Id = id;

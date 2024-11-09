@@ -6,7 +6,6 @@ using ProductService.Domain.Abstraction;
 using Shared.CommonExtension;
 using Shared.Enums;
 using Shared.Extensions;
-using Shared.Models.Response;
 
 namespace ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProducts;
 
@@ -35,14 +34,14 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
         try
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
-                    where !product.IsDeleted
-                    select new ProductDataResponse
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Price = product.Price,
-                        Quantity = product.Quantity,
-                    })
+                                     where !product.IsDeleted
+                                     select new ProductDataResponse
+                                     {
+                                         Id = product.Id,
+                                         Name = product.Name,
+                                         Price = product.Price,
+                                         Quantity = product.Quantity,
+                                     })
                 .AsNoTracking()
                 .ToListAsPageAsync(payload.PageNumber, payload.MaxPerPage, cancellationToken);
 

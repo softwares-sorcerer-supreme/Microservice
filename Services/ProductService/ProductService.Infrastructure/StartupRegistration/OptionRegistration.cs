@@ -12,7 +12,7 @@ public static class OptionRegistration
         services.Configure<GrpcOptions>(configuration.GetSection(GrpcOptions.OptionName));
         services.Configure<JwtOptions>(configuration.GetSection(JwtOptions.OptionName));
         services.Configure<ServiceOptions>(configuration.GetSection(ServiceOptions.OptionName));
-        
+
         return services;
     }
 }

@@ -6,11 +6,13 @@ public enum ResponseStatusCode
 {
     // Successful 2xx
     OK = 200,
+
     Created = 201,
     NoContent = 204,
 
     // Client Error 4xx
     BadRequest = 400,
+
     Unauthorized = 401,
     Forbidden = 403,
     NotFound = 404,
@@ -20,6 +22,7 @@ public enum ResponseStatusCode
 
     // Server Error 5xx
     InternalServerError = 500,
+
     BadGateway = 502,
     ServiceUnavailable = 503,
     GatewayTimeout = 504,

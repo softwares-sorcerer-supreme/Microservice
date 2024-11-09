@@ -9,7 +9,7 @@ public static class DependencyInjectionRegistration
     public static IServiceCollection AddDIConfiguration(this IServiceCollection services)
     {
         services.AddScoped<IIdentityService, IdentityService>();
-        
+
         return services;
     }
 }

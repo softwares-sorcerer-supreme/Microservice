@@ -15,7 +15,8 @@ public static class AuthenticationRegistration
             .AddDefaultTokenProviders()
             .AddApiEndpoints();
 
-        services.Configure<IdentityOptions> (options => {
+        services.Configure<IdentityOptions>(options =>
+        {
             // Thiết lập về Password
             options.Password.RequireDigit = false; // Không bắt phải có số
             options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
@@ -25,7 +26,7 @@ public static class AuthenticationRegistration
             options.Password.RequiredUniqueChars = 1; // Số ký tự riêng biệt
 
             // Cấu hình Lockout - khóa user
-            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes (5); // Khóa 5 phút
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Khóa 5 phút
             options.Lockout.MaxFailedAccessAttempts = 5; // Thất bại 5 lầ thì khóa
             options.Lockout.AllowedForNewUsers = true;
 
@@ -49,10 +50,10 @@ public static class AuthenticationRegistration
 
                 // see https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/
                 options.EmitStaticAudienceClaim = true;
-                
+
                 options.KeyManagement.Enabled = false;
             })
-            // .AddInMemoryIdentityResources(Config.IdentityResources) // Use this when use OIDC 
+            // .AddInMemoryIdentityResources(Config.IdentityResources) // Use this when use OIDC
             .AddInMemoryApiScopes(Config.ApiScopes)
             .AddInMemoryClients(Config.Clients(configuration)) //TODO: change this => .AddClientStore<>()
             .AddAspNetIdentity<ApplicationUser>()
@@ -71,7 +72,7 @@ public static class AuthenticationRegistration
         //         options.ClientId = "copy client ID from Google here";
         //         options.ClientSecret = "copy client secret from Google here";
         //     });
-        
+
         return services;
     }
 }

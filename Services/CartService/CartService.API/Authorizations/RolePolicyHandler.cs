@@ -1,6 +1,5 @@
-using System.Security.Claims;
-using IdentityModel;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CartService.API.Authorizations;
 
@@ -13,10 +12,10 @@ public class RolePolicyHandler : AuthorizationHandler<RolePolicyRequirement>
             context.Fail();
             return Task.CompletedTask;
         }
-        
+
         //getting custom_roles from our claims
         var roleClaims = context.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value.ToString();
-        
+
         //check if the claims contains the required roles
         if (roleClaims != null && requirement.Roles != null && roleClaims.Split(",").ToArray().Any(requirement.Roles.Contains))
         {
@@ -24,7 +23,7 @@ public class RolePolicyHandler : AuthorizationHandler<RolePolicyRequirement>
             context.Succeed(requirement);
             return Task.CompletedTask;
         }
-        
+
         //Unauthorized
         context.Fail();
         return Task.CompletedTask;

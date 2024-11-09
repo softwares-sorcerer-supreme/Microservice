@@ -22,7 +22,7 @@ public class HealthCheckCartServiceHandler : IRequestHandler<HealthCheckCartServ
         _cartClient = cartClient;
         _logger = logger;
     }
-    
+
     public async Task<HealthCheckCartServiceResponse> Handle(HealthCheckCartServiceQuery request, CancellationToken cancellationToken)
     {
         const string funcName = nameof(HealthCheckCartServiceHandler);
@@ -31,7 +31,7 @@ public class HealthCheckCartServiceHandler : IRequestHandler<HealthCheckCartServ
         {
             Status = ResponseStatusCode.OK.ToInt()
         };
-        
+
         try
         {
             await _cartClient.HealthCheckCartService(cancellationToken);

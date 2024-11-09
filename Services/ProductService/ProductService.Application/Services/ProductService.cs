@@ -1,4 +1,3 @@
-using System.Globalization;
 using Grpc.Core;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -10,7 +9,6 @@ using ProductService.Application.UseCases.v1.Queries.ProductQueries.GetProductBy
 using Shared.CommonExtension;
 using Shared.Constants;
 using Shared.Enums;
-using Shared.Models.Response;
 
 namespace ProductService.Application.Services;
 
@@ -136,7 +134,7 @@ public class ProductService : ProductProtoService.ProductProtoServiceBase
 
         return response;
     }
-    
+
     //Test server streaming grpc
     public override async Task TestSeverStreaming(TestSeverStreamingRequest request,
         IServerStreamWriter<TestSeverStreamingResponse> responseStream,

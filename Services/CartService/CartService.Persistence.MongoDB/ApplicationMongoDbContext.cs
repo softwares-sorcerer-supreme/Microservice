@@ -18,8 +18,8 @@ public class ApplicationMongoDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-        
+
         modelBuilder.Entity<Cart>().ToCollection(nameof(Cart)).HasKey(x => x.Id);
-        modelBuilder.Entity<CartItem>().ToCollection(nameof(CartItem)).HasKey(x => new {x.CartId, x.ProductId});
+        modelBuilder.Entity<CartItem>().ToCollection(nameof(CartItem)).HasKey(x => new { x.CartId, x.ProductId });
     }
 }

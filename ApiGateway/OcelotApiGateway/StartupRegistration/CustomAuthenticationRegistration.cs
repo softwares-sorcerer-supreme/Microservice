@@ -29,7 +29,7 @@ public static class CustomAuthenticationRegistration
                 ValidateLifetime = true // Ensure the token is still valid
             };
         });
-        
+
         return services;
     }
 }

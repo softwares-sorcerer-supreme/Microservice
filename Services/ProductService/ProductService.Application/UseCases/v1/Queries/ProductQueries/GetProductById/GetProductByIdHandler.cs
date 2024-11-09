@@ -12,6 +12,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
 {
     private readonly ILogger<GetProductByIdHandler> _logger;
     private readonly IUnitOfWork _unitOfWork;
+
     public GetProductByIdHandler(ILogger<GetProductByIdHandler> logger, IUnitOfWork unitOfWork)
     {
         _logger = logger;
@@ -32,18 +33,18 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
         try
         {
             var productData = await (from product in _unitOfWork.Product.GetQueryable()
-                    where product.Id == productId && !product.IsDeleted
-                    select new ProductDataResponse
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Price = product.Price,
-                        Quantity = product.Quantity,
-                    })
+                                     where product.Id == productId && !product.IsDeleted
+                                     select new ProductDataResponse
+                                     {
+                                         Id = product.Id,
+                                         Name = product.Name,
+                                         Price = product.Price,
+                                         Quantity = product.Quantity,
+                                     })
                 .AsNoTracking()
                 .FirstOrDefaultAsync(cancellationToken);
 
-            if(productData == null)
+            if (productData == null)
             {
                 _logger.LogWarning($"{functionName} Product does not exists");
                 response.Status = ResponseStatusCode.BadRequest.ToInt();
@@ -52,7 +53,7 @@ public class GetProductByIdHandler : IRequestHandler<GetProductByIdQuery, GetPro
 
                 return response;
             }
-            
+
             response.Data = productData;
             return response;
         }

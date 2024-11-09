@@ -1,5 +1,4 @@
 ﻿using AuthService.API;
-using Observability.Registrations;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -11,11 +10,11 @@ Log.Information("Starting up");
 try
 {
     var builder = WebApplication.CreateBuilder(args);
-    
+
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
-    
+
     // this seeding is only for the template to bootstrap the DB and users.
     // in production you will likely want a different approach.
     if (args.Contains("/seed"))

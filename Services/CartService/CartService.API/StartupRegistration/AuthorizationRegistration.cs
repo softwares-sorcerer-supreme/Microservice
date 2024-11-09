@@ -12,14 +12,14 @@ public static class AuthorizationRegistration
             .AddPolicy("AdminPolicy",
                 policyBuilder =>
                 {
-                    policyBuilder.AddRequirements(new RolePolicyRequirement(RoleConst.Admin)); 
+                    policyBuilder.AddRequirements(new RolePolicyRequirement(RoleConst.Admin));
                 })
             .AddPolicy("UserPolicy",
                 policyBuilder =>
                 {
-                    policyBuilder.AddRequirements(new RolePolicyRequirement(RoleConst.Guest)); 
+                    policyBuilder.AddRequirements(new RolePolicyRequirement(RoleConst.Guest));
                 });
-        
+
         services.AddSingleton<IAuthorizationHandler, RolePolicyHandler>();
 
         return services;

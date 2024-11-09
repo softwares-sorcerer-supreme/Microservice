@@ -15,15 +15,15 @@ public static class OtelRegistration
     public static IServiceCollection AddOtelConfiguration(this IServiceCollection services, IWebHostEnvironment environment, IConfiguration configuration)
     {
         var otelExporterOltEndpoint = configuration.GetSection("OTEL_EXPORTER_OTLP_ENDPOINT").Value;
-        
+
         services.AddOpenTelemetry()
             .ConfigureResource(resource => resource.AddService(serviceName: environment.ApplicationName))
             .AddMetricsTelemetry(otelExporterOltEndpoint)
             .AddTracingTelemetry(otelExporterOltEndpoint);
-        
+
         return services;
     }
-    
+
     // Add Tracing for ASP.NET Core and our custom ActivitySource and export to Jaeger
     private static IOpenTelemetryBuilder AddTracingTelemetry(this IOpenTelemetryBuilder otel, string? tracingOtlpEndpoint)
     {
@@ -47,7 +47,7 @@ public static class OtelRegistration
                 // automatically sets Activity Status to Error if an unhandled exception is thrown
                 // This is a setting that determines whether unhandled exceptions should be automatically recorded.
                 options.RecordException = true;
-                
+
                 //This enriches the activity with additional information from any unhandled exceptions. Here, it’s adding tags with the exception type and stack trace.
                 options.EnrichWithException = (activity, exception) =>
                 {
@@ -71,7 +71,7 @@ public static class OtelRegistration
                     // activity.SetTag("db.name", stateDisplayName);
                 };
             });
-            
+
             if (!string.IsNullOrEmpty(tracingOtlpEndpoint))
             {
                 tracing.AddOtlpExporter(otlpOptions =>
@@ -85,7 +85,7 @@ public static class OtelRegistration
             }
         });
     }
-    
+
     // Add Metrics for ASP.NET Core and export to Prometheus
     private static IOpenTelemetryBuilder AddMetricsTelemetry(this IOpenTelemetryBuilder otel, string? metricsOtlpEndpoint)
     {
@@ -102,7 +102,7 @@ public static class OtelRegistration
                 }
             }));
     }
-    
+
     /// <summary>
     /// Use when use the Prometheus exporter
     /// </summary>

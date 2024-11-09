@@ -70,9 +70,9 @@ public static class Config
                 // {
                 //     ClientId = "interactive",
                 //     ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-                //         
+                //
                 //     AllowedGrantTypes = GrantTypes.Code,
-                //         
+                //
                 //     RedirectUris = { "https://localhost:5000/signin-oidc" },
                 //     FrontChannelLogoutUri = "https://localhost:5001/signout-oidc",
                 //     PostLogoutRedirectUris = { "https://localhost:5001/signout-callback-oidc" },
@@ -80,14 +80,14 @@ public static class Config
                 //     AllowOfflineAccess = true,
                 //     AllowedScopes =
                 //     {
-                //         IdentityServerConstants.StandardScopes.OpenId, 
+                //         IdentityServerConstants.StandardScopes.OpenId,
                 //         IdentityServerConstants.StandardScopes.Profile,
                 //         ApiScopeConstant.ProductApiRead,
                 //         ApiScopeConstant.ProductApiWrite,
                 //         ApiScopeConstant.CartApiRead,
                 //         ApiScopeConstant.CartApiWrite,
                 //     },
-                //     
+                //
                 //     AllowedCorsOrigins = { "https://localhost:5001" }
                 // }
             ]
