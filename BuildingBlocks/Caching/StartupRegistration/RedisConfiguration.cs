@@ -13,27 +13,23 @@ public static class RedisConfiguration
         // Register Redis
         var redisOptions = services.GetOptions<RedisOptions>(RedisOptions.OptionName);
         var redisUrl = $"{redisOptions.Host}:{redisOptions.Port}";
-
+        var configurationOptions = new ConfigurationOptions
+        {
+            EndPoints = { redisUrl },
+            AbortOnConnectFail = false,
+            Ssl = redisOptions.IsSSL,
+            Password = redisOptions.Password
+        };
+        
         services.AddSingleton<IConnectionMultiplexer>
         (
-            opt =>
-             ConnectionMultiplexer.Connect(new ConfigurationOptions
-             {
-                 EndPoints = { redisUrl },
-                 AbortOnConnectFail = false,
-                 Ssl = redisOptions.IsSSL,
-                 Password = redisOptions.Password
-             })
+            _ => ConnectionMultiplexer.Connect(configurationOptions)
         );
 
         services.AddStackExchangeRedisCache(options =>
         {
             options.Configuration = redisUrl;
-            options.ConfigurationOptions = new ConfigurationOptions()
-            {
-                AbortOnConnectFail = true,
-                EndPoints = { redisUrl }
-            };
+            options.ConfigurationOptions = configurationOptions;
         });
 
         services.AddScoped<IRedisService, RedisService>();

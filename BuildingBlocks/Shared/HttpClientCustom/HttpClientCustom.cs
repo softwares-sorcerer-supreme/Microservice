@@ -34,8 +34,7 @@ public class HttpClientCustom<T> : IHttpClientCustom<T>
             response.EnsureSuccessStatusCode();
 
             var result = await response.Content.ReadAsStringAsync(cancellationToken);
-            return default;
-            // return JsonConvert.DeserializeObject<TResult>(result);
+            return JsonConvert.DeserializeObject<TResult>(result);
         }
         catch (Exception ex)
         {

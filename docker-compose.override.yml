@@ -169,45 +169,45 @@ services:
     networks:
       - microservices-network
         
-  debezium:
-    container_name: "debezium"
-    image: debezium/server:latest
-    ports:
-      - "8083:8083"
-    #    volumes:
-    #      - ./configs/debezium.properties:/kafka/config/debezium.properties
-    environment:
-      # Debezium Server configuration
-      - DEBEZIUM_SERVICE_NAME=debezium-server
-      - DEBEZIUM_SOURCE_OFFSET_STORAGE_FILE_FILENAME=/debezium/data/offsets.dat
-      - DEBEZIUM_SOURCE_OFFSET_STORAGE_FILE_FLUSH_INTERVAL_MS=60000
-      - DEBEZIUM_SOURCE_TOMBSTONES_ON_DELETE=false
-      - QUARKUS_LOG_CONSOLE_JSON=false
-      
-      # PostgreSQL source configuration
-      - DEBEZIUM_SOURCE_CONNECTOR_CLASS=io.debezium.connector.postgresql.PostgresConnector
-      - DEBEZIUM_SOURCE_PLUGIN_NAME=pgoutput
-      - DEBEZIUM_SOURCE_DATABASE_HOSTNAME=productservice_db
-      - DEBEZIUM_SOURCE_DATABASE_PORT=5432
-      - DEBEZIUM_SOURCE_DATABASE_USER=admin
-      - DEBEZIUM_SOURCE_DATABASE_PASSWORD=123456
-      - DEBEZIUM_SOURCE_DATABASE_DBNAME=productdb
-      - DEBEZIUM_SOURCE_SCHEMA_INCLUDES_LIST=public
-      - DEBEZIUM_SOURCE_TABLE_INCLUDES_LIST=public.Products
-      - DEBEZIUM_SOURCE_TOPIC_PREFIX=debezium.public
-      
-      # RabbitMQ sink configuration
-      - DEBEZIUM_SINK_TYPE=rabbitmq
-      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_HOST=rabbitmq
-      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_PORT=5672
-      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_USERNAME=guest
-      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_PASSWORD=guest
-      - DEBEZIUM_SINK_RABBITMQ_EXCHANGE_NAME=debezium-products-update
-    depends_on:
-      - rabbitmq
-      - productservice.db
-      - cartservice.db.mongo
-    restart: always
+#  debezium:
+#    container_name: "debezium"
+#    image: debezium/server:latest
+#    ports:
+#      - "8083:8083"
+#    #    volumes:
+#    #      - ./configs/debezium.properties:/kafka/config/debezium.properties
+#    environment:
+#      # Debezium Server configuration
+#      - DEBEZIUM_SERVICE_NAME=debezium-server
+#      - DEBEZIUM_SOURCE_OFFSET_STORAGE_FILE_FILENAME=/debezium/data/offsets.dat
+#      - DEBEZIUM_SOURCE_OFFSET_STORAGE_FILE_FLUSH_INTERVAL_MS=60000
+#      - DEBEZIUM_SOURCE_TOMBSTONES_ON_DELETE=false
+#      - QUARKUS_LOG_CONSOLE_JSON=false
+#      
+#      # PostgreSQL source configuration
+#      - DEBEZIUM_SOURCE_CONNECTOR_CLASS=io.debezium.connector.postgresql.PostgresConnector
+#      - DEBEZIUM_SOURCE_PLUGIN_NAME=pgoutput
+#      - DEBEZIUM_SOURCE_DATABASE_HOSTNAME=productservice_db
+#      - DEBEZIUM_SOURCE_DATABASE_PORT=5432
+#      - DEBEZIUM_SOURCE_DATABASE_USER=admin
+#      - DEBEZIUM_SOURCE_DATABASE_PASSWORD=123456
+#      - DEBEZIUM_SOURCE_DATABASE_DBNAME=productdb
+#      - DEBEZIUM_SOURCE_SCHEMA_INCLUDES_LIST=public
+#      - DEBEZIUM_SOURCE_TABLE_INCLUDES_LIST=public.Products
+#      - DEBEZIUM_SOURCE_TOPIC_PREFIX=debezium.public
+#      
+#      # RabbitMQ sink configuration
+#      - DEBEZIUM_SINK_TYPE=rabbitmq
+#      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_HOST=rabbitmq
+#      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_PORT=5672
+#      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_USERNAME=guest
+#      - DEBEZIUM_SINK_RABBITMQ_CONNECTION_PASSWORD=guest
+#      - DEBEZIUM_SINK_RABBITMQ_EXCHANGE_NAME=debezium-products-update
+#    depends_on:
+#      - rabbitmq
+#      - productservice.db
+#      - cartservice.db.mongo
+#    restart: always
 
 #  consul:
 #    container_name: "consul"

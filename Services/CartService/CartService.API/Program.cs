@@ -8,6 +8,7 @@ using CartService.Persistence.StartupRegistration;
 using EventMessage.Registrations;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Observability.Middlewares;
 using Observability.Registrations;
 using Shared.Middlewares;
 
@@ -48,7 +49,9 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
+app.UseMassTransitHealthCheck();
 app.UseMiddleware<ExceptionHandleMiddleware>();
+app.UseMiddleware<LogContextMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 //HealthCheck Middleware

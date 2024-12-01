@@ -39,7 +39,7 @@ public class MessageSender : IMessageSender
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(MessageSender)} {nameof(SendMessage)} => {ex.Message}");
+            _logger.LogError(ex, $"{funcName} Has error: {ex.Message}");
         }
     }
 
@@ -53,7 +53,7 @@ public class MessageSender : IMessageSender
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, $"{nameof(PublishMessage)} {nameof(SendMessage)} => {ex.Message}");
+            _logger.LogError(ex, $"{funcName} Has error: {ex.Message}");
         }
     }
 }

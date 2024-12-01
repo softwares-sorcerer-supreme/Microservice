@@ -11,7 +11,6 @@ public class RedisService : IRedisService
 {
     private readonly IDistributedCache _distributedCache;
     private readonly IDatabase Database;
-    private readonly IConnectionMultiplexer _connectionMultiplexer;
 
     private const string ClearCacheLuaScript =
     "for _,k in ipairs(redis.call('KEYS', ARGV[1])) do\n" +
@@ -19,21 +18,14 @@ public class RedisService : IRedisService
     "end";
 
     private const int RedisDefaultSlidingExpirationInSecond = 3600;
-
+ 
     public RedisService(IDistributedCache distributedCache, IConnectionMultiplexer connectionMultiplexer)
     {
-        _connectionMultiplexer = connectionMultiplexer;
-        Database = _connectionMultiplexer.GetDatabase();
+        Database = connectionMultiplexer.GetDatabase();
         _distributedCache = distributedCache;
     }
 
-    private ConnectionMultiplexer ConnectionMultiplexer
-    {
-        get
-        {
-            return Database.Multiplexer as ConnectionMultiplexer;
-        }
-    }
+    private ConnectionMultiplexer ConnectionMultiplexer => Database.Multiplexer as ConnectionMultiplexer;
 
     public T? Get<T>(string key)
     {
@@ -181,7 +173,7 @@ public class RedisService : IRedisService
             {
                     /*_redisOptions.Prefix +*/ "*"
             });
-    }
+     }
 
     //public async Task<IEnumerable<string>> GetKeysAsync()
     //{

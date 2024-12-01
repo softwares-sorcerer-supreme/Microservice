@@ -1,3 +1,4 @@
+using Observability.Middlewares;
 using Observability.Registrations;
 using ProductService.API.StartupRegistration;
 using ProductService.Application.StartupRegistration;
@@ -42,6 +43,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionHandleMiddleware>();
+app.UseMiddleware<LogContextMiddleware>();
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
