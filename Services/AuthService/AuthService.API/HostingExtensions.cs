@@ -32,6 +32,8 @@ internal static class HostingExtensions
             .AddOtelConfiguration(builder.Environment, builder.Configuration);
 
         builder.Host.UseLogging(builder.Configuration);
+        builder.Services.AddExceptionHandler<ExceptionHandler>();
+        builder.Services.AddProblemDetails();
 
         return builder.Build();
     }
@@ -50,8 +52,7 @@ internal static class HostingExtensions
             });
             app.UseDeveloperExceptionPage();
         }
-
-        app.UseMiddleware<ExceptionHandleMiddleware>();
+        
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseRouting();

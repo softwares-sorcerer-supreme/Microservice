@@ -34,7 +34,7 @@ public class IdentityService : IIdentityService
         _userManager = userManager;
         _httpClient = httpClient;
         _logger = logger;
-        _roleManager = roleManager;
+        _roleManager = roleManager; 
     }
 
     public async Task<SignInServiceResponse> SignInAsync(string email, string password, bool isPersistent, bool lockoutOnFailure)

@@ -7,7 +7,6 @@ namespace Shared.Handler
     public record BaseHandler : BaseResponse
     {
         public string ErrorMessage { get; set; }
-        public List<ValidationError> ErrorDetails { get; set; }
 
         public override string ToString()
         {

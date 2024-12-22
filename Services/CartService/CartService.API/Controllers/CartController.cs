@@ -103,6 +103,13 @@ public class CartController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet]
+    [Route("test-exception")]
+    public async Task<IActionResult> TestExceptional(CancellationToken cancellationToken)
+    {
+        throw new Exception("Test Exception");
+    }
+
     /// <summary>
     ///
     /// </summary>

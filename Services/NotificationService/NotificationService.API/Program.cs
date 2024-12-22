@@ -25,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMassTransitHealthCheck();
+// app.UseMassTransitHealthCheck();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

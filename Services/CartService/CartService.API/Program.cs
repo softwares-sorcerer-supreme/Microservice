@@ -38,9 +38,11 @@ builder.Services
 // .AddNpgSql(pgConnectionString)
 // .AddRedis(redisConnectionString);
 builder.Host.UseLogging(builder.Configuration);
+builder.Services.AddExceptionHandler<ExceptionHandler>();
+builder.Services.AddProblemDetails();
 
 var app = builder.Build();
-
+app.UseExceptionHandler();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -49,8 +51,7 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-app.UseMassTransitHealthCheck();
-app.UseMiddleware<ExceptionHandleMiddleware>();
+// app.UseMassTransitHealthCheck();
 app.UseMiddleware<LogContextMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

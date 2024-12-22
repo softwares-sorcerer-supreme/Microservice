@@ -1,3 +1,4 @@
+using EventMessage.Registrations;
 using Observability.Middlewares;
 using Observability.Registrations;
 using ProductService.API.StartupRegistration;
@@ -26,10 +27,12 @@ builder.Services
     .AddOptionConfiguration(builder.Configuration)
     .AddHttpClientCustom(builder.Configuration)
     .AddDIConfiguration()
-    .AddOtelConfiguration(builder.Environment, builder.Configuration);
-// .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
+    .AddOtelConfiguration(builder.Environment, builder.Configuration)
+    .AddMassTransitConfiguration(AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(x => x.FullName != null && x.FullName.Contains(nameof(ProductService.Infrastructure))));
 // .AddConfigureLogging(builder)
 
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<ExceptionHandler>();
 builder.Host.UseLogging(builder.Configuration);
 
 var app = builder.Build();
@@ -39,10 +42,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
+    // app.UseDeveloperExceptionPage();
 }
 
-app.UseMiddleware<ExceptionHandleMiddleware>();
+app.UseStatusCodePages();
+app.UseExceptionHandler();
+
 app.UseMiddleware<LogContextMiddleware>();
 
 app.UseHttpsRedirection();
