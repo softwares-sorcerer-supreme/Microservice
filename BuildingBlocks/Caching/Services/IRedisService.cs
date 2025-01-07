@@ -6,7 +6,7 @@ namespace Caching.Services;
 
 public interface IRedisService
 {
-    Task<T> GetAsync<T>(string key);
+    Task<T?> GetAsync<T>(string key);
 
     Task SetAsync<T>(string key, T value);
 

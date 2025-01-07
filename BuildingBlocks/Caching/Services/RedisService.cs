@@ -38,15 +38,11 @@ public class RedisService : IRedisService
         return default;
     }
 
-    public async Task<T> GetAsync<T>(string key)
+    public async Task<T?> GetAsync<T>(string key)
     {
         var value = await _distributedCache.GetStringAsync(key);
 
-        if (!string.IsNullOrWhiteSpace(value))
-        {
-            return CacheHelper.Deserialize<T>(value);
-        }
-        return default;
+        return !string.IsNullOrWhiteSpace(value) ? CacheHelper.Deserialize<T>(value) : default;
     }
 
     public void Set<T>(string key, T value)

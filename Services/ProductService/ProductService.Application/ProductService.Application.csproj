@@ -14,6 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\..\BuildingBlocks\Caching\Caching.csproj" />
 		<ProjectReference Include="..\..\..\BuildingBlocks\Shared\Shared.csproj" />
 		<ProjectReference Include="..\ProductService.Domain\ProductService.Domain.csproj" />
 	</ItemGroup>

@@ -4,6 +4,7 @@ using AuthService.Application.UseCases.v1.Commands.RenewToken;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
+using Caching.Behaviors;
 
 namespace AuthService.Application.StartupRegistration;
 
@@ -19,7 +20,8 @@ public static class CustomMediatorRegistration
             cfg.AutoRegisterRequestProcessors = true;
         });
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehavior<,>));
-
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(CachingBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(InvalidateCachingBehavior<,>));
         return services;
     }
 }
