@@ -1,4 +1,4 @@
-using ApiGateway.StartupRegistration;
+using ApiGateway.Registration;
 using MMLib.SwaggerForOcelot.DependencyInjection;
 using Observability.Registrations;
 using Ocelot.DependencyInjection;
@@ -8,7 +8,7 @@ using Ocelot.Provider.Polly;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var routes = "Routes";
+const string routes = "Routes";
 builder.Configuration.AddOcelotWithSwaggerSupport(options =>
 {
     options.Folder = routes;
@@ -18,7 +18,7 @@ builder.Services
     .AddOtelConfiguration(builder.Environment, builder.Configuration)
     .AddOcelot(builder.Configuration)
     // .AddPolly<RetryProvider>(); QosProvider is not implemented yet
-    // .AddCustomLoadBalancer<CustomLoadBalancer>();
+    // .AddCustomLoadBalancer<CustomLoadBalancer>() LoadBalancerProvider is not implemented yet
     .AddPolly();
 
 builder.Services.AddSwaggerForOcelot(builder.Configuration);

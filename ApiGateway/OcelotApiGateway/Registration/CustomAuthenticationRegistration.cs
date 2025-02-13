@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ApiGateway.StartupRegistration;
+namespace ApiGateway.Registration;
 
 public static class CustomAuthenticationRegistration
 {
