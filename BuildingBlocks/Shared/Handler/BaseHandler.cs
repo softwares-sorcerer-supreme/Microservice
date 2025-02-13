@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Shared.Models.Response;
-using Shared.Validation;
 
 namespace Shared.Handler
 {

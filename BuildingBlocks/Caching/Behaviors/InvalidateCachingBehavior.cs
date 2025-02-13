@@ -1,4 +1,3 @@
-using BuildingBlocks.Caching;
 using Caching.Services;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -6,7 +5,7 @@ using Microsoft.Extensions.Logging;
 namespace Caching.Behaviors;
 
 public class InvalidateCachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull, IRequest<TResponse>
+    where TRequest : IRequest<TResponse>
     where TResponse : notnull
 {
     private readonly ILogger<InvalidateCachingBehavior<TRequest, TResponse>> _logger;

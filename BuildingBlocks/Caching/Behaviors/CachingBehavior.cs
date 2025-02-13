@@ -1,4 +1,3 @@
-using BuildingBlocks.Caching;
 using Caching.Services;
 using MediatR;
 using Microsoft.Extensions.Caching.Distributed;

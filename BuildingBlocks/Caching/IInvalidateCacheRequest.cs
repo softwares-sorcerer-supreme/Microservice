@@ -1,7 +1,6 @@
-namespace BuildingBlocks.Caching
+namespace Caching;
+
+public interface IInvalidateCacheRequest
 {
-    public interface IInvalidateCacheRequest
-    {
-        string CacheKey { get; }
-    }
+    string CacheKey { get; }
 }
