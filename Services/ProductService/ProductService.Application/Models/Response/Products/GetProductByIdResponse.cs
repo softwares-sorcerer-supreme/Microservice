@@ -2,7 +2,4 @@ using Shared.Models.Response;
 
 namespace ProductService.Application.Models.Response.Products;
 
-public record GetProductByIdResponse : BaseResponse
-{
-    public ProductDataResponse Data { get; set; }
-}
+public class GetProductByIdResponse : ApiResponse<ProductDataResponse>;

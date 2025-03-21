@@ -2,7 +2,7 @@ using CartService.API.Authorizations;
 using Microsoft.AspNetCore.Authorization;
 using Shared.Constants;
 
-namespace CartService.API.StartupRegistration;
+namespace CartService.API.Registrations;
 
 public static class AuthorizationRegistration
 {

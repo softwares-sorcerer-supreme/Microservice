@@ -2,4 +2,4 @@
 
 namespace ProductService.Application.Models.Response.Products;
 
-public record CreateProductResponse : BaseResponse;
+public class CreateProductResponse : ApiResponse;

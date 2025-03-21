@@ -3,7 +3,7 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses.Services;
 
-public record SignInServiceResponse : ErrorServiceResponse
+public record SignInServiceResponse : ServiceResponse
 {
     public SignInServiceData Data { get; set; }
 }

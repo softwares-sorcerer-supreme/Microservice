@@ -39,7 +39,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetProducts([FromQuery] PagingRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProductsQuery(request), cancellationToken);
-        return ResponseHelper.ToPaginationResponse(response.Status, response.ErrorMessageCode, response.Data, response.Paging);
+        return response.ToResponseData();
     }
 
     [HttpGet]
@@ -47,7 +47,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetProductById(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return response.ToResponseData();
     }
 
     [HttpGet]
@@ -55,14 +55,14 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> GetProductByIdDapper(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new GetProductByIdDapperQuery(id), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return response.ToResponseData();
     }
 
     [HttpPost]
     public async Task<IActionResult> CreateProduct([FromBody] CreateProductRequest productRequest, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new CreateProductCommand(productRequest), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
+        return response.ToResponseData();
     }
 
     [HttpPut]
@@ -70,7 +70,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> UpdateProduct(Guid id, [FromBody] UpdateProductRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new UpdateProductCommand(id, request), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
+        return response.ToResponseData();
     }
 
     [HttpDelete]
@@ -78,7 +78,7 @@ public class ProductController : ControllerBase
     public async Task<IActionResult> DeleteProduct(Guid id, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new DeleteProductCommand(id), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
+        return response.ToResponseData();
     }
 
     [HttpGet]

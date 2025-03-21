@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shared.Extensions;
 using StackExchange.Redis;
 
-namespace Caching.StartupRegistration;
+namespace Caching.Registrations;
 
 public static class RedisConfiguration
 {

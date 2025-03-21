@@ -78,7 +78,7 @@ volumes:
     driver: local
   consul-data:
     driver: local
-
+  
 networks:
   microservices-network:
     driver: bridge

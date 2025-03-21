@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Diagnostics;
-using Microsoft.Extensions.DependencyInjection;
 using Shared.Abstractions.Entities;
 using Shared.HttpContextCustom;
 
@@ -9,54 +8,46 @@ namespace Shared.Interceptors;
 
 public class AuditableEntityInterceptor : SaveChangesInterceptor
 {
-    private readonly IServiceProvider _serviceProvider;
+    private readonly ICustomHttpContextAccessor _httpContextAccessor;
 
-    public AuditableEntityInterceptor(IServiceProvider serviceProvider)
+    public AuditableEntityInterceptor(ICustomHttpContextAccessor httpContextAccessor)
     {
-        _serviceProvider = serviceProvider;
+        _httpContextAccessor = httpContextAccessor;
     }
 
     public override InterceptionResult<int> SavingChanges(DbContextEventData eventData, InterceptionResult<int> result)
     {
         UpdateEntities(eventData.Context);
-
         return base.SavingChanges(eventData, result);
     }
 
     public override ValueTask<InterceptionResult<int>> SavingChangesAsync(DbContextEventData eventData, InterceptionResult<int> result, CancellationToken cancellationToken = default)
     {
         UpdateEntities(eventData.Context);
-
         return base.SavingChangesAsync(eventData, result, cancellationToken);
     }
 
     private void UpdateEntities(DbContext? context)
     {
-        if (context == null)
-        {
-            return;
-        }
+        if (context == null) return;
 
-        using var scope = _serviceProvider.CreateScope();
-        var customHttpContext = scope.ServiceProvider.GetRequiredService<ICustomHttpContextAccessor>();
-
-        var userId = customHttpContext.GetCurrentUserId();
         foreach (var entry in context.ChangeTracker.Entries<IAuditable>())
         {
-            if (entry.State is not (EntityState.Added or EntityState.Modified) && !entry.HasChangedOwnedEntities())
-            {
-                continue;
-            }
-            
+            var userId = _httpContextAccessor.GetCurrentUserId();
             if (entry.State == EntityState.Added)
             {
-                entry.Entity.CreatedBy = new Guid(userId);
-                entry.Entity.CreatedDate = DateTime.UtcNow;
+                entry.Entity.CreatedBy = userId;
+                entry.Entity.CreatedDate= DateTime.UtcNow;
             }
-            else
+            else if (entry.State == EntityState.Modified || entry.HasChangedOwnedEntities())
             {
-                entry.Entity.ModifiedBy = new Guid(userId);
+                entry.Entity.ModifiedBy = userId;
                 entry.Entity.ModifiedDate = DateTime.UtcNow;
+            }
+            else if (entry.State == EntityState.Deleted)
+            {
+                entry.State = EntityState.Modified;
+                entry.Entity.IsDeleted = true;
             }
         }
     }

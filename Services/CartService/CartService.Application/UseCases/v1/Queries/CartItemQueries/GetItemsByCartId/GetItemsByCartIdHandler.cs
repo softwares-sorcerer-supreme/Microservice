@@ -78,9 +78,9 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
             .ToListAsync(cancellationToken);
     }
 
-    private List<ItemDatas> MapProductsToItemDatas(List<CartItem> cartItems, List<ProductModel> products)
+    private List<ItemData> MapProductsToItemDatas(List<CartItem> cartItems, List<ProductModel> products)
     {
-        return products.Select(p => new ItemDatas
+        return products.Select(p => new ItemData
         {
             Id = new Guid(p.Id),
             Name = p.Name,
@@ -102,7 +102,7 @@ public class GetItemsByCartIdHandler : IRequestHandler<GetItemsByCartIdQuery, Ge
         };
     }
 
-    private GetItemsByCartIdResponse CreateResponseWithItems(decimal totalPrice, List<ItemDatas> items)
+    private GetItemsByCartIdResponse CreateResponseWithItems(decimal totalPrice, List<ItemData> items)
     {
         return new GetItemsByCartIdResponse
         {

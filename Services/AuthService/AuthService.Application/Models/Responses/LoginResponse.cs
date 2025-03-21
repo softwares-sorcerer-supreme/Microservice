@@ -2,10 +2,7 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses;
 
-public record LoginResponse : BaseResponse
-{
-    public LoginData Data { get; set; }
-}
+public class LoginResponse : ApiResponse<LoginData>;
 
 public record LoginData
 {

@@ -27,7 +27,7 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new LoginCommand(request), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return response.ToResponseData();
     }
 
     [HttpPost]
@@ -35,7 +35,7 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new RegisterCommand(request), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode);
+        return response.ToResponseData();
     }
 
     [HttpPost]
@@ -44,7 +44,7 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> RenewToken([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new RenewTokenCommand(request), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return response.ToResponseData();
     }
 
     //Test api versioning
@@ -55,6 +55,6 @@ public class AuthenticationController : ControllerBase
     public async Task<IActionResult> RenewTokenV2([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
     {
         var response = await _mediator.Send(new RenewTokenCommand(request), cancellationToken);
-        return ResponseHelper.ToResponse(response.Status, response.ErrorMessageCode, response.Data);
+        return response.ToResponseData();
     }
 }

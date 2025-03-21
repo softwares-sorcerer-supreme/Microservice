@@ -1,5 +1,6 @@
 ﻿using CartService.Domain.Abstraction;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Interceptors;
@@ -12,10 +13,12 @@ public static class DatabaseRegistration
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-        services.AddSingleton<AuditableEntityInterceptor>();
-        services.AddDbContext<ApplicationDbContext>((sp, builder) => builder
-            .UseNpgsql(connectionString)
-            .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        
+        services.AddDbContext<ApplicationDbContext>(
+            (sp, options) => options
+                .UseNpgsql(connectionString)
+                .AddInterceptors(sp.GetServices<ISaveChangesInterceptor>()));
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

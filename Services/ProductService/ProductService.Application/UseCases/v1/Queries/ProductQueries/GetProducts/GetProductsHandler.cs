@@ -45,9 +45,13 @@ public class GetProductsHandler : IRequestHandler<GetProductsQuery, GetProductsR
                 .AsNoTracking()
                 .ToListAsPageAsync(payload.PageNumber, payload.MaxPerPage, cancellationToken);
 
-            response.Data = productData.Data;
-            response.Paging = productData.Paging;
-
+            var responseData = new GetProductsData
+            {
+                Data = productData.Data,
+                Paging = productData.Paging
+            };
+            
+            response.Data = responseData;
             return response;
         }
         catch (Exception ex)

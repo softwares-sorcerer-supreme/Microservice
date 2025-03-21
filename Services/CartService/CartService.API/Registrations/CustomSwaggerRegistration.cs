@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace CartService.API.StartupRegistration;
+namespace CartService.API.Registrations;
 
 public static class CustomSwaggerRegistration
 {

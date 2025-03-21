@@ -2,7 +2,7 @@ using AuthService.API.StartupRegistration;
 using AuthService.Application.StartupRegistration;
 using AuthService.Infrastructure.StartupRegistration;
 using AuthService.Persistence.StartupRegistration;
-using Caching.StartupRegistration;
+using Caching.Registrations;
 using Observability.Registrations;
 using Serilog;
 using Shared.HttpContextCustom;

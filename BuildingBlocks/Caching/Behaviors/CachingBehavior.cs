@@ -34,7 +34,7 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 
         var cacheKey = cacheRequest.CacheKey;
         var cachedResponse = await _redisService.GetAsync<TResponse>(cacheKey);
-        if (cachedResponse != null)
+        if (!Equals(cachedResponse, default(TResponse)))
         {
             _logger.LogDebug("Response retrieved {TRequest} from cache. CacheKey: {CacheKey}",
                 typeof(TRequest).FullName, cacheKey);

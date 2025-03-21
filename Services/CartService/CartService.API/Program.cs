@@ -1,4 +1,4 @@
-using CartService.API.StartupRegistration;
+using CartService.API.Registrations;
 using CartService.Application.StartupRegistration;
 using CartService.Domain.Abstraction;
 using CartService.Infrastructure.StartupRegistration;

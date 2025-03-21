@@ -2,10 +2,7 @@ using Shared.Models.Response;
 
 namespace AuthService.Application.Models.Responses;
 
-public record RefreshTokenResponse : BaseResponse
-{
-    public RefreshTokenData Data { get; set; }
-}
+public class RefreshTokenResponse : ApiResponse<RefreshTokenData>;
 
 public record RefreshTokenData
 {

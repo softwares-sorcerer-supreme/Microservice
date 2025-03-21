@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
@@ -14,13 +15,14 @@ public static class DatabaseRegistration
     public static IServiceCollection AddDatabaseConfiguration(this IServiceCollection services, IConfiguration configuration)
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
-        var connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
 
-        services.AddSingleton<AuditableEntityInterceptor>();
-
-        services.AddDbContext<ApplicationDbContext>((sp, builder) => builder
-                .UseNpgsql(connectionStringBuilder.ConnectionString)
-                .AddInterceptors(sp.GetRequiredService<AuditableEntityInterceptor>()));
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        
+        services.AddDbContext<ApplicationDbContext>(
+            (sp, options) => options
+                .UseNpgsql(connectionString)
+                .AddInterceptors(sp.GetServices<ISaveChangesInterceptor>()));
+        
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IReadOnlyRepository, ReadOnlyRepository>();
 

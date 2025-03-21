@@ -2,4 +2,4 @@
 
 namespace ProductService.Application.Models.Response.Products;
 
-public record UpdateProductResponse : BaseResponse;
+public class UpdateProductResponse : ApiResponse;
