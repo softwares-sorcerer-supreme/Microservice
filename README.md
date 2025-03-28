@@ -1,4 +1,5 @@
-[![Hoang Manh Hai profile views](https://u8views.com/api/v1/github/profiles/95084590/views/day-week-month-total-count.svg)](https://u8views.com/github/softwares-sorcerer-supreme)
+![](https://komarev.com/ghpvc/?username=softwares-sorcerer-supreme&abbreviated=true&label=Views))
+
 # Overview
 
 This project demonstrates a microservices architecture using .NET technologies. It consists of several components including an API Gateway, multiple services, and a database, all deployed locally using Docker.
