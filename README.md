@@ -1,4 +1,4 @@
-![](https://komarev.com/ghpvc/?username=softwares-sorcerer-supreme&abbreviated=true&label=Views))
+![](https://komarev.com/ghpvc/?username=softwares-sorcerer-supreme&abbreviated=true&label=Views)
 
 # Overview
 
